@@ -1,0 +1,44 @@
+{
+  "name": "htv-backend",
+  "version": "0.0.1",
+  "description": "HTV project backend",
+  "main": "js/main.js",
+  "scripts": {
+    "test": "jasmine",
+    "lint": "eslint js",
+    "validate": "npm ls"
+  },
+  "pre-commit": ["lint", "test"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suchaHassle/htv-backend.git"
+  },
+  "keywords": [
+    "Twitter",
+    "Sentiment",
+    "News"
+  ],
+  "author": "GunshipPenguin,suchaHassle",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/suchaHassle/htv-backend/issues"
+  },
+  "homepage": "https://github.com/suchaHassle/htv-backend#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "mongodb": "^2.2.19",
+    "twitter": "^1.7.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.13.0",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^2.0.1",
+    "jasmine": "^2.5.2"
+  },
+  "pre-commit": [
+    "lint",
+    "validate",
+    "test"
+  ]
+}
