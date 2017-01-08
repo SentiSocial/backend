@@ -36,7 +36,7 @@ function startBackend() {
       }
     }
 
-    return retVal
+    return {trends: retVal}
   }
 
   var getSpecificTrend = function (trend, callback) {
