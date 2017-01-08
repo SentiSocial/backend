@@ -32,6 +32,7 @@
     "mongodb": "^2.2.19",
     "precommit-hook-eslint": "^3.0.0",
     "request": "^2.79.0",
+    "sentiment": "^2.1.0",
     "twitter": "^1.7.0"
   },
   "devDependencies": {
