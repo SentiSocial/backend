@@ -29,7 +29,16 @@ var config = {
   popularTweetsPerSearch: 100,
 
   // Total number of popular tweets retreived for each trend
-  popularTweetsRetreivedTotal: 300
+  popularTweetsRetreivedTotal: 300,
+
+  // Interval length in milliseconds, (1800000 is 30 mins)
+  intervalLength: 15000,
+
+  // Weight that popular tweets are given relative to tweets that come in via the streaming API
+  popularTweetWeight: 3,
+
+  // Maximum number of popular tweets stroed in the database for each trend
+  popularTweetsStored: 60
 }
 
 module.exports = config

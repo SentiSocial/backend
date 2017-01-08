@@ -70,8 +70,8 @@ var SentimentStream = function (trends) {
    * Stop listening to the Twitter streaming API.
    *
    */
-  this.stopStream = function () {
-    _stream.off()
+  this.stopStream = function() {
+    _stream.destroy()
   }
 }
 
