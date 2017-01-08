@@ -3,10 +3,10 @@
 var config = {
   // Root URL for News API
   rootNewsApiLink: 'http://newsapi.org/',
-  
+
   // Cap for articles to be displayed
   maxArticlesStorageCap: 20,
-  
+
   // List of news sources sorted generally by popularity
   sources: [
     'The New York Times', 'Bloomberg', 'The Wall Street Journal',
@@ -23,8 +23,8 @@ var config = {
     'Sky Sports News', 'TalkSport', 'TechCrunch', 'TechRadar',
     'The Guardian (AU)', 'The Hindu', 'The Huffington Post', 'The Lad Bible',
     'The Next Web', 'The Sport Bible', 'The Times of India', 'The Verge'
-  ]
-  
+  ],
+
   // Number of tweets retreived per call to the search api
   popularTweetsPerSearch: 100,
 

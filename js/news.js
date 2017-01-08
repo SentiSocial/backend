@@ -15,6 +15,11 @@ var getNews = function (trend, callback) {
   var responses = []
   var completedRequests = 0
 
+  // Strip of hashtag
+  if (trend.startsWith('#')) {
+    trend = trend.replace('#', '')
+  }
+
   // Iterate through each source configured by sources.json file
   sources.source.forEach(function (source, index) {
     var currentSource = source.id
