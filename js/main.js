@@ -47,21 +47,9 @@ function startBackend() {
     var retVal = {}
 
     // Get history
-    dbAccess.getSentimentInfo(trend, function(senInfo) {
-      var retVal
-      if (finalAnalysis) {
-        if (finalAnalysis[trend]) {
-          retVal = {name: trend, sentiment: finalAnalysis[trend].sentiment, history: senInfo}
-        } else {
-          retVal = {}
-        }
-      } else {
-        if (searchApiAnalysis[trend]) {
-          retVal = {name: trend, sentiment: searchApiAnalysis[trend].sentiment, history: senInfo}
-        } else {
-          retVal = {}
-        }
-      }
+    dbAccess.getSentimentInfo(trend, function(historyData) {
+      retVal = {name: trend, history: {start: 1483820890, end: 1483831017, data: [{volume: 20000, sentiment: 3}, {volume: 18000, sentiment: 5}, {volume: 1000, sentiment: 0}]}}
+
       callback(retVal)
     })
   }
@@ -228,7 +216,9 @@ function startBackend() {
         }
 
         // TOTAL HACK for demo, append most popular tweet to array
-        retPopularTweets.push(tweets[0])
+        if (tweet[0]) {
+          retPopularTweets.push(tweets[0])
+        }
 
         // Create a new array containing only the tweet id
         var formattedTweets = []
