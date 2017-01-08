@@ -51,7 +51,7 @@ var tweetSearch = {
           // Add the tweet text, id and popularity to tweets
           tweets.push({
             text: tweet.text,
-            id: tweet.id,
+            id: tweet.id_str,
             popularity: tweet.retweet_count + tweet.favorite_count
           })
         })

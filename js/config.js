@@ -32,7 +32,7 @@ var config = {
   popularTweetsRetreivedTotal: 300,
 
   // Interval length in milliseconds, (1800000 is 30 mins)
-  intervalLength: 10000,
+  intervalLength: 30000,
 
   // Weight that popular tweets are given relative to tweets that come in via the streaming API
   popularTweetWeight: 3,
