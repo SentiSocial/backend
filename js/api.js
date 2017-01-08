@@ -1,6 +1,6 @@
 var express = require('express')
 
-var api = function (getTrends, getSpecificTrend, getPopularTweets, getSpecificPopularTweets) {
+var api = function (getTrends, getSpecificTrend, getContent, getSpecificContent) {
   var app = express()
 
   app.get('/v1/trends', function (req, res) {
@@ -14,12 +14,12 @@ var api = function (getTrends, getSpecificTrend, getPopularTweets, getSpecificPo
   })
 
   app.get('/v1/content', function (req, res) {
-    var tweets = getPopularTweets(parseInt(req.query.page))
-    res.send(JSON.stringify(tweets))
+    var content = getContent(parseInt(req.query.page))
+    res.send(JSON.stringify(content))
   })
 
   app.get('/v1/content/:id', function (req, res) {
-    getSpecificPopularTweets(req.params.id, parseInt(req.query.page), function(popularTweets) {
+    getSpecificContent(req.params.id, parseInt(req.query.page), function(popularTweets) {
       res.send(JSON.stringify(popularTweets))
     })
   })

@@ -3,6 +3,7 @@ var MongoClient = require('mongodb').MongoClient
 var assert = require('assert')
 var sentiment = require('sentiment')
 
+var news = require('./news')
 var api = require('./api')
 var trends = require('./trends')
 var config = require('./config')
@@ -15,6 +16,9 @@ var searchApiAnalysis
 var finalAnalysis
 var currTrends
 var retPopularTweets
+
+var articlesOverall
+var articles
 
 // Access to database
 var dbAccess = new db(startBackend)
@@ -64,18 +68,20 @@ function startBackend() {
     })
   }
 
-  var getPopularTweets = function (page) {
-    return retPopularTweets.slice(page*5, page*5+5)
+  var getContent = function (page) {
+    var retVal = {}
+    retVal.news = articlesOverall.slice(page*3, page*3+3)
+    retVal.tweets = retPopularTweets.slice(page*5, page*5+5)
   }
 
-  var getSpecificPopularTweets = function (trend, page, callback) {
+  var getSpecificContent = function (trend, page, callback) {
     dbAccess.getPopularTweets(trend, function(popularTweets) {
       callback(popularTweets.slice(page*5, page*5+5))
     })
   }
 
   // Set up api
-  var trendsApi = new api(getTrends, getSpecificTrend, getPopularTweets, getSpecificPopularTweets)
+  var trendsApi = new api(getTrends, getSpecificTrend, getContent, getSpecificContent)
 
   // Code run prior to the first time based interval callback being run
   trends.getTrends(function (trends) {
@@ -180,7 +186,18 @@ function startBackend() {
     retPopularTweets = []
 
     // Iterate over all trends
-    trends.slice(0, 10).forEach(function (trend) {
+    trends.slice(0, 4).forEach(function (trend) {
+
+      // Hackish News gathering
+      articlesOverall = []
+      articles = {}
+      news(trend, function(articles) {
+        if (articles.length > 0) {
+          articlesOverall.push(articles[0])
+          articles[trend] = articles
+        }
+      })
+
       // Iterate over a sample of popular tweets for the current trend
       tweetSearch.getTweetSample(trend, config.popularTweetsRetreivedTotal, function (tweets) {
         // Perform a search API analsis on this trend's tweets
