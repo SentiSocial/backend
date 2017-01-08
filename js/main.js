@@ -98,7 +98,11 @@ function startBackend() {
         if (!searchApiAnalysis[trend]) {
           continue
         }
-        finalAnalysis[trend] = {sentiment: ((searchApiAnalysis[trend].sentiment * config.popularTweetWeight) + sentimentStream.getSentiments()[trend].getSentiment()) / (config.popularTweetWeight + 1), timestamp: currTime.getTime()}
+        // Horrible hack. Do not send tweets for which sentiment == 0, this should be based on num analyzed rather than sentiment
+        var senScore = ((searchApiAnalysis[trend].sentiment * config.popularTweetWeight) + sentimentStream.getSentiments()[trend].getSentiment()) / (config.popularTweetWeight + 1)
+        if (senScore !== 0) {
+          finalAnalysis[trend] = {sentiment: senScore, timestamp: currTime.getTime()}
+        }
       }
 
       // Create a new searchApiAnalysis, and store popular tweets in the DB
@@ -216,7 +220,7 @@ function startBackend() {
         }
 
         // TOTAL HACK for demo, append most popular tweet to array
-        if (tweets[0]) {
+        if (tweetscl[0]) {
           retPopularTweets.push(tweets[0])
         }
 
