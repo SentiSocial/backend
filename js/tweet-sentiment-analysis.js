@@ -4,6 +4,7 @@ var sentiment = require('sentiment')
 /**
  * Construct a new TweetSentimentAnalysis object.
  *
+ * @author GunshipPenguin
  * @constructor
  */
 var TweetSentimentAnalysis = function () {
