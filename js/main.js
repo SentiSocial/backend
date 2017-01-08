@@ -216,7 +216,7 @@ function startBackend() {
         }
 
         // TOTAL HACK for demo, append most popular tweet to array
-        if (tweet[0]) {
+        if (tweets[0]) {
           retPopularTweets.push(tweets[0])
         }
 
