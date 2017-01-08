@@ -24,8 +24,9 @@ var trends = {
     var trendsStrings = []
 
     // Get trending topics
-    client.get('trends/place', {id: 1}, function (error, trends, response) {
+    client.get('trends/place', {id: 23424977}, function (error, trends, response) {
       if (error) {
+        console.log(error)
         throw error
       }
 

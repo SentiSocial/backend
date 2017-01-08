@@ -72,7 +72,7 @@ var SentimentStream = function(trends) {
    *
    */
   this.stopStream = function() {
-    _stream.off()
+    _stream.destroy()
   }
 }
 

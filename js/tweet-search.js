@@ -30,7 +30,7 @@ var tweetSearch = {
     var tweets = []
     var tweetsRetrieved = 0
 
-    client.get('search/tweets', {q: trend, result_type: 'mixed', count: num}, function appendTo (error, result, response) {
+    client.get('search/tweets', {q: trend, result_type: 'popular', count: num}, function appendTo (error, result, response) {
       if (error) {
         console.log(error)
         throw error
