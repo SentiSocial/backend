@@ -1,6 +1,5 @@
 'use strict'
 var TweetSentimentAnalysis = require('./tweet-sentiment-analysis')
-var config = require('./config')
 var apiKeys = require('./api-keys')
 var Twitter = require('twitter')
 
@@ -19,10 +18,10 @@ var client = new Twitter({
  * @param {Array} trends Array of trends to calculate average sentiments for
  * @return {type} description
  */
-var SentimentStream = function(trends) {
+var SentimentStream = function (trends) {
   // Construct a mapping of trends as strings to TweetSentimentAnalysis object
   var _sentiments = {}
-  trends.forEach(function(trend) {
+  trends.forEach(function (trend) {
     _sentiments[trend] = new TweetSentimentAnalysis()
   })
 
@@ -32,7 +31,7 @@ var SentimentStream = function(trends) {
    *
    * @param {String} tweetText The tweetText to analyze
    */
-  var _analyzeTweet = function(tweetText) {
+  var _analyzeTweet = function (tweetText) {
     var tweetTextLower = tweetText.toLowerCase()
 
     for (var trend in _sentiments) {
@@ -44,7 +43,7 @@ var SentimentStream = function(trends) {
   }
 
   // Create stream object to connect to Twitter API
-  var _stream = client.stream('statuses/sample', {language: 'en'});
+  var _stream = client.stream('statuses/sample', {language: 'en'})
 
   /**
    * Get an object mapping sentiments as strings to an associated tweetSentimentAnalysis
@@ -52,7 +51,7 @@ var SentimentStream = function(trends) {
    *
    * @return {Object} description
    */
-  this.getSentiments = function() {
+  this.getSentiments = function () {
     return _sentiments
   }
 
@@ -61,10 +60,10 @@ var SentimentStream = function(trends) {
    * tweets.
    *
    */
-  this.startStream = function() {
-    _stream.on('data', function(event) {
+  this.startStream = function () {
+    _stream.on('data', function (event) {
       _analyzeTweet(event.text)
-    });
+    })
   }
 
   /**
