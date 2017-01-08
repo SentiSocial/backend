@@ -96,6 +96,7 @@ function createNewObject (article, sourceName) {
     timestamp: parseInt(new Date(article.publishedAt).getTime()) / 1000,
     source: sourceName,
     link: article.url,
+    media: article.urlToImage,
     description: article.description
   }
   return obj

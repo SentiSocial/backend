@@ -70,6 +70,7 @@ function startBackend() {
 
   var getContent = function (page) {
     var retVal = {}
+	console.log(articlesOverall)
     retVal.news = articlesOverall.slice(page*3, page*3+3)
     retVal.tweets = retPopularTweets.slice(page*5, page*5+5)
     retVal.remaining = 9
@@ -78,7 +79,12 @@ function startBackend() {
 
   var getSpecificContent = function (trend, page, callback) {
     dbAccess.getPopularTweets(trend, function(popularTweets) {
-      callback(popularTweets.slice(page*5, page*5+5))
+      var retVal = {}
+      
+      retVal.news = articles[trend] ? articles[trend] : []
+      retVal.tweets = popularTweets
+      retVal.remaining = 9
+      callback(retVal)
     })
   }
 
@@ -188,7 +194,7 @@ function startBackend() {
     retPopularTweets = []
 
     // Iterate over all trends
-    trends.slice(0, 30).forEach(function (trend) {
+    trends.slice(0, 15).forEach(function (trend) {
 
       // Hackish News gathering
       articlesOverall = []
@@ -198,7 +204,6 @@ function startBackend() {
           articlesOverall.push(articles[0])
           articles[trend] = articles
         }
-        console.log(articlesOverall)
       })
 
       // Iterate over a sample of popular tweets for the current trend

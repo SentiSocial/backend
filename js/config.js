@@ -29,10 +29,10 @@ var config = {
   popularTweetsPerSearch: 100,
 
   // Total number of popular tweets retreived for each trend
-  popularTweetsRetreivedTotal: 300,
+  popularTweetsRetreivedTotal: 200,
 
   // Interval length in milliseconds, (1800000 is 30 mins)
-  intervalLength: 30000,
+  intervalLength: 300000,
 
   // Weight that popular tweets are given relative to tweets that come in via the streaming API
   popularTweetWeight: 3,
