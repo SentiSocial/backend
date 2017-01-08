@@ -3,6 +3,7 @@ var MongoClient = require('mongodb').MongoClient
 var assert = require('assert')
 var sentiment = require('sentiment')
 
+var api = require('./api')
 var trends = require('./trends')
 var config = require('./config')
 var tweetSearch = require('./tweet-search')
@@ -11,13 +12,74 @@ var db = require('./db-access')
 
 var sentimentStream
 var searchApiAnalysis
+var finalAnalysis
+var currTrends
+var retPopularTweets
 
 // Access to database
 var dbAccess = new db(startBackend)
 
 function startBackend() {
+  var getTrends = function() {
+    var retVal = []
+
+    var currId = 0
+    if (finalAnalysis){
+      for (var trend in finalAnalysis) {
+        retVal.push({name: trend, sentiment: finalAnalysis[trend].sentiment, id: currId})
+        currId++
+      }
+    } else {
+      for (var trend in searchApiAnalysis) {
+        retVal.push({name: trend, sentiment: searchApiAnalysis[trend].sentiment, id: currId})
+        currId++
+      }
+    }
+
+    return retVal
+  }
+
+  var getSpecificTrend = function (trend, callback) {
+    var retVal = {}
+    console.log(finalAnalysis)
+    console.log(searchApiAnalysis)
+
+    // Get history
+    dbAccess.getSentimentInfo(trend, function(senInfo) {
+      var retVal
+      if (finalAnalysis) {
+        if (finalAnalysis[trend]) {
+          retVal = {name: trend, sentiment: finalAnalysis[trend].sentiment, history: senInfo}
+        } else {
+          retVal = {}
+        }
+      } else {
+        if (searchApiAnalysis[trend]) {
+          retVal = {name: trend, sentiment: searchApiAnalysis[trend].sentiment, history: senInfo}
+        } else {
+          retVal = {}
+        }
+      }
+      callback(retVal)
+    })
+  }
+
+  var getPopularTweets = function (page) {
+    return retPopularTweets.slice(page*5, page*5+5)
+  }
+
+  var getSpecificPopularTweets = function (trend, page, callback) {
+    dbAccess.getPopularTweets(trend, function(popularTweets) {
+      callback(popularTweets.slice(page*5, page*5+5))
+    })
+  }
+
+  // Set up api
+  var trendsApi = new api(getTrends, getSpecificTrend, getPopularTweets, getSpecificPopularTweets)
+
   // Code run prior to the first time based interval callback being run
   trends.getTrends(function (trends) {
+    currTrends = trends
     openNewStream(trends)
     analyzeAndStoreTweets(trends)
   })
@@ -26,8 +88,9 @@ function startBackend() {
   setInterval(function() {
     // At the beginning of each interval, we get all trends
     trends.getTrends(function (trends) {
+
       // Object to store the results of the search + streaming api analysis
-      var finalAnalysis = {}
+      finalAnalysis = {}
       var currTime = new Date()
 
       // Combine stream analysis with searchApiAnalysis
@@ -114,9 +177,10 @@ function startBackend() {
   var analyzeAndStoreTweets = function (trends) {
     // Reset searchApiAnalysis so that new data can be added
     searchApiAnalysis = {}
+    retPopularTweets = []
 
     // Iterate over all trends
-    trends.slice(0, 3).forEach(function (trend) {
+    trends.slice(0, 10).forEach(function (trend) {
       // Iterate over a sample of popular tweets for the current trend
       tweetSearch.getTweetSample(trend, config.popularTweetsRetreivedTotal, function (tweets) {
         // Perform a search API analsis on this trend's tweets
@@ -136,12 +200,17 @@ function startBackend() {
           tweets = tweets.slice(0, config.popularTweetsStored)
         }
 
+        // TOTAL HACK for demo, append most popular tweet to array
+        retPopularTweets.push(tweets[0])
+
         // Create a new array containing only the tweet id
         var formattedTweets = []
         tweets.forEach(function(tweet) {
           formattedTweets.push({id: tweet.id})
         })
+        console.log(formattedTweets)
         dbAccess.addPopularTweets(trend, formattedTweets)
+        console.log('addign popular tweets')
       })
     })
   }
