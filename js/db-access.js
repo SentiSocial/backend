@@ -98,7 +98,11 @@ var dbAccess = function (readyCallback) {
       if (err !== null) {
         console.log(err)
       } else {
-        callback(document.popularTweets)
+        if (document) {
+          callback(document.popularTweets)
+        } else {
+          callback({})
+        }
       }
     });
   }
