@@ -1,9 +1,6 @@
 'use strict'
 
 var config = {
-  // Root URL for News API
-  rootNewsApiLink: 'http://newsapi.org/',
-
   // Cap for articles to be displayed
   maxArticlesStorageCap: 20,
 

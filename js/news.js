@@ -1,58 +1,152 @@
 'use strict'
-var apiKeys = require('./api-keys')
-var config = require('./config')
-var sources = require('./sources.json')
-var request = require('request')
+const request = require('request')
+
+const newsApi = 'http://newsapi.org'
+const apiKey = require('./api-keys').newsApiKey
+const config = require('./config.js')
+const sources = require('./sources.json')
+const maxArticles = config.maxArticlesStorageCap
+
+if (!apiKey) {
+  throw Error('News Module requires an API key from NewsAPI.org')
+}
 
 /**
- * Contains function that gets an arrray of news articles using the News API
- *
- * @author suchaHassle
- * @param  {String} trend Trend word to search for news articles in the API
- * @param  {Function} callback Callback with an array objects(news articles)
+ * Transforms camel cased sentences to a spaced spaced sentence.
+ * "thisIsAnExample" -> "this Is An Example"
+ * "hiOCAreMyInitials" -> "hi OC Are My Initials"
+ * "ABCNews" -> "ABC News"
+ * "CNN" -> "CNN"
+ * @param  {string} string
+ * @return {string}
+ * @author Omar Chehab
  */
-var getNews = function (trend, callback) {
-  var responses = []
-  var completedRequests = 0
+function camelCaseToSpaced (string) {
+  return string
+    .replace(/([A-Z])([A-Z][a-z])/g, '$1 $2')
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+}
 
-  // Strip of hashtag
-  if (trend.startsWith('#')) {
-    trend = trend.replace('#', '')
+/**
+ * Replaces hyphens with spaces.
+ * "this_is_an_example" -> "this is an example"
+ * "what-about-dashes" -> "what about dashes"
+ * @param  {sting} string
+ * @return {sting}
+ * @author Omar Chehab
+ */
+function unHyphenate (string) {
+  return string
+    .replace(/[_-]/g, ' ')
+}
+
+/**
+ * Adds ? after all matches
+ * @param  {string} substring  what to make optional from string
+ * @param  {string} string
+ * @return {string}
+ * @author Omar Chehab
+ */
+function optionalize (substring, string, flags) {
+  flags = flags || 'g'
+  return string
+    .replace(new RegExp(`(${substring})`, flags), '$1?')
+}
+
+/**
+ * Generates a regular expression that leniently match a given string
+ * @param  {string} string
+ * @param  {string} flags  optional
+ * @return {RegExp}
+ * @author Omar Chehab
+ */
+function generateFuzzyPattern (string, flags) {
+  flags = flags || 'i'
+  string = camelCaseToSpaced(string)
+  string = unHyphenate(string)
+  string = optionalize('[#@ ]', string)
+  return new RegExp(string, flags)
+}
+
+/**
+ * Retrieves relevant news using NewsAPI.org given a phrase.
+ * @param  {string}   phrase
+ * @param  {function} callback
+ * @author Omar Chehab
+ */
+function getNews (phrase, callback) {
+  let articles = []
+  let pending = sources.length
+
+  const pattern = generateFuzzyPattern(phrase)
+
+  sources.forEach(source => searchForArticlesFromSource(pattern, source,
+   (error, response) => {
+     pending--
+     if (error) {
+       console.error(`Request to ${source} failed`, error)
+       return
+     }
+
+     articles = articles.concat(response)
+     if (!pending) respond()
+   })
+  )
+
+  function respond () {
+    callback(reduceArticles(articles))
   }
+}
 
-  // Iterate through each source configured by sources.json file
-  sources.source.forEach(function (source, index) {
-    var currentSource = source.id
-    var link = config.rootNewsApiLink + 'v1/articles?source=' + currentSource + '&apiKey=' + apiKeys.newsApiKey
+/**
+ * Requests NewsAPI.org for articles from a given source and returns an array of
+ * articles that matches a given RegExp pattern.
+ * @param  {RegExp}   pattern   describing what to find
+ * @param  {string}   source    newsapi.org source id
+ * @param  {function} callback  callback should be a function with two
+ *                              parameters.
+ *                              First parameter is error.
+ *                              Second parameter is articles.
+ * @author Omar Chehab
+ */
+function searchForArticlesFromSource (pattern, source, callback) {
+  const url = `${newsApi}/v1/articles?source=${source.id}&apiKey=${apiKey}`
+  let articles = []
 
-    // JSON request for the articles from the source
-    request(link, function (error, response, body) {
-      response = JSON.parse(response.body)
+  request(url, (error, response) => {
+    if (error) {
+      callback(error)
+      return
+    }
 
-      if (!error) {
-        for (var article in response.articles) {
-          // Ignore all articles that contain null
-          if (response.articles[article].description !== null && response.articles[article].title !== null) {
-            // Checks for whether the article contains the trending keyword
-            if (response.articles[article].description.toLowerCase().indexOf(trend.toLowerCase()) !== -1 ||
-              response.articles[article].title.toLowerCase().indexOf(trend.toLowerCase()) !== -1) {
-              // Adds the news object to the list of articles
-              responses.push(createNewObject(response.articles[article], source.name))
-            }
-          }
-        }
+    response = JSON.parse(response.body)
 
-        completedRequests++
-        if (completedRequests === sources.source.length) {
-          // Filter the articles down to the max cap
-          if (responses.length > config.maxArticlesStorageCap) {
-            responses = pickArticles(responses)
-          }
-          // Callback to save to database
-          callback(responses)
-        }
+    if (response.status !== 'ok') {
+      const message = `NewsAPI returned status ${response.status} `
+      callback(new Error(message))
+      return
+    }
+
+    response.articles.forEach(article => {
+      const title = article.title
+      const titleMatches = title && pattern.test(title)
+      const description = article.description
+      const descriptionMatches = description && pattern.test(description)
+
+      if (titleMatches || descriptionMatches) {
+        const timestamp = new Date(article.publishedAt).getTime() / 1000
+        articles.push({
+          title: title,
+          description: description,
+          timestamp: timestamp,
+          source: source.name,
+          link: article.url,
+          media: article.urlToImage
+        })
       }
     })
+
+    callback(undefined, articles)
   })
 }
 
@@ -63,7 +157,11 @@ var getNews = function (trend, callback) {
  * @param  {Array} articles An array of objects for all news articles
  * @return {Array} An array of objects for the top news articles capped at configured amount
  */
-function pickArticles (articles) {
+function reduceArticles (articles) {
+  if (articles.length <= maxArticles) {
+    return articles
+  }
+
   var count = 0
   var finalArticles = []
 
@@ -83,23 +181,11 @@ function pickArticles (articles) {
   }
 }
 
- /**
-  * createNewObject - Creates a news object to formatted requirements for endpoint
-  *
-  * @param  {Object} article Object containing all information of the article
-  * @param  {String} sourceName Name of the source for that article
-  * @return {Object} Return news article object in appropriate format
-  */
-function createNewObject (article, sourceName) {
-  var obj = {
-    title: article.title,
-    timestamp: parseInt(new Date(article.publishedAt).getTime()) / 1000,
-    source: sourceName,
-    link: article.url,
-    media: article.urlToImage,
-    description: article.description
-  }
-  return obj
-}
-
 module.exports = getNews
+// For scalability reasons, change the statement above to the statement below
+// Do not forget to change news (...) to news.getNews (...) in js/main.js
+/*
+module.exports = {
+  getNews: getNews,
+}
+*/
