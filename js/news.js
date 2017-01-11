@@ -169,7 +169,7 @@ function reduceArticles (articles) {
   for (var i = 0; i < config.sources.length; i++) {
     // Add all articles from said news source
     for (var j = 0; j < articles.length; j++) {
-      if (articles[j].source === config.sources[i]) {
+      if (articles[j].id === config.sources[i]) {
         finalArticles.push(articles[j])
         count++
       }
