@@ -6,12 +6,12 @@
   <tr>
     <td><strong>GET</strong></td>
     <td><a href="#v1-alltrends"><code>/v1/alltrends</code></a></td>
-    <td>Gets the current trends and data associated with them</td>
+    <td>Get all current trends and data associated with each one</td>
   </tr>
   <tr>
     <td><strong>GET</strong></td>
     <td><a href="#v1-alltrends-content"><code>/v1/alltrends/content?page={page}</code></a></td>
-    <td>Gets news and tweets from all the trends</td>
+    <td>Get news and tweets for all the trends</td>
   </tr>
   <tr>
     <td><strong>GET</strong></td>
@@ -21,13 +21,11 @@
   <tr>
     <td><strong>GET</strong></td>
     <td><a href="#v1-trend-name-content"><code>/v1/trend/{name}/content?page={page}</code></a></td>
-    <td>Gets news and tweets from a given trend</td>
+    <td>Get news and tweets from a given trend</td>
   </tr>
 </table>
 
-<h2>Trends Endpoint</h2>
-
-<h3>/v1/alltrends</h3>
+<h2>GET /v1/alltrends</h2>
 <a id="v1-alltrends"></a>
 
 <table>
@@ -36,7 +34,7 @@
     <td colspan="2"><code>/v1/alltrends</code></td>
   </tr>
   <tr>
-    <td colspan="3">Gets the current trends and data associated with them</td>
+    <td colspan="3">Get all current trends and data associated with each one</td>
   </tr>
 </table> 
 
@@ -67,7 +65,7 @@
   <tr>
     <td>trends[i].sentiment</td>
     <td>number</td>
-    <td>Sentiment at a given time</td>
+    <td>Sentiment score at a given time, higher numbers indicate a more positive sentiment</td>
   </tr>
 </table>
 
@@ -84,7 +82,7 @@
 
 <a href="#summary">Back to summary</a>
 
-<h3>/v1/alltrends/content</h3>
+<h2>GET /v1/alltrends/content</h2>
 <a id="v1-alltrends-content"></a>
 
 <table>
@@ -104,7 +102,7 @@
   <tr>
     <td>page</td>
     <td>string</td>
-    <td>Page number, starts counting from 0</td>
+    <td>Zero indexed page number</td>
   </tr>
 </table>
 
@@ -115,7 +113,7 @@
   <tr>
     <td>news</td>
     <td>array</td>
-    <td>Array of objects containing timestamp and sentiment, sorted oldest first</td>
+    <td>Array of objects containing news, sorted by popularity of news source</td>
   </tr>
   <tr>
     <td>news[i]</td>
@@ -135,7 +133,7 @@
   <tr>
     <td>news[i].source</td>
     <td>string</td>
-    <td>Article source, which organization it belongs to</td>
+    <td>Publishing organization of news article</td>
   </tr>
   <tr>
     <td>news[i].link</td>
@@ -150,7 +148,7 @@
   <tr>
     <td>news[i].media</td>
     <td>string|undefined</td>
-    <td>URL link to the article's featured image</td>
+    <td>URL link to media associated with the article</td>
   </tr>
   <tr>
     <td>tweets[i]</td>
@@ -160,7 +158,7 @@
   <tr>
     <td>tweets[i].id</td>
     <td>string</td>
-    <td>Tweet unique identifier used to <a href="https://dev.twitter.com/web/embedded-tweets">embed a tweet</a></td>
+    <td>Unique identifier of the tweet used to <a href="https://dev.twitter.com/web/embedded-tweets">embed</a> it</td>
   </tr>
   <tr>
     <td>remaining</td>
@@ -192,7 +190,7 @@
 
 <a href="#summary">Back to summary</a>
 
-<h3>/v1/trend/{name}</h3>
+<h2>GET /v1/trend/{name}</h2>
 <a id="v1-trend-name"></a>
 
 <table>
@@ -212,7 +210,7 @@
   <tr>
     <td>name</td>
     <td>string</td>
-    <td>Trend name from the <code>/trends</code> endpoint</td>
+    <td>Trend name from the <code>/alltrends</code> endpoint</td>
   </tr>
 </table>
 
@@ -261,7 +259,7 @@
 
 <a href="#summary">Back to summary</a>
 
-<h3>/v1/trend/{name}/content</h3>
+<h2>GET /v1/trend/{name}/content</h2>
 <a id="v1-trend-name-content"></a>
 
 <table>
