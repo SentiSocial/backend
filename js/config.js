@@ -6,20 +6,66 @@ var config = {
 
   // List of news sources sorted generally by popularity
   sources: [
-    'The New York Times', 'Bloomberg', 'The Wall Street Journal',
-    'The Washington Post', 'National Geographic', 'CNN', 'The Economist',
-    'Time', 'Independent', 'Fortune', 'CNBC', 'Associated Press',
-    'BBC News', 'Business Insider', 'Financial Times', 'ABC News',
-    'Daily Mail', 'Buzzfeed', 'Reuters', 'The Guardian (UK)', 'The Telegraph',
-    'USA Today', 'Ars Technica', 'BBC Sport', 'Business Insider (UK)',
-    'Engadget', 'Entertainment Weekly', 'ESPN', 'ESPN Cric Info',
-    'Football Italia', 'FourFourTwo', 'Fox Sports', 'Google News',
-    'Hacker News', 'IGN', 'Mashable', 'Metro', 'Mirror', 'MTV News',
-    'MTV News (UK)', 'New Scientist', 'Newsweek', 'New York Magazine',
-    'NFL News', 'Polygon', 'Recode', 'Reddit /r/all', 'Sky News',
-    'Sky Sports News', 'TalkSport', 'TechCrunch', 'TechRadar',
-    'The Guardian (AU)', 'The Hindu', 'The Huffington Post', 'The Lad Bible',
-    'The Next Web', 'The Sport Bible', 'The Times of India', 'The Verge'
+    'the-new-york-times',
+    'bloomberg',
+    'the-wall-street-journal',
+    'the-washington-post',
+    'national-geographic',
+    'cnn',
+    'the-economist',
+    'time',
+    'independent',
+    'fortune',
+    'cnbc',
+    'associated-press',
+    'bbc-news',
+    'business-insider',
+    'financial-times',
+    'abc-news-au',
+    'daily-mail',
+    'buzzfeed',
+    'reuters',
+    'the-guardian-uk',
+    'the-telegraph',
+    'usa-today',
+    'ars-technica',
+    'bbc-sport',
+    'business-insider-uk',
+    'engadget',
+    'entertainment-weekly',
+    'espn',
+    'espn-cric-info',
+    'football-italia',
+    'four-four-two',
+    'fox-sports',
+    'google-news',
+    'hacker-news',
+    'ign',
+    'mashable',
+    'metro',
+    'mirror',
+    'mtv-news',
+    'mtv-news-uk',
+    'new-scientist',
+    'newsweek',
+    'new-york-magazine',
+    'nfl-news',
+    'polygon',
+    'recode',
+    'reddit-r-all',
+    'sky-news',
+    'sky-sports-news',
+    'talksport',
+    'techcrunch',
+    'techradar',
+    'the-guardian-au',
+    'the-hindu',
+    'the-huffington-post',
+    'the-lad-bible',
+    'the-next-web',
+    'the-sport-bible',
+    'the-times-of-india',
+    'the-verge'
   ],
 
   // Number of tweets retreived per call to the search api
@@ -35,7 +81,10 @@ var config = {
   popularTweetWeight: 3,
 
   // Maximum number of popular tweets stroed in the database for each trend
-  popularTweetsStored: 60
+  popularTweetsStored: 60,
+
+  // Yahoo WOEID ID of location for grabbing tweets and trending topics
+  woeid: 23424977
 }
 
 module.exports = config

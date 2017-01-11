@@ -1,6 +1,7 @@
 'use strict'
 var Twitter = require('twitter')
 var apiKeys = require('./api-keys')
+var config = require('./config')
 
 var client = new Twitter({
   consumer_key: apiKeys.twitter_consumer_key,
@@ -24,7 +25,7 @@ var trends = {
     var trendsStrings = []
 
     // Get trending topics
-    client.get('trends/place', {id: 23424977}, function (error, trends, response) {
+    client.get('trends/place', {id: config.woeid}, function (error, trends, response) {
       if (error) {
         console.log(error)
         throw error
