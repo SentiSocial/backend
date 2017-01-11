@@ -1,6 +1,12 @@
 'use strict'
 
 var config = {
+  // Name of MongoDB database to store trend information
+  dbName: 'trendgator',
+
+  // Name of MongoDB collection used to store trend information
+  collectionName: 'trends',
+
   // Cap for articles to be displayed
   maxArticlesStorageCap: 20,
 
