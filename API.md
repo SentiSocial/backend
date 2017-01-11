@@ -11,7 +11,7 @@
   <tr>
     <td><strong>GET</strong></td>
     <td><a href="#v1-alltrends-content"><code>/v1/alltrends/content?page={page}</code></a></td>
-    <td>Get news and tweets for all the trends</td>
+    <td>Get news and tweets for all trends</td>
   </tr>
   <tr>
     <td><strong>GET</strong></td>
@@ -65,7 +65,7 @@
   <tr>
     <td>trends[i].sentiment</td>
     <td>number</td>
-    <td>Sentiment score at a given time, higher numbers indicate a more positive sentiment</td>
+    <td>Sentiment score at a given timestamp, higher numbers indicate a more positive sentiment</td>
   </tr>
 </table>
 
@@ -91,7 +91,7 @@
     <td colspan="2">/v1/alltrends/content?page={page}</code></td>
   </tr>
   <tr>
-    <td colspan="3">Gets news and tweets from all the trends</td>
+    <td colspan="3">Get news and tweets for all trends</td>
   </tr>
 </table> 
 
@@ -163,7 +163,7 @@
   <tr>
     <td>remaining</td>
     <td>number</td>
-    <td></td>
+    <td>Number of news articles and tweets remaining in all pages after the specified page</td>
   </tr>
 </table>
 
@@ -268,7 +268,7 @@
     <td colspan="2">/v1/trend/{name}/content?page={page}</code></td>
   </tr>
   <tr>
-    <td colspan="3">Gets news and tweets from a given trend</td>
+    <td colspan="3">Get news and tweets from a given trend</td>
   </tr>
 </table> 
 
@@ -340,12 +340,12 @@
   <tr>
     <td>tweets[i].id</td>
     <td>string</td>
-    <td>Tweet unique identifier used to <a href="https://dev.twitter.com/web/embedded-tweets">embed a tweet</a></td>
+    <td>Unique identifier of the tweet used to <a href="https://dev.twitter.com/web/embedded-tweets">embed</a> it</td>
   </tr>
   <tr>
     <td>remaining</td>
     <td>number</td>
-    <td></td>
+    <td>Number of news articles and tweets remaining in all pages after the specified page</td>
   </tr>
 </table>
 
