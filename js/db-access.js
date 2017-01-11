@@ -27,7 +27,6 @@ var dbAbstraction = function (readyCallback) {
     readyCallback()
   });
 
-
   /**
    * Removes all trends from the database not in the trends array, adds a new
    * empty trend document to the database for each trend in trends not already
