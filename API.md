@@ -16,12 +16,12 @@
   <tr>
     <td><strong>GET</strong></td>
     <td><a href="#v1-trend-name"><code>/v1/trend/{name}</code></a></td>
-    <td>Get historical data for this trend</td>
+    <td>Get historical data for the specified trend</td>
   </tr>
   <tr>
     <td><strong>GET</strong></td>
     <td><a href="#v1-trend-name-content"><code>/v1/trend/{name}/content?page={page}</code></a></td>
-    <td>Get news and tweets from a given trend</td>
+    <td>Get news and tweets for the specified trend</td>
   </tr>
 </table>
 
@@ -199,7 +199,7 @@
     <td colspan="2"><code>/v1/trend/{name}</code></td>
   </tr>
   <tr>
-    <td colspan="3">Get historical data for this trend</td>
+    <td colspan="3">Get historical data for the specified trend</td>
   </tr>
 </table> 
 
@@ -268,7 +268,7 @@
     <td colspan="2">/v1/trend/{name}/content?page={page}</code></td>
   </tr>
   <tr>
-    <td colspan="3">Get news and tweets from a given trend</td>
+    <td colspan="3">Get news and tweets for the specified trend</td>
   </tr>
 </table> 
 
@@ -330,7 +330,7 @@
   <tr>
     <td>news[i].media</td>
     <td>string|undefined</td>
-    <td>URL link to the article's featured image</td>
+    <td>URL link to media associated with the article</td>
   </tr>
   <tr>
     <td>tweets[i]</td>
