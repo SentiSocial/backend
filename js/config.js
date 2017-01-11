@@ -83,7 +83,7 @@ var config = {
   // Maximum number of popular tweets stroed in the database for each trend
   popularTweetsStored: 60,
 
-  // WOEID ID
+  // Yahoo WOEID ID of location for grabbing tweets and trending topics
   woeid: 23424977
 }
 
