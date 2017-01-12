@@ -36,7 +36,7 @@
   <tr>
     <td colspan="3">Get all current trends and data associated with each one</td>
   </tr>
-</table> 
+</table>
 
 <table>
   <tr>
@@ -56,11 +56,6 @@
     <td>trends[i].name</td>
     <td>string</td>
     <td>Name of the trend, used as a parameter in <code>/trends/{name}</code></td>
-  </tr>
-  <tr>
-    <td>trends[i].timestamp</td>
-    <td>number</td>
-    <td>Unix timestamp in seconds</td>
   </tr>
   <tr>
     <td>trends[i].sentiment</td>
@@ -93,7 +88,7 @@
   <tr>
     <td colspan="3">Get news and tweets for all trends</td>
   </tr>
-</table> 
+</table>
 
 <table>
   <tr>
@@ -201,7 +196,7 @@
   <tr>
     <td colspan="3">Get historical data for the specified trend</td>
   </tr>
-</table> 
+</table>
 
 <table>
   <tr>
@@ -243,7 +238,7 @@
     <td>number</td>
     <td>Sentiment at a given time</td>
   </tr>
-</table> 
+</table>
 
 <pre>
 {
@@ -270,7 +265,7 @@
   <tr>
     <td colspan="3">Get news and tweets for the specified trend</td>
   </tr>
-</table> 
+</table>
 
 <table>
   <tr>
