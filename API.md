@@ -10,18 +10,28 @@
   </tr>
   <tr>
     <td><strong>GET</strong></td>
-    <td><a href="#v1-alltrends-content"><code>/v1/alltrends/content?page={page}</code></a></td>
-    <td>Get news and tweets for all trends</td>
+    <td><a href="#v1-alltrends-tweets"><code>/v1/alltrends/tweets</code></a></td>
+    <td>Get tweets related to all trends</td>
+  </tr>
+  <tr>
+    <td><strong>GET</strong></td>
+    <td><a href="#v1-alltrends-articles"><code>/v1/alltrends/articles</code></a></td>
+    <td>Get news articles related to all trends</td>
   </tr>
   <tr>
     <td><strong>GET</strong></td>
     <td><a href="#v1-trend-name"><code>/v1/trend/{name}</code></a></td>
-    <td>Get historical data for the specified trend</td>
+    <td>Get data for the specified trend</td>
   </tr>
   <tr>
     <td><strong>GET</strong></td>
-    <td><a href="#v1-trend-name-content"><code>/v1/trend/{name}/content?page={page}</code></a></td>
-    <td>Get news and tweets for the specified trend</td>
+    <td><a href="#v1-trend-name-tweets"><code>/v1/trend/{name}/tweets</code></a></td>
+    <td>Get tweets related to the specified trend</td>
+  </tr>
+  <tr>
+    <td><strong>GET</strong></td>
+    <td><a href="#v1-trend-name-articles"><code>/v1/trend/{name}/articles</code></a></td>
+    <td>Get news articles related to the specified trend</td>
   </tr>
 </table>
 
@@ -77,16 +87,16 @@
 
 <a href="#summary">Back to summary</a>
 
-<h2>GET /v1/alltrends/content</h2>
-<a id="v1-alltrends-content"></a>
+<h2>GET /v1/alltrends/tweets</h2>
+<a id="v1-alltrends-tweets"></a>
 
 <table>
   <tr>
     <td><strong>GET</strong></td>
-    <td colspan="2">/v1/alltrends/content?page={page}</code></td>
+    <td colspan="2">/v1/alltrends/tweets</code></td>
   </tr>
   <tr>
-    <td colspan="3">Get news and tweets for all trends</td>
+    <td colspan="3">Get tweets related to all trends</td>
   </tr>
 </table>
 
@@ -95,9 +105,9 @@
     <td colspan="3"><strong>Parameters</strong></td>
   </tr>
   <tr>
-    <td>page</td>
-    <td>string</td>
-    <td>Zero indexed page number</td>
+    <td>max_id</td>
+    <td>string|undefined</td>
+    <td>If set, returns tweets less than <code>_id</code>. Otherwise response will start from the highest <code>_id</code></td>
   </tr>
 </table>
 
@@ -106,66 +116,115 @@
     <td colspan="3"><strong>Response</strong></td>
   </tr>
   <tr>
-    <td>news</td>
-    <td>array</td>
-    <td>Array of objects containing news, sorted by popularity of news source</td>
-  </tr>
-  <tr>
-    <td>news[i]</td>
-    <td>object</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>news[i].title</td>
-    <td>string</td>
-    <td>Article's headline</td>
-  </tr>
-  <tr>
-    <td>news[i].description</td>
-    <td>string</td>
-    <td>Article excerpt or description</td>
-  </tr>
-  <tr>
-    <td>news[i].source</td>
-    <td>string</td>
-    <td>Publishing organization of news article</td>
-  </tr>
-  <tr>
-    <td>news[i].link</td>
-    <td>string</td>
-    <td>URL link to the article</td>
-  </tr>
-  <tr>
-    <td>news[i].timestamp</td>
-    <td>string</td>
-    <td>Unix timestamp in seconds of the publishing date</td>
-  </tr>
-  <tr>
-    <td>news[i].media</td>
-    <td>string|undefined</td>
-    <td>URL link to media associated with the article</td>
-  </tr>
-  <tr>
     <td>tweets[i]</td>
     <td>object</td>
     <td></td>
   </tr>
   <tr>
-    <td>tweets[i].id</td>
+    <td>tweets[i]._id</td>
     <td>string</td>
-    <td>Unique identifier of the tweet used to <a href="https://dev.twitter.com/web/embedded-tweets">embed</a> it</td>
+    <td>Sequential unique identifier for tweets</td>
   </tr>
   <tr>
-    <td>remaining</td>
-    <td>number</td>
-    <td>Number of news articles and tweets remaining in all pages after the specified page</td>
+    <td>tweets[i].embed_id</td>
+    <td>string</td>
+    <td>Unique identifier of the tweet used to <a href="https://dev.twitter.com/web/embedded-tweets">embed</a> it</td>
   </tr>
 </table>
 
 <pre>
 {
-  "news": [
+  "tweets": [
     {
+      "_id": string,
+      "embed_id": string
+    }
+  ]
+}
+</pre>
+
+<a href="#summary">Back to summary</a>
+
+<h2>GET /v1/alltrends/articles</h2>
+<a id="v1-alltrends-articles"></a>
+
+<table>
+  <tr>
+    <td><strong>GET</strong></td>
+    <td colspan="2">/v1/alltrends/articles</code></td>
+  </tr>
+  <tr>
+    <td colspan="3">Get news articles related to all trends</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="3"><strong>Parameters</strong></td>
+  </tr>
+  <tr>
+    <td>max_id</td>
+    <td>string|undefined</td>
+    <td>If set, returns articles less than <code>_id</code>. Otherwise response will start from the highest <code>_id</code></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="3"><strong>Response</strong></td>
+  </tr>
+  <tr>
+    <td>articles</td>
+    <td>array</td>
+    <td>Array of objects containing news articles, sorted by popularity of news source</td>
+  </tr>
+  <tr>
+    <td>articles[i]</td>
+    <td>object</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>articles[i]._id</td>
+    <td>string</td>
+    <td>Sequential unique identifier for news articles</td>
+  </tr>
+  <tr>
+    <td>articles[i].title</td>
+    <td>string</td>
+    <td>Article's headline</td>
+  </tr>
+  <tr>
+    <td>articles[i].description</td>
+    <td>string</td>
+    <td>Article excerpt or description</td>
+  </tr>
+  <tr>
+    <td>articles[i].source</td>
+    <td>string</td>
+    <td>Publishing organization of news article</td>
+  </tr>
+  <tr>
+    <td>articles[i].link</td>
+    <td>string</td>
+    <td>URL link to the article</td>
+  </tr>
+  <tr>
+    <td>articles[i].timestamp</td>
+    <td>string</td>
+    <td>Unix timestamp in seconds of the publishing date</td>
+  </tr>
+  <tr>
+    <td>articles[i].media</td>
+    <td>string|undefined</td>
+    <td>URL link to media associated with the article</td>
+  </tr>
+</table>
+
+<pre>
+{
+  "articles": [
+    {
+      "_id": string,
       "title": string,
       "description": string,
       "source": string,
@@ -173,13 +232,7 @@
       "timestamp": number,
       "media": string|undefined
     }
-  ],
-  "tweets": [
-    {
-      "id": string
-    }
-  ],
-  "remaining": number
+  ]
 }
 </pre>
 
@@ -194,7 +247,7 @@
     <td colspan="2"><code>/v1/trend/{name}</code></td>
   </tr>
   <tr>
-    <td colspan="3">Get historical data for the specified trend</td>
+    <td colspan="3">Get data for the specified trend</td>
   </tr>
 </table>
 
@@ -254,16 +307,16 @@
 
 <a href="#summary">Back to summary</a>
 
-<h2>GET /v1/trend/{name}/content</h2>
-<a id="v1-trend-name-content"></a>
+<h2>GET /v1/trend/{name}/tweets</h2>
+<a id="v1-trend-name-tweets"></a>
 
 <table>
   <tr>
     <td><strong>GET</strong></td>
-    <td colspan="2">/v1/trend/{name}/content?page={page}</code></td>
+    <td colspan="2">/v1/trend/{name}/tweets</code></td>
   </tr>
   <tr>
-    <td colspan="3">Get news and tweets for the specified trend</td>
+    <td colspan="3">Get tweets related to the specified trend</td>
   </tr>
 </table>
 
@@ -274,12 +327,12 @@
   <tr>
     <td>name</td>
     <td>string</td>
-    <td>Trend name from the <code>/trends</code> endpoint</td>
+    <td>Trend name from the <code>/alltrends</code> endpoint</td>
   </tr>
   <tr>
-    <td>page</td>
-    <td>string</td>
-    <td>Page number, starts counting from 0</td>
+    <td>max_id</td>
+    <td>string|undefined</td>
+    <td>If set, returns tweets less than <code>_id</code>. Otherwise response will start from the highest <code>_id</code></td>
   </tr>
 </table>
 
@@ -288,66 +341,120 @@
     <td colspan="3"><strong>Response</strong></td>
   </tr>
   <tr>
-    <td>news</td>
-    <td>array</td>
-    <td>Array of objects containing timestamp and sentiment, sorted oldest first</td>
-  </tr>
-  <tr>
-    <td>news[i]</td>
-    <td>object</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>news[i].title</td>
-    <td>string</td>
-    <td>Article's headline</td>
-  </tr>
-  <tr>
-    <td>news[i].description</td>
-    <td>string</td>
-    <td>Article excerpt or description</td>
-  </tr>
-  <tr>
-    <td>news[i].source</td>
-    <td>string</td>
-    <td>Article source, which organization it belongs to</td>
-  </tr>
-  <tr>
-    <td>news[i].link</td>
-    <td>string</td>
-    <td>URL link to the article</td>
-  </tr>
-  <tr>
-    <td>news[i].timestamp</td>
-    <td>string</td>
-    <td>Unix timestamp in seconds of the publishing date</td>
-  </tr>
-  <tr>
-    <td>news[i].media</td>
-    <td>string|undefined</td>
-    <td>URL link to media associated with the article</td>
-  </tr>
-  <tr>
     <td>tweets[i]</td>
     <td>object</td>
     <td></td>
   </tr>
   <tr>
-    <td>tweets[i].id</td>
+    <td>tweets[i]._id</td>
     <td>string</td>
-    <td>Unique identifier of the tweet used to <a href="https://dev.twitter.com/web/embedded-tweets">embed</a> it</td>
+    <td>Sequential unique identifier for tweets</td>
   </tr>
   <tr>
-    <td>remaining</td>
-    <td>number</td>
-    <td>Number of news articles and tweets remaining in all pages after the specified page</td>
+    <td>tweets[i].embed_id</td>
+    <td>string</td>
+    <td>Unique identifier of the tweet used to <a href="https://dev.twitter.com/web/embedded-tweets">embed</a> it</td>
   </tr>
 </table>
 
 <pre>
 {
-  "news": [
+  "tweets": [
     {
+      "_id": string,
+      "embed_id": string
+    }
+  ],
+}
+</pre>
+
+<a href="#summary">Back to summary</a>
+
+<h2>GET /v1/trend/{name}/articles</h2>
+<a id="v1-trend-name-articles"></a>
+
+<table>
+  <tr>
+    <td><strong>GET</strong></td>
+    <td colspan="2">/v1/trend/{name}/articles</code></td>
+  </tr>
+  <tr>
+    <td colspan="3">Get news articles related to the specified trend</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="3"><strong>Parameters</strong></td>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>string</td>
+    <td>Trend name from the <code>/alltrends</code> endpoint</td>
+  </tr>
+  <tr>
+    <td>max_id</td>
+    <td>string|undefined</td>
+    <td>If set, returns articles less than <code>_id</code>. Otherwise response will start from the highest <code>_id</code>.</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="3"><strong>Response</strong></td>
+  </tr>
+  <tr>
+    <td>articles</td>
+    <td>array</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>articles[i]</td>
+    <td>object</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>articles[i]._id</td>
+    <td>string</td>
+    <td>Sequential unique identifier for news articles</td>
+  </tr>
+  <tr>
+    <td>articles[i].title</td>
+    <td>string</td>
+    <td>Article's headline</td>
+  </tr>
+  <tr>
+    <td>articles[i].description</td>
+    <td>string</td>
+    <td>Article excerpt or description</td>
+  </tr>
+  <tr>
+    <td>articles[i].source</td>
+    <td>string</td>
+    <td>Article source, which organization it belongs to</td>
+  </tr>
+  <tr>
+    <td>articles[i].link</td>
+    <td>string</td>
+    <td>URL link to the article</td>
+  </tr>
+  <tr>
+    <td>articles[i].timestamp</td>
+    <td>string</td>
+    <td>Unix timestamp in seconds of the publishing date</td>
+  </tr>
+  <tr>
+    <td>articles[i].media</td>
+    <td>string|undefined</td>
+    <td>URL link to media associated with the article</td>
+  </tr>
+</table>
+
+<pre>
+{
+  "articles": [
+    {
+      "_id": string,
       "title": string,
       "description": string,
       "source": string,
@@ -355,13 +462,7 @@
       "timestamp": number,
       "media": string|undefined
     }
-  ],
-  "tweets": [
-    {
-      "id": string
-    }
-  ],
-  "remaining": number
+  ]
 }
 </pre>
 
