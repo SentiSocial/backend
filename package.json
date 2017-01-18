@@ -8,10 +8,6 @@
     "lint": "eslint js",
     "validate": "npm ls"
   },
-  "pre-commit": [
-    "lint",
-    "test"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/suchaHassle/htv-backend.git"
@@ -30,6 +26,7 @@
   "dependencies": {
     "express": "^4.14.0",
     "mongodb": "^2.2.19",
+    "mongoose": "^4.7.6",
     "precommit-hook-eslint": "^3.0.0",
     "request": "^2.79.0",
     "sentiment": "^2.1.0",
