@@ -14,12 +14,13 @@ var db = mongoose.connection
 db.on('error', console.error);
 db.once('open', () => {
   console.log('Successfully connected to mongodb')
-
-  // Run intervalFunction each server interval
-  //setInterval(intervalFunction, config.intervalLength)
-
   // Run the intervalFunction when the backend starts
   intervalFunction()
+
+  // Then set up intervalFunction to run each server interval
+  setInterval(intervalFunction, config.intervalLength)
+
+  api.start()
 });
 mongoose.connect('mongodb://localhost/' + config.dbName);
 
@@ -35,7 +36,7 @@ function intervalFunction () {
     // Remove all old trends
     removeOldTrends(trends, function () {
       // Update all current trends
-      updateTrends(trends.slice(5)) // .slice to avoid hitting rate limit while testing, remove later
+      updateTrends(trends.slice(8)) // .slice to avoid hitting rate limit while testing, remove later
     })
   })
 }

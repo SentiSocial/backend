@@ -89,6 +89,9 @@ var config = {
   // Weight that popular tweets are given relative to tweets that come in via the streaming API
   popularTweetWeight: 3,
 
+  // Port that the API listens on
+  apiPort: 8080,
+
   // Yahoo WOEID ID of location for grabbing tweets and trending topics
   woeid: 23424977
 }
