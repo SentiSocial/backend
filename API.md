@@ -10,13 +10,13 @@
   </tr>
   <tr>
     <td><strong>GET</strong></td>
-    <td><a href="#v1-alltrends-tweets"><code>/v1/alltrends/tweets?max_id={max_id}</code></a></td>
-    <td>Get tweets from all trends</td>
+    <td><a href="#v1-alltrends-tweets"><code>/v1/alltrends/tweets</code></a></td>
+    <td>Get tweets related to all trends</td>
   </tr>
   <tr>
     <td><strong>GET</strong></td>
-    <td><a href="#v1-alltrends-articles"><code>/v1/alltrends/articles?max_id={max_id}</code></a></td>
-    <td>Get news articles from all trends</td>
+    <td><a href="#v1-alltrends-articles"><code>/v1/alltrends/articles</code></a></td>
+    <td>Get news articles related to all trends</td>
   </tr>
   <tr>
     <td><strong>GET</strong></td>
@@ -25,13 +25,13 @@
   </tr>
   <tr>
     <td><strong>GET</strong></td>
-    <td><a href="#v1-trend-name-tweets"><code>/v1/trend/{name}/tweets?max_id={max_id}</code></a></td>
-    <td>Get tweets from the specified trend</td>
+    <td><a href="#v1-trend-name-tweets"><code>/v1/trend/{name}/tweets</code></a></td>
+    <td>Get tweets related to the specified trend</td>
   </tr>
   <tr>
     <td><strong>GET</strong></td>
-    <td><a href="#v1-trend-name-articles"><code>/v1/trend/{name}/articles?max_id={max_id}</code></a></td>
-    <td>Get news articles from the specified trend</td>
+    <td><a href="#v1-trend-name-articles"><code>/v1/trend/{name}/articles</code></a></td>
+    <td>Get news articles related to the specified trend</td>
   </tr>
 </table>
 
@@ -93,10 +93,10 @@
 <table>
   <tr>
     <td><strong>GET</strong></td>
-    <td colspan="2">/v1/alltrends/tweets?max_id={max_id}</code></td>
+    <td colspan="2">/v1/alltrends/tweets</code></td>
   </tr>
   <tr>
-    <td colspan="3">Get tweets from all trends</td>
+    <td colspan="3">Get tweets related to all trends</td>
   </tr>
 </table>
 
@@ -139,8 +139,7 @@
       "_id": string,
       "embed_id": string
     }
-  ],
-  "remaining": number
+  ]
 }
 </pre>
 
@@ -152,7 +151,7 @@
 <table>
   <tr>
     <td><strong>GET</strong></td>
-    <td colspan="2">/v1/alltrends/articles?max_id={max_id}</code></td>
+    <td colspan="2">/v1/alltrends/articles</code></td>
   </tr>
   <tr>
     <td colspan="3">Get news articles from all trends</td>
@@ -314,10 +313,10 @@
 <table>
   <tr>
     <td><strong>GET</strong></td>
-    <td colspan="2">/v1/trend/{name}/tweets?max_id={max_id}</code></td>
+    <td colspan="2">/v1/trend/{name}/tweets</code></td>
   </tr>
   <tr>
-    <td colspan="3">Get tweets from the specified trend</td>
+    <td colspan="3">Get tweets related to the specified trend</td>
   </tr>
 </table>
 
@@ -377,10 +376,10 @@
 <table>
   <tr>
     <td><strong>GET</strong></td>
-    <td colspan="2">/v1/trend/{name}/articles?max_id={max_id}</code></td>
+    <td colspan="2">/v1/trend/{name}/articles</code></td>
   </tr>
   <tr>
-    <td colspan="3">Get news articles from the specified trend</td>
+    <td colspan="3">Get news articles related to the specified trend</td>
   </tr>
 </table>
 
