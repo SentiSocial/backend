@@ -21,7 +21,7 @@
   <tr>
     <td><strong>GET</strong></td>
     <td><a href="#v1-trend-name"><code>/v1/trend/{name}</code></a></td>
-    <td>Get historical data for the specified trend</td>
+    <td>Get data for the specified trend</td>
   </tr>
   <tr>
     <td><strong>GET</strong></td>
@@ -154,7 +154,7 @@
     <td colspan="2">/v1/alltrends/articles</code></td>
   </tr>
   <tr>
-    <td colspan="3">Get news articles from all trends</td>
+    <td colspan="3">Get news articles related to all trends</td>
   </tr>
 </table>
 
@@ -247,7 +247,7 @@
     <td colspan="2"><code>/v1/trend/{name}</code></td>
   </tr>
   <tr>
-    <td colspan="3">Get historical data for the specified trend</td>
+    <td colspan="3">Get data for the specified trend</td>
   </tr>
 </table>
 
@@ -406,7 +406,7 @@
   <tr>
     <td>articles</td>
     <td>array</td>
-    <td>Array of objects containing timestamp and sentiment, sorted oldest first</td>
+    <td></td>
   </tr>
   <tr>
     <td>articles[i]</td>
