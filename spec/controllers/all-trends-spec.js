@@ -6,7 +6,7 @@ describe('All Trends Controller', () => {
   var controller
   var mockTrends = [{
     name: '#thisIsATrend',
-    sentiment: 5,
+    history: [{sentiment: 5, timestamp: 22}],
   }]
 
   beforeAll (function() {
@@ -40,6 +40,10 @@ describe('All Trends Controller', () => {
     let data = JSON.parse(res._getData())
     expect(data.trends.length).toEqual(mockTrends.length)
     expect(data.trends[0].name).toEqual(mockTrends[0].name)
-    expect(data.trends[0].history).toEqual(mockTrends[0].history)
+
+    // The sentiment value returned should be the last sentiment value in the
+    // history array
+    let lastSentimentValue = mockTrends[0].history[mockTrends[0].history.length-1].sentiment
+    expect(data.trends[0].sentiment).toEqual(lastSentimentValue)
   })
 })
