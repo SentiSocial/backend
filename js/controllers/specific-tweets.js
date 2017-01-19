@@ -22,8 +22,8 @@ const specificTweetsController = function (req, res) {
     if (err) {
       res.status(500).send('Internal error while retreiving tweets')
     } else {
-      res.type('application/json')
-      res.send(tweets)
+      let resData = {tweets: tweets}
+      res.json(resData)
     }
   }).sort({_id: -1}).limit(config.tweetsPerRequest)
 }
