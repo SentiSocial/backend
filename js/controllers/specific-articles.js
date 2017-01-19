@@ -1,4 +1,5 @@
 const Article = require('../models/article')
+const controllerUtils = require('./controller-utils')
 
 const specificArticlesController = function (req, res) {
   if (!req.params.name) {
@@ -10,6 +11,11 @@ const specificArticlesController = function (req, res) {
   if (!req.params.max_id) {
     query = {trend: req.params.name}
   } else {
+    // If max_id is provided, ensure that it is valid
+    if(!controllerUtils.isNumeric(req.query.max_id)) {
+      res.status(400).send('Invalid max_id parameter')
+      return
+    }
     options = {trend: req.params.name, _id: {$gt: res.query.max_id}}
   }
 

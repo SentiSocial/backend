@@ -1,4 +1,5 @@
 const Tweet = require('../models/tweet')
+const controllerUtils = require('./controller-utils')
 
 const allTweetsController = function (req, res) {
   let query
@@ -6,8 +7,9 @@ const allTweetsController = function (req, res) {
     query = {}
   } else {
     // If max_id is provided, ensure that it is valid
-    if(isNaN(parseFloat(req.query.max_id)) || !isFinite(req.query.max_id)) {
+    if(!controllerUtils.isNumeric(req.query.max_id)) {
       res.status(400).send('Invalid max_id parameter')
+      return
     }
     options = {_id: {$gt: req.query.max_id}}
   }
