@@ -11,7 +11,7 @@ var config = {
   maxArticlesStorageCap: 20,
 
   // Maximum number of popular tweets stroed in the database for each trend
-  tweetsStored: 10,
+  tweetsStored: 3,
 
   // Number of tweets to send per request to a tweets endpoint
   tweetsPerRequest: 10,

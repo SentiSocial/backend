@@ -1,5 +1,6 @@
 const Tweet = require('../models/tweet')
 const config = require('../config')
+const mongoose = require('mongoose')
 
 const specificTweetsController = function (req, res) {
   res.set('Access-Control-Allow-Origin', '*')
@@ -13,7 +14,8 @@ const specificTweetsController = function (req, res) {
   if (!req.query.max_id) {
     query = {trend: req.params.name}
   } else {
-    options = {trend: req.params.name, _id: {$gt: res.query.max_id}}
+    var max_oid = mongoose.Types.ObjectId(req.query.max_id)
+    query = {trend: req.params.name, _id: {$lt: max_oid}}
   }
 
   Tweet.find(query, (err, tweets) => {
@@ -23,7 +25,7 @@ const specificTweetsController = function (req, res) {
       res.type('application/json')
       res.send(tweets)
     }
-  }).limit(config.tweetsPerRequest)
+  }).sort({_id: -1}).limit(config.tweetsPerRequest)
 }
 
 module.exports = specificTweetsController

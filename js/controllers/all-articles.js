@@ -1,5 +1,6 @@
 const Article = require('../models/article')
 const config = require('../config')
+const mongose = require('mongoose')
 
 const allArticlesController = function (req, res) {
   res.set('Access-Control-Allow-Origin', '*')
@@ -8,7 +9,8 @@ const allArticlesController = function (req, res) {
   if (!req.query.max_id) {
     query = {}
   } else {
-    options = {_id: {$gt: req.query.max_id}}
+    var max_oid = mongoose.Types.ObjectId(req.query.max_id)
+    query = {trend: req.params.name, _id: {$lt: max_oid}}
   }
 
   Article.find(query, (err, articles) => {
@@ -18,7 +20,7 @@ const allArticlesController = function (req, res) {
       let resData = {articles: articles}
       res.json(resData)
     }
-  }).limit(config.articlesPerRequest)
+  }).sort({_id: -1}).limit(config.articlesPerRequest)
 }
 
 module.exports = allArticlesController
