@@ -18,7 +18,7 @@ describe('Tweet', function () {
   it('Saves a Tweet and retreives it', (done) => {
     let tweetModel = new Tweet({
       trend: 'test-trend',
-      id: '123456',
+      embed_id: '123456',
       popularity: 10
     })
 
@@ -40,16 +40,16 @@ describe('Tweet', function () {
   it('Adds a new tweet if it does not already exist using $setOnInsert' , (done) => {
     let tweet = {
         trend: 'test-trend',
-        id: '123',
+        embed_id: '123',
         popularity: 10
     }
 
-    Tweet.findOneAndUpdate({id: '123'}, {$setOnInsert: tweet},
+    Tweet.findOneAndUpdate({embed_id: '123'}, {$setOnInsert: tweet},
       {upsert: true, new: true}, (err, doc) => {
       expect(err).toBeNull()
 
       expect(doc.trend).toEqual('test-trend')
-      expect(doc.id).toEqual('123')
+      expect(doc.embed_id).toEqual('123')
       expect(doc.popularity).toEqual(10)
       done()
     })
