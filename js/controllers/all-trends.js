@@ -5,8 +5,8 @@ const allTrendsController = function (req, res) {
     if (err) {
       res.status(500).send('Internal error while retreiving trend information')
     } else {
-      res.type('application/json')
-      res.send(trends)
+      let resData = {trends: trends}
+      res.json(resData)
     }
   })
 }

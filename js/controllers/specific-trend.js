@@ -12,8 +12,7 @@ const specificTrendController = function (req, res) {
     } else if (!trend) {
       res.status(404).send('Trend not found')
     } else {
-      res.type('application/json')
-      res.send(trend)
+      res.json(trend)
     }
   })
 }
