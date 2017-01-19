@@ -2,6 +2,8 @@ const Tweet = require('../models/tweet')
 const config = require('../config')
 
 const allTweetsController = function (req, res) {
+  res.set('Access-Control-Allow-Origin', '*')
+
   let query
   if (!req.query.max_id) {
     query = {}

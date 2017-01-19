@@ -2,6 +2,8 @@ const Article = require('../models/article')
 const config = require('../config')
 
 const allArticlesController = function (req, res) {
+  res.set('Access-Control-Allow-Origin', '*')
+
   let query
   if (!req.query.max_id) {
     query = {}

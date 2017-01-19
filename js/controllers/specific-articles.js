@@ -2,6 +2,8 @@ const Article = require('../models/article')
 const config = require('../config')
 
 const specificArticlesController = function (req, res) {
+  res.set('Access-Control-Allow-Origin', '*')
+
   if (!req.params.name) {
     res.status(400).send('Invalid trend name')
     return

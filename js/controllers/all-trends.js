@@ -1,6 +1,8 @@
 const Trend = require('../models/trend')
 
 const allTrendsController = function (req, res) {
+  res.set('Access-Control-Allow-Origin', '*')
+
   Trend.find({}, (err, trends) => {
     if (err) {
       res.status(500).send('Internal error while retreiving trend information')
