@@ -6,7 +6,7 @@ var articleSchema = new mongoose.Schema({
   description: String,
   source: String,
   link: String,
-  timeStamp: Number
+  timestamp: Number
 });
 
 var Article = mongoose.model('Article', articleSchema);

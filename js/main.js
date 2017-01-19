@@ -110,13 +110,13 @@ function storeTweets (trend, tweets) {
   reducedTweets.forEach((tweet) => {
     let dbTweet = {
       trend: trend,
-      id: tweet.id,
+      embed_id: tweet.id,
       popularity: tweet.popularity
     }
 
     // Add dbTweet to the database only if it does not already exist in
     // the database
-    Tweet.findOneAndUpdate({id: tweet.id}, {$setOnInsert: dbTweet},
+    Tweet.findOneAndUpdate({embed_id: tweet.id}, {$setOnInsert: dbTweet},
       {upsert: true, new: true}, (err, doc) => {
       if (err) {
         console.log('Error adding tweet to database')
