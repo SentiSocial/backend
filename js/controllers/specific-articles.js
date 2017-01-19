@@ -24,8 +24,8 @@ const specificArticlesController = function (req, res) {
     if (err) {
       res.status(500).send('Internal error while retreiving tweets')
     } else {
-      res.type('application/json')
-      res.send(articles)
+      let resData = {articles: articles}
+      res.json(resData)
     }
   }).sort({_id: -1}).limit(config.articlesPerRequest)
 }
