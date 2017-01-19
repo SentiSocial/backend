@@ -1,5 +1,5 @@
 const Tweet = require('../models/tweet')
-const controllerUtils = require('./controllerUtils')
+const controllerUtils = require('./controller-utils')
 
 const specificTweetsController = function (req, res) {
   if (!req.params.name) {
