@@ -18,7 +18,8 @@ describe('All Tweets Controller', () => {
     mockery.registerMock('../models/tweet', {
       find: (query, cb) => {
         cb(null, mockTweets)
-      }
+        return {limit: () => {}}
+      },
     })
 
     controller = require('../../js/controllers/all-tweets')
@@ -42,21 +43,5 @@ describe('All Tweets Controller', () => {
     expect(data.tweets.length).toEqual(mockTweets.length)
     expect(data.tweets[0].id).toEqual(mockTweets[0].id)
     expect(data.tweets[0]._id).toEqual(mockTweets[0]._id)
-  })
-
-  it('Should respond with HTTP 400 if an invalid max_id is provided', () => {
-    let req  = httpMocks.createRequest({
-      method: 'GET',
-      url: '/v1/alltrends/tweets',
-      query: {
-        max_id: 'asdf' // Invalid
-      }
-    })
-    let res = httpMocks.createResponse()
-
-    controller(req, res)
-
-    expect(res.statusCode).toEqual(400)
-    expect(res._isEndCalled()).toEqual(true)
   })
 })

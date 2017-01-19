@@ -1,5 +1,5 @@
 const Tweet = require('../models/tweet')
-const controllerUtils = require('./controller-utils')
+const config = require('../config')
 
 const specificTweetsController = function (req, res) {
   if (!req.params.name) {
@@ -11,11 +11,6 @@ const specificTweetsController = function (req, res) {
   if (!req.query.max_id) {
     query = {trend: req.params.name}
   } else {
-    // If max_id is provided, ensure that it is valid
-    if(!controllerUtils.isNumeric(req.query.max_id)) {
-      res.status(400).send('Invalid max_id parameter')
-      return
-    }
     options = {trend: req.params.name, _id: {$gt: res.query.max_id}}
   }
 
@@ -26,7 +21,7 @@ const specificTweetsController = function (req, res) {
       res.type('application/json')
       res.send(tweets)
     }
-  })
+  }).limit(config.tweetsPerRequest)
 }
 
 module.exports = specificTweetsController

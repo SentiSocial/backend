@@ -23,7 +23,8 @@ describe('Specific Articles Controller', () => {
     mockery.registerMock('../models/article', {
       find: (query, cb) => {
         cb(null, mockArticles)
-      }
+        return {limit: () => {}}
+      },
     })
 
     controller = require('../../js/controllers/specific-articles')
@@ -51,21 +52,5 @@ describe('Specific Articles Controller', () => {
     expect(data.articles[0].source).toEqual(mockArticles[0].source)
     expect(data.articles[0].link).toEqual(mockArticles[0].link)
     expect(data.articles[0]._id).toEqual(mockArticles[0]._id)
-  })
-
-  it('Should respond with HTTP 400 if an invalid max_id is provided', () => {
-    let req  = httpMocks.createRequest({
-      method: 'GET',
-      url: '/v1/trend/some_trend/articles',
-      query: {
-        max_id: 'asdf' // Invalid
-      }
-    })
-    let res = httpMocks.createResponse()
-
-    controller(req, res)
-
-    expect(res.statusCode).toEqual(400)
-    expect(res._isEndCalled()).toEqual(true)
   })
 })

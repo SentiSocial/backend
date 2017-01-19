@@ -13,6 +13,12 @@ var config = {
   // Maximum number of popular tweets stroed in the database for each trend
   tweetsStored: 10,
 
+  // Number of tweets to send per request to a tweets endpoint
+  tweetsPerRequest: 10,
+
+  // Number of articles to send per request to an articles endpoint
+  articlesPerRequest: 5,
+
   // List of news sources sorted generally by popularity
   sources: [
     'the-new-york-times',
