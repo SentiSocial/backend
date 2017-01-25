@@ -15,12 +15,12 @@ Get all current trends and associated data for each one
 
 Response:
 
-| Name                | Type          | Description                                                                             |
-|---------------------|---------------|-----------------------------------------------------------------------------------------|
-| trends              | array         | Array of trends sorted most popular first                                               |
-| trends[i]           | object        |                                                                                         |
-| trends[i].name      | string        | Name of Trend                                                                           |
-| trends[i].sentiment | number        | Latest sentiment score for this trend, higher values indicate a more positive sentiment |
+| Name                | Type   | Description                                                                             |
+|---------------------|--------|-----------------------------------------------------------------------------------------|
+| trends              | array  | Array of trends sorted most popular first                                               |
+| trends[i]           | object |                                                                                         |
+| trends[i].name      | string | Name of Trend                                                                           |
+| trends[i].sentiment | number | Latest sentiment score for this trend, higher values indicate a more positive sentiment |
 
 Example Request:
 ```
@@ -45,13 +45,13 @@ Get data for the specified trend
 
 Response:
 
-| Name                 | Type          | Description                                                                             |
-|----------------------|---------------|-----------------------------------------------------------------------------------------|
-| name                 | string        | Trend name echoed back                                                                  |
-| history              | array         | Array of objects containing timestamp and sentiment, sorted oldest first                |
-| history[i]           | object        |                                                                                         |
-| history[i].timestamp | number        | Unix timestamp in seconds that this history object was recorded at                      |
-| history[i].sentiment | number        | Sentiment score for this trend at the given timestamp                                   |
+| Name                 | Type   | Description                                                              |
+|----------------------|--------|--------------------------------------------------------------------------|
+| name                 | string | Trend name echoed back                                                   |
+| history              | array  | Array of objects containing timestamp and sentiment, sorted oldest first |
+| history[i]           | object |                                                                          |
+| history[i].timestamp | number | Unix timestamp in seconds that this history object was recorded at       |
+| history[i].sentiment | number | Sentiment score for this trend at the given timestamp                    |
 
 Example Request:
 ```
@@ -80,19 +80,19 @@ Get popular tweets related to the specified trend
 
 Request parameters:
 
-| Name                | Description                                                                                               |
-|---------------------|-----------------------------------------------------------------------------------------------------------|
-| max_id              | If set, returns tweets with an _id value less than _id. Otherwise response will start from the highest _id|
-| limit               | If set, return no more than this many tweets                                                              |
+| Name   | Description                                                                                                |
+|--------|------------------------------------------------------------------------------------------------------------|
+| max_id | If set, returns tweets with an _id value less than _id. Otherwise response will start from the highest _id |
+| limit  | If set, return no more than this many tweets                                                               |
 
 Response:
 
-| Name                 | Type          | Description                                                                             |
-|----------------------|---------------|-----------------------------------------------------------------------------------------|
-| tweets               | array         | Array of popular tweets for this trend                                                  |
-| tweets[i]            | object        |                                                                                         |
-| tweets[i]._id        | string        | Sequential unique identifier for tweets used for pagination                             |
-| tweets[i].embed_id   | string        | Twitter id of tweet, used to embed it                                                   |
+| Name               | Type   | Description                                                 |
+|--------------------|--------|-------------------------------------------------------------|
+| tweets             | array  | Array of popular tweets for this trend                      |
+| tweets[i]          | object |                                                             |
+| tweets[i]._id      | string | Sequential unique identifier for tweets used for pagination |
+| tweets[i].embed_id | string | Twitter id of tweet, used to embed it                       |
 
 Example Request:
 ```
@@ -122,10 +122,10 @@ Get news articles related to the specified trend
 
 Request parameters:
 
-| Name                | Description                                                                                            |
-|---------------------|--------------------------------------------------------------------------------------------------------|
-| max_id              | If set, returns articles with an _id value than _id. Otherwise response will start from the highest _id|
-| limit               | If set, return no more than this many tweets                                                           |
+| Name                | Description                                                                                             |
+|---------------------|---------------------------------------------------------------------------------------------------------|
+| max_id              | If set, returns articles with an _id value than _id. Otherwise response will start from the highest _id |
+| limit               | If set, return no more than this many tweets                                                            |
 
 Response:
 
