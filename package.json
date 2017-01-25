@@ -2,10 +2,11 @@
   "name": "htv-backend",
   "version": "0.0.1",
   "description": "HTV project backend",
-  "main": "js/main.js",
+  "main": "src/main.js",
   "scripts": {
     "test": "jasmine",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "start": "node src/main.js"
   },
   "repository": {
     "type": "git",
