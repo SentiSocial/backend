@@ -1,4 +1,5 @@
-mongoose = require('mongoose')
+'use strict'
+const mongoose = require('mongoose')
 
 // Schema representing sentiment at a particular timestamp
 // To go in trendSchema's history array
@@ -9,9 +10,9 @@ var historyItemSchema = new mongoose.Schema({
 
 var trendSchema = new mongoose.Schema({
   name: String,
-  history: [historyItemSchema],
-});
+  history: [historyItemSchema]
+})
 
-var Trend = mongoose.model('Trend', trendSchema);
+var Trend = mongoose.model('Trend', trendSchema)
 
 module.exports = Trend

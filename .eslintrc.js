@@ -1,7 +1,14 @@
 module.exports = {
-    "extends": "standard",
+    "extends": [
+      "standard",
+      "plugin:jasmine/recommended"
+    ],
     "plugins": [
         "standard",
-        "promise"
-    ]
+        "promise",
+        "jasmine"
+    ],
+    "env": {
+      jasmine: true
+    }
 };

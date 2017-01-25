@@ -12,8 +12,8 @@ const allTrendsController = function (req, res) {
       resData.trends = resData.trends.map((trend) => {
         return {
           name: trend.name,
-          sentiment: trend.sentiment = trend.history.length > 0 ?
-            trend.history[trend.history.length-1].sentiment : 0
+          sentiment: trend.history.length > 0
+            ? trend.history[trend.history.length - 1].sentiment : 0
         }
       })
       res.json(resData)

@@ -4,7 +4,6 @@ const mongoose = require('mongoose')
 const mockgoose = require('mockgoose')
 
 describe('Trend', function () {
-
   beforeEach((done) => {
     mockgoose(mongoose).then(() => {
       mongoose.connect('mongodb://example.com/testdb', (err) => {
@@ -17,8 +16,8 @@ describe('Trend', function () {
 
   it('Saves a trend and retreives it', (done) => {
     let trendModel = new Trend({
-        name: 'test-trend',
-        history: [{sentiment: 1, timestamp: 123}],
+      name: 'test-trend',
+      history: [{sentiment: 1, timestamp: 123}]
     })
 
     // Save the trend
@@ -36,17 +35,17 @@ describe('Trend', function () {
     })
   })
 
-  it('Pushes new history to an existing trend', (done) => {
+  it('Pushes new history to an existing trend', done => {
     let trendModel = new Trend({
-        name: 'test-trend',
-        history: [],
+      name: 'test-trend',
+      history: []
     })
 
     let newHistoryItem = {sentiment: 1, timestamp: 123}
 
     trendModel.save(() => {
       Trend.findOneAndUpdate({name: 'test-trend'},
-        {$push: {history: newHistoryItem}}, {new: true}, (err, doc) => {
+      {$push: {history: newHistoryItem}}, {new: true}, (err, doc) => {
         expect(err).toBeNull()
 
         expect(doc.name).toEqual('test-trend')
@@ -59,23 +58,17 @@ describe('Trend', function () {
   })
 
   it('Pushes new history to a nonexistant trend using upsert', (done) => {
-    let trendModel = new Trend({
-        name: 'test-trend',
-        history: [],
-    })
-
     let newHistoryItem = {sentiment: 1, timestamp: 123}
 
     Trend.findOneAndUpdate({name: 'test-trend'},
-      {$push: {history: newHistoryItem}}, {upsert: true, new: true},
-      (err, doc) => {
-      expect(err).toBeNull()
+      {$push: {history: newHistoryItem}}, {upsert: true, new: true}, (err, doc) => {
+        expect(err).toBeNull()
 
-      expect(doc.name).toEqual('test-trend')
-      expect(doc.history.length).toEqual(1)
-      expect(doc.history[0].sentiment).toEqual(newHistoryItem.sentiment)
-      expect(doc.history[0].timestamp).toEqual(newHistoryItem.timestamp)
-      done()
-    })
+        expect(doc.name).toEqual('test-trend')
+        expect(doc.history.length).toEqual(1)
+        expect(doc.history[0].sentiment).toEqual(newHistoryItem.sentiment)
+        expect(doc.history[0].timestamp).toEqual(newHistoryItem.timestamp)
+        done()
+      })
   })
 })

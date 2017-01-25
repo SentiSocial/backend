@@ -1,24 +1,24 @@
 'use strict'
-var TweetSentimentAnalysis = require('../js/tweet-sentiment-analysis')
-var sentiment = require('sentiment')
+const TweetSentimentAnalysis = require('../js/tweet-sentiment-analysis')
+const sentiment = require('sentiment')
 
-describe("tweetSentimentAnalysis", function () {
+describe('tweetSentimentAnalysis', () => {
   var tweetSentimentAnalysis
 
-  beforeEach(function() {
+  beforeEach(() => {
     tweetSentimentAnalysis = new TweetSentimentAnalysis()
   })
 
-  it("Correctly calculates an average with 1 tweet", function () {
+  it('Correctly calculates an average with 1 tweet', () => {
     var tweetText = 'This is a great string with a positivie mood'
     tweetSentimentAnalysis.addTweet(tweetText)
 
     var sen = sentiment(tweetText)
 
     expect(tweetSentimentAnalysis.getSentiment()).toEqual(sen.score)
-  });
+  })
 
-  it("Correctly calculates an average with multiple tweets", function () {
+  it('Correctly calculates an average with multiple tweets', () => {
     var string1 = 'This is a great string with a positivie mood'
     var string2 = 'This is a horrible string with a really awful mood'
     var string3 = 'This string is absolutely euphoric'
@@ -34,6 +34,5 @@ describe("tweetSentimentAnalysis", function () {
     tweetSentimentAnalysis.addTweet(string3)
 
     expect(tweetSentimentAnalysis.getSentiment()).toEqual(averageSen)
-  });
-
-});
+  })
+})

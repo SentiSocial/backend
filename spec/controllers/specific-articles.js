@@ -2,7 +2,6 @@ const httpMocks = require('node-mocks-http')
 const mockery = require('mockery')
 
 describe('Specific Articles Controller', () => {
-
   var controller
   var mockArticles = [{
     trend: 'test-trend',
@@ -15,7 +14,7 @@ describe('Specific Articles Controller', () => {
     _id: 123456
   }]
 
-  beforeAll (function() {
+  beforeAll(function () {
     mockery.enable({
       warnOnReplace: false,
       warnOnUnregistered: false
@@ -25,14 +24,14 @@ describe('Specific Articles Controller', () => {
       find: (query, cb) => {
         cb(null, mockArticles)
         return {limit: () => {}}
-      },
+      }
     })
 
     controller = require('../../js/controllers/specific-articles')
   })
 
   it('Should return the all articles', () => {
-    let req  = httpMocks.createRequest({
+    let req = httpMocks.createRequest({
       method: 'GET',
       url: '/v1/trend/some_trend/articles'
     })

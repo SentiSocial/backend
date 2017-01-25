@@ -14,8 +14,8 @@ const specificTweetsController = function (req, res) {
   if (!req.query.max_id) {
     query = {trend: req.params.name}
   } else {
-    var max_oid = mongoose.Types.ObjectId(req.query.max_id)
-    query = {trend: req.params.name, _id: {$lt: max_oid}}
+    var maxOid = mongoose.Types.ObjectId(req.query.max_id)
+    query = {trend: req.params.name, _id: {$lt: maxOid}}
   }
 
   Tweet.find(query, (err, tweets) => {

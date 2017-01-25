@@ -4,7 +4,6 @@ const mongoose = require('mongoose')
 const mockgoose = require('mockgoose')
 
 describe('Article', function () {
-
   beforeEach((done) => {
     mockgoose(mongoose).then(() => {
       mongoose.connect('mongodb://example.com/testdb', (err) => {
@@ -40,7 +39,7 @@ describe('Article', function () {
     })
   })
 
-  it('Adds a new article if it does not already exist using $setOnInsert' , (done) => {
+  it('Adds a new article if it does not already exist using $setOnInsert', (done) => {
     let article = {
       trend: 'test-trend',
       title: 'Article Title',
@@ -53,11 +52,11 @@ describe('Article', function () {
 
     Article.findOneAndUpdate({link: 'https://nytimes.com'}, {$setOnInsert: article},
       {upsert: true, new: true}, (err, doc) => {
-      expect(err).toBeNull()
+        expect(err).toBeNull()
 
-      expect(doc.trend).toEqual('test-trend')
-      expect(doc.title).toEqual('Article Title')
-      done()
-    })
+        expect(doc.trend).toEqual('test-trend')
+        expect(doc.title).toEqual('Article Title')
+        done()
+      })
   })
 })
