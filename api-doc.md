@@ -85,7 +85,6 @@ Request parameters:
 | max_id              | If set, returns tweets with an _id value less than _id. Otherwise response will start from the highest _id|
 | limit               | If set, return no more than this many tweets                                                              |
 
-
 Response:
 
 | Name                 | Type          | Description                                                                             |
@@ -131,7 +130,7 @@ Request parameters:
 Response:
 
 | Name                    | Type                    | Description                                                                        |
-|-------------------------|--------------------------------------------------------------------------------------------------------------|
+|-------------------------|-------------------------|------------------------------------------------------------------------------------|
 | articles                | array                   | Array of objects containing news articles, sorted by popularity of news source     |
 | articles[i]             | object                  |                                                                                    |
 | articles[i]._id         | string                  | Sequential unique identifier for news articles                                     |
