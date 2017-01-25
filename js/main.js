@@ -33,10 +33,11 @@ mongoose.connect('mongodb://localhost/' + config.dbName);
 function intervalFunction () {
   // At the beginning of each interval get all trends
   trends.getTrends(function (trends) {
+    console.log(trends)
     // Remove all old trends
     removeOldTrends(trends, function () {
       // Update all current trends
-      updateTrends(trends.slice(8)) // .slice to avoid hitting rate limit while testing, remove later
+      updateTrends(trends.slice(0, 8)) // .slice to avoid hitting rate limit while testing, remove later
     })
   })
 }
