@@ -1,22 +1,39 @@
-# TrendGator - A Trend Aggregator
+# sentisocial-backend
+## Node.js backend for SentiSocial
 
-We presented at [Hack The Valley 2017](https://www.hackvalley.com)!
+[![Standard - JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](http://standardjs.com/)
 
-You can find more information about our submission at [Devpost](https://devpost.com/software/trendgator).
+Created at The University of Toronto Scarborough's Hack the Valley 2017
 
-Check it out at [trend-gator.com](https://trend-gator.com).
-
-## Prerequisites
+## Requirements
 
 * NodeJS ^6.9.4
-* Node Package Manager
+* NPM
+* MongoDB
 
-## Installation
+## Running
 
-Please note that this is the server repository. Are you looking for the [client](https://github.com/trendgator/trendgator-client)?
+Before running the backend, ensure you have node + NPM installed and run:
 
-To build the project locally, clone the repository.
-* `npm install`
+`npm install`
 
-To run the tests use
-* `npm run test`
+After installation, edit `src/config.js` to your liking, making sure to add the
+address of your MongoDB server. Then run:
+
+`npm start`
+
+To spin up the backend
+
+# Tests
+
+Jasmine unit tests are located in the `spec` directory, to run them, use:
+
+`npm test`
+
+# Style
+
+This project uses the [JS standard code style](http://standardjs.com).
+
+To run the linter, use:
+
+`npm run lint`
