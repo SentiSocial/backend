@@ -1,5 +1,5 @@
 'use strict'
-const Tweet = require('../../js/models/tweet')
+const Tweet = require('../../src/models/tweet')
 const mongoose = require('mongoose')
 const mockgoose = require('mockgoose')
 

@@ -1,5 +1,5 @@
 'use strict'
-const TweetSentimentAnalysis = require('../js/tweet-sentiment-analysis')
+const TweetSentimentAnalysis = require('../src/tweet-sentiment-analysis')
 const sentiment = require('sentiment')
 
 describe('tweetSentimentAnalysis', () => {

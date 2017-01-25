@@ -27,7 +27,7 @@ describe('Specific Articles Controller', () => {
       }
     })
 
-    controller = require('../../js/controllers/specific-articles')
+    controller = require('../../src/controllers/specific-articles')
   })
 
   it('Should return the all articles', () => {

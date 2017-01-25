@@ -1,5 +1,5 @@
 'use strict'
-const Article = require('../../js/models/article')
+const Article = require('../../src/models/article')
 const mongoose = require('mongoose')
 const mockgoose = require('mockgoose')
 

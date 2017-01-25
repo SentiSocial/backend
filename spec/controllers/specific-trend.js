@@ -20,7 +20,7 @@ describe('All Trends Controller', () => {
       }
     })
 
-    controller = require('../../js/controllers/all-trends')
+    controller = require('../../src/controllers/all-trends')
   })
 
   it('Should return the all trends', () => {

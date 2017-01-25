@@ -21,7 +21,7 @@ describe('Specific Tweets Controller', () => {
       }
     })
 
-    controller = require('../../js/controllers/specific-tweets')
+    controller = require('../../src/controllers/specific-tweets')
   })
 
   it('Should return the all tweets', () => {

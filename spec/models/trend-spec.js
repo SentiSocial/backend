@@ -1,5 +1,5 @@
 'use strict'
-const Trend = require('../../js/models/trend')
+const Trend = require('../../src/models/trend')
 const mongoose = require('mongoose')
 const mockgoose = require('mockgoose')
 
