@@ -45,6 +45,8 @@ describe('Specific Articles Controller', () => {
 
     let data = JSON.parse(res._getData())
 
+    console.log('ALSDKJF;LKDSAJFJDSAF;LAJFD;LJ')
+
     expect(data.articles.length).toEqual(mockArticles.length)
     expect(data.articles[0].trend).toEqual(mockArticles[0].trend)
     expect(data.articles[0].title).toEqual(mockArticles[0].title)
