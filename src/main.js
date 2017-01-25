@@ -23,7 +23,7 @@ db.once('open', () => {
 
   api.start()
 })
-mongoose.connect('mongodb://localhost/' + config.dbName)
+mongoose.connect('mongodb://' + config.dbAddress + '/' + config.dbName)
 
 /**
  * Function run once every server interval, gets trends from the

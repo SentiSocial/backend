@@ -1,25 +1,41 @@
 'use strict'
 
 var config = {
+  // Address of MongoDB database to store trend ino in
+  dbAddress: 'localhost',
+
   // Name of MongoDB database to store trend information
-  dbName: 'trendgator',
+  dbName: 'sentisocial',
 
-  // Name of MongoDB collection used to store trend information
-  collectionName: 'trends',
+  // Maximum number of articles to store for each trend
+  maxArticlesStorageCap: 10,
 
-  // Cap for articles to be displayed
-  maxArticlesStorageCap: 20,
+  // Maximum number of popular tweets to store for each trend
+  tweetsStored: 20,
 
-  // Maximum number of popular tweets stroed in the database for each trend
-  tweetsStored: 3,
-
-  // Number of tweets to send per request to a tweets endpoint
+  // Number of tweets to send per request to the tweets endpoint
   tweetsPerRequest: 10,
 
-  // Number of articles to send per request to an articles endpoint
+  // Number of articles to send per request to the articles endpoint
   articlesPerRequest: 5,
 
-  // List of news sources sorted generally by popularity
+  // Yahoo WOEID ID of location for grabbing tweets and trending topics (23424977 is the USA)
+  woeid: 23424977,
+
+  // Number of tweets retreived per call to the Twitter search api
+  popularTweetsPerSearch: 100,
+
+  // Total number of popular tweets retreived for each trend from Twitter
+  popularTweetsRetreivedTotal: 200,
+
+  // Interval length in milliseconds, (1800000 is 30 mins)
+  intervalLength: 1800000,
+
+  // Port that the API listens on
+  apiPort: 8080,
+
+  // List of News API news org ids to retreive news info for
+  // Orgs appearing higher in the array are more likely to have their articles stored
   sources: [
     'the-new-york-times',
     'bloomberg',
@@ -81,25 +97,7 @@ var config = {
     'the-sport-bible',
     'the-times-of-india',
     'the-verge'
-  ],
-
-  // Number of tweets retreived per call to the search api
-  popularTweetsPerSearch: 100,
-
-  // Total number of popular tweets retreived for each trend
-  popularTweetsRetreivedTotal: 200,
-
-  // Interval length in milliseconds, (1800000 is 30 mins)
-  intervalLength: 300000,
-
-  // Weight that popular tweets are given relative to tweets that come in via the streaming API
-  popularTweetWeight: 3,
-
-  // Port that the API listens on
-  apiPort: 8080,
-
-  // Yahoo WOEID ID of location for grabbing tweets and trending topics
-  woeid: 23424977
+  ]
 }
 
 module.exports = config
