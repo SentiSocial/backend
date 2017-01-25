@@ -5,6 +5,7 @@ var articleSchema = new mongoose.Schema({
   title: String,
   description: String,
   source: String,
+  media: String,
   link: String,
   timestamp: Number
 });

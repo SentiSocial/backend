@@ -22,7 +22,7 @@ describe('Article', function () {
       description: 'Article Description',
       source: 'New York Times',
       link: 'https://nytimes.com',
-      timeStamp: 123456
+      timestamp: 123456
     })
 
     // Save the article
@@ -46,8 +46,9 @@ describe('Article', function () {
       title: 'Article Title',
       description: 'Article Description',
       source: 'New York Times',
+      media: 'https://nytimes.com/someimage.jpg',
       link: 'https://nytimes.com',
-      timeStamp: 123456
+      timestamp: 123456
     }
 
     Article.findOneAndUpdate({link: 'https://nytimes.com'}, {$setOnInsert: article},

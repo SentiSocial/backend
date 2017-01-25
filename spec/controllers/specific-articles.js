@@ -9,8 +9,9 @@ describe('Specific Articles Controller', () => {
     title: 'title',
     description: 'description',
     source: 'nyt',
+    media: 'https://nytime.com/someimage.jpg',
     link: 'https://nytimes.com',
-    timeStamp: 123456,
+    timestamp: 123456,
     _id: 123456
   }]
 
@@ -45,14 +46,14 @@ describe('Specific Articles Controller', () => {
 
     let data = JSON.parse(res._getData())
 
-    console.log('ALSDKJF;LKDSAJFJDSAF;LAJFD;LJ')
-
     expect(data.articles.length).toEqual(mockArticles.length)
     expect(data.articles[0].trend).toEqual(mockArticles[0].trend)
     expect(data.articles[0].title).toEqual(mockArticles[0].title)
     expect(data.articles[0].description).toEqual(mockArticles[0].description)
     expect(data.articles[0].source).toEqual(mockArticles[0].source)
+    expect(data.articles[0].media).toEqual(mockArticles[0].media)
     expect(data.articles[0].link).toEqual(mockArticles[0].link)
+    expect(data.articles[0].timestamp).toEqual(mockArticles[0].timeStamp)
     expect(data.articles[0]._id).toEqual(mockArticles[0]._id)
   })
 })

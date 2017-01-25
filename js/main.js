@@ -33,7 +33,6 @@ mongoose.connect('mongodb://localhost/' + config.dbName);
 function intervalFunction () {
   // At the beginning of each interval get all trends
   trends.getTrends(function (trends) {
-    console.log(trends)
     // Remove all old trends
     removeOldTrends(trends, function () {
       // Update all current trends
@@ -142,8 +141,9 @@ function storeArticles (trend, articles) {
       title: article.title,
       description: article.description,
       source: article.source,
+      media: article.media,
       link: article.link,
-      timeStamp: article.timestamp
+      timestamp: article.timestamp
     }
 
     // Add the article to the db only if it does not alreay exist in the db
