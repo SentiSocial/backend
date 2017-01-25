@@ -10,6 +10,15 @@ var config = {
   // Cap for articles to be displayed
   maxArticlesStorageCap: 20,
 
+  // Maximum number of popular tweets stroed in the database for each trend
+  tweetsStored: 3,
+
+  // Number of tweets to send per request to a tweets endpoint
+  tweetsPerRequest: 10,
+
+  // Number of articles to send per request to an articles endpoint
+  articlesPerRequest: 5,
+
   // List of news sources sorted generally by popularity
   sources: [
     'the-new-york-times',
@@ -86,8 +95,8 @@ var config = {
   // Weight that popular tweets are given relative to tweets that come in via the streaming API
   popularTweetWeight: 3,
 
-  // Maximum number of popular tweets stroed in the database for each trend
-  popularTweetsStored: 60,
+  // Port that the API listens on
+  apiPort: 8080,
 
   // Yahoo WOEID ID of location for grabbing tweets and trending topics
   woeid: 23424977
