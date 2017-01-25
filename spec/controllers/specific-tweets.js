@@ -2,14 +2,13 @@ const httpMocks = require('node-mocks-http')
 const mockery = require('mockery')
 
 describe('Specific Tweets Controller', () => {
-
   var controller
   var mockTweets = [{
     embedId: '123456789',
     _id: '1234abcdef'
   }]
 
-  beforeAll (function() {
+  beforeAll(function () {
     mockery.enable({
       warnOnReplace: false,
       warnOnUnregistered: false
@@ -26,7 +25,7 @@ describe('Specific Tweets Controller', () => {
   })
 
   it('Should return the all tweets', () => {
-    let req  = httpMocks.createRequest({
+    let req = httpMocks.createRequest({
       method: 'GET',
       url: '/v1/alltrends/tweets'
     })

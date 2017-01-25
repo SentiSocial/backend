@@ -1,4 +1,5 @@
-mongoose = require('mongoose')
+'use strict'
+const mongoose = require('mongoose')
 
 var articleSchema = new mongoose.Schema({
   trend: String,
@@ -8,8 +9,8 @@ var articleSchema = new mongoose.Schema({
   media: String,
   link: String,
   timestamp: Number
-});
+})
 
-var Article = mongoose.model('Article', articleSchema);
+var Article = mongoose.model('Article', articleSchema)
 
 module.exports = Article

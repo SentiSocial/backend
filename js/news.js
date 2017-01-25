@@ -7,10 +7,6 @@ const config = require('./config.js')
 const sources = require('./sources.json')
 const maxArticles = config.maxArticlesStorageCap
 
-if (!apiKey) {
-  throw Error('News Module requires an API key from NewsAPI.org')
-}
-
 /**
  * Transforms camel cased sentences to a spaced spaced sentence.
  * "thisIsAnExample" -> "this Is An Example"
@@ -75,6 +71,10 @@ function generateFuzzyPattern (string, flags) {
  * @author Omar Chehab
  */
 function getNews (phrase, callback) {
+  if (!apiKey) {
+    throw Error('News Module requires an API key from NewsAPI.org')
+  }
+
   let articles = []
   let pending = sources.length
 

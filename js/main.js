@@ -1,4 +1,5 @@
 'use strict'
+const mongoose = require('mongoose')
 const news = require('./news')
 const api = require('./api')
 const trends = require('./trends')
@@ -11,7 +12,7 @@ const Tweet = require('./models/tweet')
 
 // Connect to the db, then set up the intervalFunction
 var db = mongoose.connection
-db.on('error', console.error);
+db.on('error', console.error)
 db.once('open', () => {
   console.log('Successfully connected to mongodb')
   // Run the intervalFunction when the backend starts
@@ -21,8 +22,8 @@ db.once('open', () => {
   setInterval(intervalFunction, config.intervalLength)
 
   api.start()
-});
-mongoose.connect('mongodb://localhost/' + config.dbName);
+})
+mongoose.connect('mongodb://localhost/' + config.dbName)
 
 /**
  * Function run once every server interval, gets trends from the
@@ -91,11 +92,11 @@ function storeSentimentInfo (trend, sentimentScore, timestamp) {
   // Update this trend's sentiment, or create a new trend if this trend doesn't already exist
   Trend.findOneAndUpdate({name: trend}, {$push: {history: sentiment}},
     {upsert: true}, (err, doc) => {
-    if (err) {
-      console.log('Error updating sentiment information in database')
-      throw err
-    }
-  })
+      if (err) {
+        console.log('Error updating sentiment information in database')
+        throw err
+      }
+    })
 }
 
 /**
@@ -113,16 +114,15 @@ function storeTweets (trend, tweets) {
       embed_id: tweet.id,
       popularity: tweet.popularity
     }
-
     // Add dbTweet to the database only if it does not already exist in
     // the database
     Tweet.findOneAndUpdate({embed_id: tweet.id}, {$setOnInsert: dbTweet},
-      {upsert: true, new: true}, (err, doc) => {
-      if (err) {
-        console.log('Error adding tweet to database')
-        throw err
-      }
-    })
+      {upsert: true}, (err, doc) => {
+        if (err) {
+          console.log('Error adding tweet to database')
+          throw err
+        }
+      })
   })
 }
 
@@ -149,8 +149,7 @@ function storeArticles (trend, articles) {
     // Add the article to the db only if it does not alreay exist in the db
     // Note: We don't have a unique ID for news articles, so we use
     // the article title and link as an identifier (Should cover 99.99% of cases)
-    Article.findOneAndUpdate({title: article.title, link: article.link},
-      {$setOnInsert: currArticle}, {upsert: true}, (err, doc) => {
+    Article.findOneAndUpdate({title: article.title, link: article.link}, {$setOnInsert: currArticle}, {upsert: true}, (err, doc) => {
       if (err) {
         console.log('Error adding news article to database')
         throw err

@@ -5,7 +5,6 @@ const specificTrendController = require('./controllers/specific-trend')
 const specificTweetsController = require('./controllers/specific-tweets')
 const specificArticlesController = require('./controllers/specific-articles')
 
-
 const api = {
   start: function () {
     let app = express()

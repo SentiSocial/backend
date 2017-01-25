@@ -2,14 +2,13 @@ const httpMocks = require('node-mocks-http')
 const mockery = require('mockery')
 
 describe('All Trends Controller', () => {
-
   var controller
   var mockTrends = [{
     name: '#thisIsATrend',
-    history: [{sentiment: 5, timestamp: 22}],
+    history: [{sentiment: 5, timestamp: 22}]
   }]
 
-  beforeAll (function() {
+  beforeAll(function () {
     mockery.enable({
       warnOnReplace: false,
       warnOnUnregistered: false
@@ -25,7 +24,7 @@ describe('All Trends Controller', () => {
   })
 
   it('Should return the all trends', () => {
-    let req  = httpMocks.createRequest({
+    let req = httpMocks.createRequest({
       method: 'GET',
       url: '/v1/alltrends'
     })
@@ -43,7 +42,7 @@ describe('All Trends Controller', () => {
 
     // The sentiment value returned should be the last sentiment value in the
     // history array
-    let lastSentimentValue = mockTrends[0].history[mockTrends[0].history.length-1].sentiment
+    let lastSentimentValue = mockTrends[0].history[mockTrends[0].history.length - 1].sentiment
     expect(data.trends[0].sentiment).toEqual(lastSentimentValue)
   })
 })

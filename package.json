@@ -5,8 +5,7 @@
   "main": "js/main.js",
   "scripts": {
     "test": "jasmine",
-    "lint": "eslint js",
-    "validate": "npm ls"
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -35,6 +34,7 @@
   "devDependencies": {
     "eslint": "^3.13.0",
     "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-jasmine": "^2.2.0",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^2.0.1",
     "jasmine": "^2.5.2",
@@ -42,5 +42,9 @@
     "mockgoose": "^6.0.8",
     "node-mocks-http": "^1.5.6",
     "rewire": "^2.5.2"
-  }
+  },
+  "pre-commit": [
+    "lint",
+    "test"
+  ]
 }
