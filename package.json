@@ -1,7 +1,7 @@
 {
-  "name": "htv-backend",
+  "name": "sentisocial-backend",
   "version": "0.0.1",
-  "description": "HTV project backend",
+  "description": "Nodejs backend for SentiSocial",
   "main": "src/main.js",
   "scripts": {
     "test": "jasmine",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/suchaHassle/htv-backend.git"
+    "url": "git+https://github.com/SentiSocial/sentisocial-backend.git"
   },
   "keywords": [
     "Twitter",
@@ -20,9 +20,9 @@
   "author": "GunshipPenguin,suchaHassle",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/suchaHassle/htv-backend/issues"
+    "url": "https://github.com/SentiSocial/sentisocial-backend/issues"
   },
-  "homepage": "https://github.com/suchaHassle/htv-backend#readme",
+  "homepage": "https://github.com/SentiSocial/sentisocial-backend#readme",
   "dependencies": {
     "express": "^4.14.0",
     "mongodb": "^2.2.19",
