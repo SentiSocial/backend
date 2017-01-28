@@ -1,6 +1,7 @@
 # sentisocial-backend
 ## Node.js backend for SentiSocial
 
+[![Travis](https://img.shields.io/travis/SentiSocial/sentisocial-backend.svg)](https://travis-ci.org/SentiSocial/sentisocial-backend)
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](http://standardjs.com/)
 
 Created at The University of Toronto Scarborough's Hack the Valley 2017
