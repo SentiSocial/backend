@@ -1,8 +1,8 @@
 'use strict'
 var Twitter = require('twitter')
-var apiKeys = require('./api-keys')
-var config = require('./config')
-var tweetUtils = require('./tweet-utils')
+var apiKeys = require('../api-keys')
+var config = require('../config')
+var tweetUtils = require('../utils/tweet-utils')
 
 var client = new Twitter({
   consumer_key: apiKeys.twitter_consumer_key,

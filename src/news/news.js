@@ -2,8 +2,8 @@
 const request = require('request')
 
 const newsApi = 'http://newsapi.org'
-const apiKey = require('./api-keys').newsApiKey
-const config = require('./config.js')
+const apiKey = require('../api-keys').newsApiKey
+const config = require('../config.js')
 const sources = require('./sources.json')
 const maxArticles = config.maxArticlesStorageCap
 
