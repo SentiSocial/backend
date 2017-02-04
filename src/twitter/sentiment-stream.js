@@ -1,6 +1,6 @@
 'use strict'
 var TweetSentimentAnalysis = require('./tweet-sentiment-analysis')
-var apiKeys = require('./api-keys')
+var apiKeys = require('../api-keys')
 var Twitter = require('twitter')
 
 var client = new Twitter({

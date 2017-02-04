@@ -1,6 +1,6 @@
 'use strict'
 const rewire = require('rewire')
-const news = rewire('../src/news.js')
+const news = rewire('../src/news/news')
 
 const camelCaseToSpaced = news.__get__('camelCaseToSpaced')
 const unHyphenate = news.__get__('unHyphenate')
