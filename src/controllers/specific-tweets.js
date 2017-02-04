@@ -10,6 +10,7 @@ const specificTweetsController = function (req, res) {
     return
   }
 
+  // Build the MongoDB query
   let query
   if (!req.query.max_id) {
     query = {trend: req.params.name}
@@ -18,6 +19,10 @@ const specificTweetsController = function (req, res) {
     query = {trend: req.params.name, _id: {$lt: maxOid}}
   }
 
+  // Compute number of articles to return
+  let limit = parseInt(req.query.limit, 10)
+  limit = isNaN(limit) ? config.articlesPerRequest : limit
+
   Tweet.find(query, (err, tweets) => {
     if (err) {
       res.status(500).send('Internal error while retreiving tweets')
@@ -25,7 +30,7 @@ const specificTweetsController = function (req, res) {
       let resData = {tweets: tweets}
       res.json(resData)
     }
-  }).sort({_id: -1}).limit(config.tweetsPerRequest)
+  }).limit(limit).sort({_id: -1})
 }
 
 module.exports = specificTweetsController
