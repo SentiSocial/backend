@@ -2,7 +2,7 @@
 var Twitter = require('twitter')
 var apiKeys = require('./api-keys')
 var config = require('./config')
-var popularTweetUtils = require('./tweet-utils')
+var tweetUtils = require('./tweet-utils')
 
 var client = new Twitter({
   consumer_key: apiKeys.twitter_consumer_key,
@@ -60,11 +60,11 @@ var tweetSearch = {
         if (tweetsRetrieved <= num) {
           client.get('search/tweets', {q: trend, count: config.popularTweetsPerSearch, max_id: lowestId}, appendTo)
         } else {
-          popularTweetUtils.sortTweets(tweets)
+          tweetUtils.sortTweets(tweets)
           callback(tweets)
         }
       } else {
-        popularTweetUtils.sortTweets(tweets)
+        tweetUtils.sortTweets(tweets)
         callback(tweets)
       }
     })
