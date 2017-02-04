@@ -1,6 +1,6 @@
 const Trend = require('../models/trend')
 
-const specificTrendController = function (req, res) {
+const trendController = function (req, res) {
   res.set('Access-Control-Allow-Origin', '*')
 
   if (!req.params.name) {
@@ -19,4 +19,4 @@ const specificTrendController = function (req, res) {
   })
 }
 
-module.exports = specificTrendController
+module.exports = trendController

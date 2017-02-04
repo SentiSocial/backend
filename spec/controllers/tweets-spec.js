@@ -1,10 +1,10 @@
 const httpMocks = require('node-mocks-http')
-const specificTweetsController = require('../../src/controllers/specific-tweets')
+const tweetsController = require('../../src/controllers/tweets')
 const mongoose = require('mongoose')
 const mockgoose = require('mockgoose')
 const Tweet = require('../../src/models/tweet')
 
-describe('Specific Tweets Controller', () => {
+describe('Tweets Controller', () => {
   // Fake tweet data
   var mockTweets = [
     new Tweet({
@@ -60,7 +60,7 @@ describe('Specific Tweets Controller', () => {
       done()
     })
 
-    specificTweetsController(req, res)
+    tweetsController(req, res)
   })
 
   it('Should return with status 400 for a request with no trend name', (done) => {
@@ -78,7 +78,7 @@ describe('Specific Tweets Controller', () => {
       done()
     })
 
-    specificTweetsController(req, res)
+    tweetsController(req, res)
   })
 
   it('Should return valid JSON', (done) => {
@@ -94,7 +94,7 @@ describe('Specific Tweets Controller', () => {
       eventEmitter: require('events').EventEmitter
     })
 
-    specificTweetsController(req, res)
+    tweetsController(req, res)
 
     res.on('end', () => {
       expect(res._isJSON()).toEqual(true)
@@ -125,7 +125,7 @@ describe('Specific Tweets Controller', () => {
       done()
     })
 
-    specificTweetsController(req, res)
+    tweetsController(req, res)
   })
 
   it('Should return tweets having the correct data', (done) => {
@@ -153,6 +153,6 @@ describe('Specific Tweets Controller', () => {
       done()
     })
 
-    specificTweetsController(req, res)
+    tweetsController(req, res)
   })
 })

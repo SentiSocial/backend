@@ -2,7 +2,7 @@ const Article = require('../models/article')
 const config = require('../config')
 const mongoose = require('mongoose')
 
-const specificArticlesController = function (req, res) {
+const articlesController = function (req, res) {
   res.set('Access-Control-Allow-Origin', '*')
 
   if (!req.params.name) {
@@ -33,4 +33,4 @@ const specificArticlesController = function (req, res) {
   }).limit(limit).sort({_id: -1})
 }
 
-module.exports = specificArticlesController
+module.exports = articlesController

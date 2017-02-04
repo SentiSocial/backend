@@ -1,10 +1,10 @@
 const httpMocks = require('node-mocks-http')
-const specificArticlesController = require('../../src/controllers/specific-articles')
+const articlesController = require('../../src/controllers/articles')
 const mongoose = require('mongoose')
 const mockgoose = require('mockgoose')
 const Article = require('../../src/models/article')
 
-describe('Specific Articles Controller', () => {
+describe('Articles Controller', () => {
   // Fake article data
   var mockArticles = [
     new Article({
@@ -70,7 +70,7 @@ describe('Specific Articles Controller', () => {
       done()
     })
 
-    specificArticlesController(req, res)
+    articlesController(req, res)
   })
 
   it('Should return with status 400 for a request with no trend name', (done) => {
@@ -88,7 +88,7 @@ describe('Specific Articles Controller', () => {
       done()
     })
 
-    specificArticlesController(req, res)
+    articlesController(req, res)
   })
 
   it('Should return valid JSON', (done) => {
@@ -104,7 +104,7 @@ describe('Specific Articles Controller', () => {
       eventEmitter: require('events').EventEmitter
     })
 
-    specificArticlesController(req, res)
+    articlesController(req, res)
 
     res.on('end', () => {
       expect(res._isJSON()).toEqual(true)
@@ -135,7 +135,7 @@ describe('Specific Articles Controller', () => {
       done()
     })
 
-    specificArticlesController(req, res)
+    articlesController(req, res)
   })
 
   it('Should return articles having the correct data', (done) => {
@@ -163,6 +163,6 @@ describe('Specific Articles Controller', () => {
       done()
     })
 
-    specificArticlesController(req, res)
+    articlesController(req, res)
   })
 })
