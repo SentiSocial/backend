@@ -10,24 +10,27 @@ const specificArticlesController = function (req, res) {
     return
   }
 
+  // Build the MongoDB query
   let query
-  if (!req.params.max_id) {
+  if (!req.query.max_id) {
     query = {trend: req.params.name}
   } else {
     var maxOid = mongoose.Types.ObjectId(req.query.max_id)
     query = {trend: req.params.name, _id: {$lt: maxOid}}
   }
 
-  console.log(query)
+  // Compute number of articles to return
+  let limit = parseInt(req.query.limit, 10)
+  limit = isNaN(limit) ? config.articlesPerRequest : limit
 
   Article.find(query, (err, articles) => {
     if (err) {
-      res.status(500).send('Internal error while retreiving tweets')
+      res.status(500).send('Internal error while retreiving articles')
     } else {
       let resData = {articles: articles}
       res.json(resData)
     }
-  }).sort({_id: -1}).limit(config.articlesPerRequest)
+  }).limit(limit).sort({_id: -1})
 }
 
 module.exports = specificArticlesController
