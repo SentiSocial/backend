@@ -1,9 +1,9 @@
 const express = require('express')
 const config = require('./config')
 const allTrendsController = require('./controllers/all-trends')
-const specificTrendController = require('./controllers/specific-trend')
-const specificTweetsController = require('./controllers/specific-tweets')
-const specificArticlesController = require('./controllers/specific-articles')
+const trendController = require('./controllers/trend')
+const tweetsController = require('./controllers/tweets')
+const articlesController = require('./controllers/articles')
 
 const api = {
   start: function () {
@@ -11,11 +11,11 @@ const api = {
 
     app.get('/v1/alltrends', allTrendsController)
 
-    app.get('/v1/trend/:name', specificTrendController)
+    app.get('/v1/trend/:name', trendController)
 
-    app.get('/v1/trend/:name/tweets', specificTweetsController)
+    app.get('/v1/trend/:name/tweets', tweetsController)
 
-    app.get('/v1/trend/:name/articles', specificArticlesController)
+    app.get('/v1/trend/:name/articles', articlesController)
 
     app.listen(config.apiPort, () => {
       console.log('Api listening on port ' + config.apiPort.toString())

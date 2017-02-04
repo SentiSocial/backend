@@ -2,7 +2,7 @@ const Tweet = require('../models/tweet')
 const config = require('../config')
 const mongoose = require('mongoose')
 
-const specificTweetsController = function (req, res) {
+const tweetsController = function (req, res) {
   res.set('Access-Control-Allow-Origin', '*')
 
   if (!req.params.name) {
@@ -33,4 +33,4 @@ const specificTweetsController = function (req, res) {
   }).limit(limit).sort({_id: -1})
 }
 
-module.exports = specificTweetsController
+module.exports = tweetsController

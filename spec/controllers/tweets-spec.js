@@ -1,31 +1,21 @@
 const httpMocks = require('node-mocks-http')
-const specificArticlesController = require('../../src/controllers/specific-articles')
+const tweetsController = require('../../src/controllers/tweets')
 const mongoose = require('mongoose')
 const mockgoose = require('mockgoose')
-const Article = require('../../src/models/article')
+const Tweet = require('../../src/models/tweet')
 
-describe('Specific Articles Controller', () => {
-  // Fake article data
-  var mockArticles = [
-    new Article({
+describe('Tweets Controller', () => {
+  // Fake tweet data
+  var mockTweets = [
+    new Tweet({
       trend: 'test-trend',
-      title: 'title1',
-      description: 'description1',
-      source: 'nyt',
-      media: 'https://nytimes.com/someimage.jpg',
-      link: 'https://nytimes.com',
-      timestamp: 1234567,
-      _id: 123888
+      embed_id: '123456789',
+      popularity: 2
     }),
-    new Article({
+    new Tweet({
       trend: 'test-trend',
-      title: 'title2',
-      description: 'description2',
-      source: 'nyt',
-      media: 'https://nytimes.com/someimage.jpg',
-      link: 'https://nytimes.com',
-      timestamp: 1234567,
-      _id: 12345678
+      embed_id: '12345678',
+      popularity: 3
     })
   ]
 
@@ -36,8 +26,8 @@ describe('Specific Articles Controller', () => {
         if (err) throw err
         // Clear the database
         mockgoose.reset(() => {
-          // Insert all our mock articles
-          Article.collection.insert(mockArticles, (err, docs) => {
+          // Insert all our mock tweets
+          Tweet.collection.insert(mockTweets, (err, docs) => {
             if (err) throw err
             done()
           })
@@ -58,7 +48,7 @@ describe('Specific Articles Controller', () => {
       params: {
         name: 'test-trend'
       },
-      url: '/v1/trend/test-trend/articles'
+      url: '/v1/trend/test-trend/tweets'
     })
 
     let res = httpMocks.createResponse({
@@ -70,13 +60,13 @@ describe('Specific Articles Controller', () => {
       done()
     })
 
-    specificArticlesController(req, res)
+    tweetsController(req, res)
   })
 
   it('Should return with status 400 for a request with no trend name', (done) => {
     let req = httpMocks.createRequest({
       method: 'GET',
-      url: '/v1/trend/test-trend/articles'
+      url: '/v1/trend/test-trend/tweets'
     })
 
     let res = httpMocks.createResponse({
@@ -88,7 +78,7 @@ describe('Specific Articles Controller', () => {
       done()
     })
 
-    specificArticlesController(req, res)
+    tweetsController(req, res)
   })
 
   it('Should return valid JSON', (done) => {
@@ -97,14 +87,14 @@ describe('Specific Articles Controller', () => {
       params: {
         name: 'test-trend'
       },
-      url: '/v1/trend/test-trend/articles'
+      url: '/v1/trend/test-trend/tweets'
     })
 
     let res = httpMocks.createResponse({
       eventEmitter: require('events').EventEmitter
     })
 
-    specificArticlesController(req, res)
+    tweetsController(req, res)
 
     res.on('end', () => {
       expect(res._isJSON()).toEqual(true)
@@ -112,7 +102,7 @@ describe('Specific Articles Controller', () => {
     })
   })
 
-  it('Should return fewer articles if a limit is specified', (done) => {
+  it('Should return fewer tweets if a limit is specified', (done) => {
     let req = httpMocks.createRequest({
       method: 'GET',
       params: {
@@ -121,7 +111,7 @@ describe('Specific Articles Controller', () => {
       query: {
         limit: '1'
       },
-      url: '/v1/trend/test-trend/articles'
+      url: '/v1/trend/test-trend/tweets'
     })
 
     let res = httpMocks.createResponse({
@@ -131,20 +121,20 @@ describe('Specific Articles Controller', () => {
     res.on('end', () => {
       let data = JSON.parse(res._getData())
 
-      expect(data.articles.length).toEqual(1)
+      expect(data.tweets.length).toEqual(1)
       done()
     })
 
-    specificArticlesController(req, res)
+    tweetsController(req, res)
   })
 
-  it('Should return articles having the correct data', (done) => {
+  it('Should return tweets having the correct data', (done) => {
     let req = httpMocks.createRequest({
       method: 'GET',
       params: {
         name: 'test-trend'
       },
-      url: '/v1/trend/test-trend/articles'
+      url: '/v1/trend/test-trend/tweets'
     })
 
     let res = httpMocks.createResponse({
@@ -154,15 +144,15 @@ describe('Specific Articles Controller', () => {
     res.on('end', () => {
       let data = JSON.parse(res._getData())
       // Verify that all fields are returned and defined
-      let fields = ['trend', 'title', 'description', 'source', 'media', 'link', 'timestamp', '_id']
-      mockArticles.forEach((article, index) => {
+      let fields = ['trend', 'embed_id', 'popularity']
+      data.tweets.forEach(tweet => {
         fields.forEach(field => {
-          expect(data.articles[index][field]).toBeDefined()
+          expect(tweet[field]).toBeDefined()
         })
       })
       done()
     })
 
-    specificArticlesController(req, res)
+    tweetsController(req, res)
   })
 })
