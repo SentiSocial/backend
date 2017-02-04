@@ -1,48 +1,109 @@
 const httpMocks = require('node-mocks-http')
-const mockery = require('mockery')
+const Trend = require('../../src/models/trend')
+const mongoose = require('mongoose')
+const mockgoose = require('mockgoose')
+const allTrendsController = require('../../src/controllers/all-trends')
+
+function getRequest () {
+  return httpMocks.createRequest({
+    method: 'GET',
+    url: '/v1/alltrends'
+  })
+}
+
+function getResponse () {
+  return httpMocks.createResponse({
+    eventEmitter: require('events').EventEmitter
+  })
+}
 
 describe('All Trends Controller', () => {
-  var controller
-  var mockTrends = [{
-    name: '#thisIsATrend',
-    history: [{sentiment: 5, timestamp: 22}]
-  }]
-
-  beforeAll(function () {
-    mockery.enable({
-      warnOnReplace: false,
-      warnOnUnregistered: false
+  var mockTrends = [
+    new Trend({
+      name: 'test-trend1',
+      sentiment: 4
+    }),
+    new Trend({
+      name: 'test-trend2',
+      sentiment: -1
     })
+  ]
 
-    mockery.registerMock('../models/trend', {
-      find: (query, cb) => {
-        cb(null, mockTrends)
-      }
+  beforeAll(function (done) {
+    // Wrap mongoose with mockgoose
+    mockgoose(mongoose).then(() => {
+      mongoose.connect('mongodb://example.com/testdb', err => {
+        if (err) throw err
+        // Clear the database
+        mockgoose.reset(() => {
+          // Insert all our mock trends
+          Trend.collection.insert(mockTrends, (err, docs) => {
+            if (err) throw err
+            done()
+          })
+        })
+      })
     })
-
-    controller = require('../../src/controllers/all-trends')
   })
 
-  it('Should return the all trends', () => {
-    let req = httpMocks.createRequest({
-      method: 'GET',
-      url: '/v1/alltrends'
+  afterAll((done) => {
+    mongoose.unmock(() => {
+      done()
     })
-    let res = httpMocks.createResponse()
+  })
 
-    controller(req, res)
+  it('Should return with status 200 for a valid request', done => {
+    let req = getRequest()
+    let res = getResponse()
 
-    expect(res.statusCode).toEqual(200)
-    expect(res._isEndCalled()).toEqual(true)
-    expect(res._isJSON()).toEqual(true)
+    res.on('end', () => {
+      expect(res.statusCode).toEqual(200)
+      done()
+    })
 
-    let data = JSON.parse(res._getData())
-    expect(data.trends.length).toEqual(mockTrends.length)
-    expect(data.trends[0].name).toEqual(mockTrends[0].name)
+    allTrendsController(req, res)
+  })
 
-    // The sentiment value returned should be the last sentiment value in the
-    // history array
-    let lastSentimentValue = mockTrends[0].history[mockTrends[0].history.length - 1].sentiment
-    expect(data.trends[0].sentiment).toEqual(lastSentimentValue)
+  it('Should return valid JSON', done => {
+    let req = getRequest()
+    let res = getResponse()
+
+    res.on('end', () => {
+      expect(res._isJSON()).toEqual(true)
+      done()
+    })
+
+    allTrendsController(req, res)
+  })
+
+  it('Should return all current trends', done => {
+    let req = getRequest()
+    let res = getResponse()
+
+    res.on('end', () => {
+      let data = JSON.parse(res._getData())
+      expect(data.trends.length).toEqual(mockTrends.length)
+      done()
+    })
+    allTrendsController(req, res)
+  })
+
+  it('Should return all data for each trend', done => {
+    let req = getRequest()
+    let res = getResponse()
+
+    res.on('end', () => {
+      let data = JSON.parse(res._getData())
+
+      let fields = ['name', 'sentiment']
+      data.trends.forEach(trend => {
+        fields.forEach(field => {
+          expect(trend[field]).toBeDefined()
+        })
+      })
+
+      done()
+    })
+    allTrendsController(req, res)
   })
 })
