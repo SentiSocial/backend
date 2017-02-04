@@ -37,7 +37,7 @@ function intervalFunction () {
     // Remove all old trends
     removeOldTrends(trends, function () {
       // Update all current trends
-      updateTrends(trends.slice(0, 8)) // .slice to avoid hitting rate limit while testing, remove later
+      updateTrends(trends)
     })
   })
 }
