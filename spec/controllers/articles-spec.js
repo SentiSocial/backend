@@ -155,9 +155,9 @@ describe('Articles Controller', () => {
       let data = JSON.parse(res._getData())
       // Verify that all fields are returned and defined
       let fields = ['trend', 'title', 'description', 'source', 'media', 'link', 'timestamp', '_id']
-      mockArticles.forEach((article, index) => {
+      data.articles.forEach(article => {
         fields.forEach(field => {
-          expect(data.articles[index][field]).toBeDefined()
+          expect(article[field]).toBeDefined()
         })
       })
       done()

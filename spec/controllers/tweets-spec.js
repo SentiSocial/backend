@@ -145,9 +145,9 @@ describe('Tweets Controller', () => {
       let data = JSON.parse(res._getData())
       // Verify that all fields are returned and defined
       let fields = ['trend', 'embed_id', 'popularity']
-      mockTweets.forEach((tweet, index) => {
+      data.tweets.forEach(tweet => {
         fields.forEach(field => {
-          expect(data.tweets[index][field]).toBeDefined()
+          expect(tweet[field]).toBeDefined()
         })
       })
       done()
