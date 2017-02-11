@@ -77,7 +77,7 @@ function updateTrends (trends) {
     })
 
     // Store news articles
-    news(trend, articles => {
+    news.getNews(trend, articles => {
       storeArticles(trend, articles)
     })
   })

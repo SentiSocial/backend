@@ -125,11 +125,6 @@ function reduceArticles (articles) {
   }
 }
 
-module.exports = getNews
-// For scalability reasons, change the statement above to the statement below
-// Do not forget to change news (...) to news.getNews (...) in js/main.js
-/*
 module.exports = {
-  getNews: getNews,
+  getNews: getNews
 }
-*/
