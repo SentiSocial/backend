@@ -1,68 +1,12 @@
 'use strict'
 const request = require('request')
+const newsUtils = require('../utils/news-utils')
 
 const newsApi = 'http://newsapi.org'
 const apiKey = require('../api-keys').newsApiKey
 const config = require('../config.js')
 const sources = require('./sources.json')
 const maxArticles = config.maxArticlesStorageCap
-
-/**
- * Transforms camel cased sentences to a spaced spaced sentence.
- * "thisIsAnExample" -> "this Is An Example"
- * "hiOCAreMyInitials" -> "hi OC Are My Initials"
- * "ABCNews" -> "ABC News"
- * "CNN" -> "CNN"
- * @param  {string} string
- * @return {string}
- * @author Omar Chehab
- */
-function camelCaseToSpaced (string) {
-  return string
-    .replace(/([A-Z])([A-Z][a-z])/g, '$1 $2')
-    .replace(/([a-z])([A-Z])/g, '$1 $2')
-}
-
-/**
- * Replaces hyphens with spaces.
- * "this_is_an_example" -> "this is an example"
- * "what-about-dashes" -> "what about dashes"
- * @param  {sting} string
- * @return {sting}
- * @author Omar Chehab
- */
-function unHyphenate (string) {
-  return string
-    .replace(/[_-]/g, ' ')
-}
-
-/**
- * Adds ? after all matches
- * @param  {string} substring  what to make optional from string
- * @param  {string} string
- * @return {string}
- * @author Omar Chehab
- */
-function optionalize (substring, string, flags) {
-  flags = flags || 'g'
-  return string
-    .replace(new RegExp(`(${substring})`, flags), '$1?')
-}
-
-/**
- * Generates a regular expression that leniently match a given string
- * @param  {string} string
- * @param  {string} flags  optional
- * @return {RegExp}
- * @author Omar Chehab
- */
-function generateFuzzyPattern (string, flags) {
-  flags = flags || 'i'
-  string = camelCaseToSpaced(string)
-  string = unHyphenate(string)
-  string = optionalize('[#@ ]', string)
-  return new RegExp(string, flags)
-}
 
 /**
  * Retrieves relevant news using NewsAPI.org given a phrase.
@@ -78,7 +22,7 @@ function getNews (phrase, callback) {
   let articles = []
   let pending = sources.length
 
-  const pattern = generateFuzzyPattern(phrase)
+  const pattern = newsUtils.generateFuzzyPattern(phrase)
 
   sources.forEach(source => searchForArticlesFromSource(pattern, source,
    (error, response) => {
