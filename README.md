@@ -3,7 +3,7 @@
 
 [![Travis](https://img.shields.io/travis/SentiSocial/sentisocial-backend.svg)](https://travis-ci.org/SentiSocial/sentisocial-backend)
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](http://standardjs.com/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg)]()
+[![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/SentiSocial/sentisocial-backend/blob/master/LICENSE)
 
 
 Created at The University of Toronto Scarborough's Hack the Valley 2017
@@ -16,7 +16,7 @@ analysis is performed on tweets related to each trend using the [NPM sentiment
 package](https://www.npmjs.com/package/sentiment). All this information is then
 exposed via a REST API created with express.js.
 
-The SentiSocial frontend can be found [here](github.com/SentiSocial/sentisocial-frontend)
+The SentiSocial frontend can be found [here](https://github.com/SentiSocial/sentisocial-frontend)
 
 The API is documented in api-doc.md.
 
