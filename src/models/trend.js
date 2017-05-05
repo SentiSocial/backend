@@ -2,7 +2,7 @@
 const mongoose = require('mongoose')
 
 var tweetSchema = new mongoose.Schema({
-  embed_id: String,
+  embed_id: String
 }, {_id: false})
 
 var articleSchema = new mongoose.Schema({
