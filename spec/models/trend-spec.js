@@ -17,7 +17,22 @@ describe('Trend', function () {
   it('Saves a trend and retreives it', (done) => {
     let trendModel = new Trend({
       name: 'test-trend',
-      history: [{sentiment: 1, timestamp: 123}]
+      sentiment_score: 3.8,
+      sentiment_description: 'Positive',
+      locations: ['ca', 'us'],
+      tweet_volume: 30000,
+      tweets: [
+        {embed_id: '23432234'}
+      ],
+      articles: [
+        {
+          title: 'Some Article',
+          description: 'Description Here',
+          source: 'CNN',
+          link: 'http://cnn.com',
+          timestamp: 1232352352,
+          media: 'http://cnn.com/image.jpg'}
+      ]
     })
 
     // Save the trend
@@ -25,50 +40,12 @@ describe('Trend', function () {
       expect(err).toBeNull()
 
       // Try to find the trend after saving
-      Trend.find({name: 'test-trend'}, (err, docs) => {
+      Trend.findOne({name: 'test-trend'}, (err, doc) => {
         expect(err).toBeNull()
 
-        expect(docs.length).toEqual(1)
-        expect(docs[0].name).toEqual('test-trend')
+        expect(doc).toBeDefined()
         done()
       })
     })
-  })
-
-  it('Pushes new history to an existing trend', done => {
-    let trendModel = new Trend({
-      name: 'test-trend',
-      history: []
-    })
-
-    let newHistoryItem = {sentiment: 1, timestamp: 123}
-
-    trendModel.save(() => {
-      Trend.findOneAndUpdate({name: 'test-trend'},
-      {$push: {history: newHistoryItem}}, {new: true}, (err, doc) => {
-        expect(err).toBeNull()
-
-        expect(doc.name).toEqual('test-trend')
-        expect(doc.history.length).toEqual(1)
-        expect(doc.history[0].sentiment).toEqual(newHistoryItem.sentiment)
-        expect(doc.history[0].timestamp).toEqual(newHistoryItem.timestamp)
-        done()
-      })
-    })
-  })
-
-  it('Pushes new history to a nonexistant trend using upsert', (done) => {
-    let newHistoryItem = {sentiment: 1, timestamp: 123}
-
-    Trend.findOneAndUpdate({name: 'test-trend'},
-      {$push: {history: newHistoryItem}}, {upsert: true, new: true}, (err, doc) => {
-        expect(err).toBeNull()
-
-        expect(doc.name).toEqual('test-trend')
-        expect(doc.history.length).toEqual(1)
-        expect(doc.history[0].sentiment).toEqual(newHistoryItem.sentiment)
-        expect(doc.history[0].timestamp).toEqual(newHistoryItem.timestamp)
-        done()
-      })
   })
 })

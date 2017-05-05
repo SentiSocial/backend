@@ -2,8 +2,6 @@ const news = require('../news/news')
 const tweetSearch = require('../twitter/tweet-search')
 const TweetSentimentAnalysis = require('../twitter/tweet-sentiment-analysis')
 const Trend = require('../models/trend')
-const Article = require('../models/article')
-const Tweet = require('../models/tweet')
 const config = require('../config')
 
 /**
@@ -17,16 +15,9 @@ const mainUtils = {
    * @param {type} cb Function to be called when trends have been deleted
    */
   removeOldTrends: function (currTrends, cb) {
-    Trend.remove({name: {$nin: currTrends}})
-    .then(() => {
-      return Article.remove({name: {$nin: currTrends}})
-    }, err => { throw err })
-    .then(() => {
-      return Tweet.remove({name: {$nin: currTrends}})
-    }, err => { throw err })
-    .then(() => {
+    Trend.remove({name: {$nin: currTrends}}, () => {
       cb()
-    }, err => { throw err })
+    })
   },
 
   /**
@@ -85,6 +76,7 @@ const mainUtils = {
         embed_id: tweet.id,
         popularity: tweet.popularity
       }
+
       // Add dbTweet to the database only if it does not already exist in
       // the database
       Tweet.findOneAndUpdate({embed_id: tweet.id}, {$setOnInsert: dbTweet},

@@ -21,11 +21,11 @@ describe('All Trends Controller', () => {
   var mockTrends = [
     new Trend({
       name: 'test-trend1',
-      sentiment: 4
+      sentiment_score: 4
     }),
     new Trend({
       name: 'test-trend2',
-      sentiment: -1
+      sentiment_score: -1
     })
   ]
 
@@ -95,7 +95,7 @@ describe('All Trends Controller', () => {
     res.on('end', () => {
       let data = JSON.parse(res._getData())
 
-      let fields = ['name', 'sentiment']
+      let fields = ['name', 'sentiment_score']
       data.trends.forEach(trend => {
         fields.forEach(field => {
           expect(trend[field]).toBeDefined()
