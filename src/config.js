@@ -19,8 +19,16 @@ var config = {
   // Number of articles to send per request to the articles endpoint
   articlesPerRequest: 5,
 
-  // Yahoo WOEID ID of location for grabbing tweets and trending topics (23424977 is the USA)
-  woeid: 23424977,
+  // Array of Yahoo! WOEIDs of countries to get trends for
+  // Currently tries to cover most of the English speaking world
+  woeid_array: [
+    23424977, // United States
+    23424775, // Canada
+    23424975, // United Kingdom
+    23424803, // Ireland
+    23424748, // Australia
+    23424916  // New Zealand
+  ],
 
   // Number of tweets retreived per call to the Twitter search api
   popularTweetsPerSearch: 100,
