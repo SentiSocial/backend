@@ -28,7 +28,8 @@
     "mongoose": "^4.7.6",
     "request": "^2.79.0",
     "sentiment": "^2.1.0",
-    "twitter": "^1.7.0"
+    "twitter": "^1.7.0",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "eslint": "^3.13.0",
