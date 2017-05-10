@@ -1,13 +1,12 @@
 'use strict'
 var Twitter = require('twitter')
 var apiKeys = require('../api-keys')
-var config = require('../config')
-var tweetUtils = require('../utils/tweet-utils')
 
 var client = new Twitter({
   consumer_key: apiKeys.twitter_consumer_key,
   consumer_secret: apiKeys.twitter_consumer_secret,
-  bearer_token: apiKeys.twitter_bearer_token
+  access_token_key: apiKeys.twitter_access_token_key,
+  access_token_secret: apiKeys.twitter_access_token_secret
 })
 
 /**
@@ -26,47 +25,21 @@ var tweetSearch = {
    * @param  {Number} Number of tweets to retreive
    * @param  {Function} callback description
    */
-  getTweetSample: function (trend, num, callback) {
-    var tweets = []
-    var tweetsRetrieved = 0
+  getTweetSample: function (trend, num) {
+    return new Promise((resolve, reject) => {
+      client.get('search/tweets', {q: trend, result_type: 'popular', count: num}, (error, result, response) => {
+        if (error) reject(error)
 
-    client.get('search/tweets', {q: trend, result_type: 'popular', count: num}, function appendTo (error, result, response) {
-      if (error) {
-        console.log(error)
-        throw error
-      }
-
-      // If there are returned statuses
-      if (result.statuses.length !== 0) {
-        // Add all tweets to the tweets array
-        var lowestId = Number.MAX_SAFE_INTEGER
+        let tweets = []
         result.statuses.forEach(function (tweet) {
-          tweetsRetrieved++
-
-          // Check for lowest id
-          if (tweet.id < lowestId) {
-            lowestId = tweet.id
-          }
-
           // Add the tweet text, id and popularity to tweets
           tweets.push({
-            text: tweet.text,
-            id: tweet.id_str,
-            popularity: tweet.retweet_count + tweet.favorite_count
+            embed_id: tweet.id_str
           })
         })
 
-        // If there are more tweets to retrieve, make a recursive async call
-        if (tweetsRetrieved <= num) {
-          client.get('search/tweets', {q: trend, count: config.popularTweetsPerSearch, max_id: lowestId}, appendTo)
-        } else {
-          tweetUtils.sortTweets(tweets)
-          callback(tweets)
-        }
-      } else {
-        tweetUtils.sortTweets(tweets)
-        callback(tweets)
-      }
+        resolve(tweets)
+      })
     })
   }
 }
