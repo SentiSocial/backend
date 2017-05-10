@@ -1,13 +1,13 @@
 'use strict'
 const Twitter = require('twitter')
-var sentiment = require('sentiment')
-var _ = require('underscore')
-var apiKeys = require('../api-keys')
+const sentiment = require('sentiment')
+const _ = require('underscore')
+const apiKeys = require('../api-keys')
 
 var client = new Twitter({
   consumer_key: apiKeys.twitter_consumer_key,
   consumer_secret: apiKeys.twitter_consumer_secret,
-  access_token_key: apiKeys.twitter_acess_token_key,
+  access_token_key: apiKeys.twitter_access_token_key,
   access_token_secret: apiKeys.twitter_access_token_secret
 })
 
@@ -68,7 +68,7 @@ function TweetStream () {
     })
 
     stream.on('error', function (error) {
-      throw error
+      console.error(error)
     })
   }
 
