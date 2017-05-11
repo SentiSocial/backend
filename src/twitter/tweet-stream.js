@@ -44,7 +44,7 @@ function TweetStream () {
     // Fill the trendData object
     trendData = {}
     trends.forEach(trend => {
-      trendData[trend] = {count: 0, sentiment_prelim: 0}
+      trendData[trend] = {tweets_analyzed: 0, sentiment_prelim: 0}
     })
 
     stream = client.stream('statuses/filter', {track: trends.join(',')})
@@ -62,7 +62,7 @@ function TweetStream () {
         if (event.text.match(trendRegex.regex)) {
           // Add sentiment (Sentiment is averaged when data is returned)
           trendData[trendRegex.name].sentiment_prelim += sentimentScore
-          trendData[trendRegex.name].count ++
+          trendData[trendRegex.name].tweets_analyzed ++
         }
       })
     })
@@ -93,9 +93,9 @@ function TweetStream () {
       // Omit sentiment_prelim from the return
       returnTrendData[trend] = _.omit(trendData[trend], 'sentiment_prelim')
 
-      // Average the sentiment (avoiding dividing by zero if count == 0)
-      var avgSentiment = trendData[trend].count > 0
-      ? trendData[trend].sentiment_prelim / trendData[trend].count : 0
+      // Average the sentiment (avoiding dividing by zero if tweets_analyzed == 0)
+      var avgSentiment = trendData[trend].tweets_analyzed > 0
+      ? trendData[trend].sentiment_prelim / trendData[trend].tweets_analyzed : 0
       returnTrendData[trend].sentiment = avgSentiment
     })
 
