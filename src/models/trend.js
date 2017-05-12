@@ -16,6 +16,7 @@ var articleSchema = new mongoose.Schema({
 
 var trendSchema = new mongoose.Schema({
   name: String,
+  rank: Number,
   tweets_analyzed: Number,
   sentiment_score: Number,
   sentiment_description: String,
