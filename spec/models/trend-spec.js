@@ -14,6 +14,13 @@ describe('Trend', function () {
     })
   })
 
+  afterAll(done => {
+    mockgoose.reset(() => {
+      mongoose.connection.close()
+      done()
+    })
+  })
+
   it('Saves a trend and retreives it', (done) => {
     let trendModel = new Trend({
       name: 'test-trend',

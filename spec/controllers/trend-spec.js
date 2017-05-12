@@ -36,8 +36,9 @@ describe('Trend Controller', () => {
     })
   })
 
-  afterAll((done) => {
-    mongoose.unmock(() => {
+  afterAll(done => {
+    mockgoose.reset(() => {
+      mongoose.connection.close()
       done()
     })
   })
