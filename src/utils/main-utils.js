@@ -51,7 +51,7 @@ const mainUtils = {
               // Resolve when all trends processed
               trendsProcessed++
 
-              if (trendsProcessed == trends.length) {
+              if (trendsProcessed === trends.length) {
                 resolve()
               }
             })
