@@ -42,7 +42,8 @@
     "mockgoose": "^6.0.8",
     "nock": "^9.0.2",
     "node-mocks-http": "^1.5.6",
-    "pre-commit": "^1.2.2"
+    "pre-commit": "^1.2.2",
+    "rewire": "^2.5.2"
   },
   "pre-commit": [
     "lint",
