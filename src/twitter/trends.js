@@ -39,7 +39,7 @@ var trends = {
     function fillLocations () {
       return client.get('trends/available', {}).then((locations) => {
         locations.forEach(location => {
-          if (config.woeid_array.indexOf(location.woeid) !== -1) {
+          if (config.locationsTracking.indexOf(location.woeid) !== -1) {
             locationsTracking.push({woeid: location.woeid, countryCode: location.countryCode})
           }
         })

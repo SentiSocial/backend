@@ -94,7 +94,7 @@ describe('Twitter Trends Module', () => {
 
     // Mock the config so that trends are only requested from the mocked endpoints
     var configMock = {
-      woeid_array: [23424977, 23424775]
+      locationsTracking: [23424977, 23424775]
     }
     mockery.registerMock('config', configMock)
   })

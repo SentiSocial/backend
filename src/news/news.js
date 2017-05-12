@@ -37,7 +37,7 @@ function getNews (phrase, callback) {
   )
 
   function respond () {
-    callback(articles.slice(0, config.maxArticlesStorageCap))
+    callback(articles.slice(0, config.maxArticlesPerTrend))
   }
 }
 

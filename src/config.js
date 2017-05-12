@@ -1,27 +1,28 @@
 'use strict'
 
-var config = {
+const config = {
   // Address of MongoDB database to store trend ino in
   dbAddress: 'localhost',
 
   // Name of MongoDB database to store trend information
   dbName: 'sentisocial',
 
+  // Port that the API listens on
+  apiPort: 8080,
+
   // Maximum number of articles to store for each trend
-  maxArticlesStorageCap: 10,
+  maxArticlesPerTrend: 10,
 
   // Maximum number of popular tweets to store for each trend
-  tweetsStored: 20,
+  maxTweetsPerTrend: 10,
 
-  // Number of tweets to send per request to the tweets endpoint
-  tweetsPerRequest: 10,
-
-  // Number of articles to send per request to the articles endpoint
-  articlesPerRequest: 5,
+  // Server interval length in milliseconds (Trends are updated every this many
+  // milliseconds), (450000 is 7.5 mins)
+  intervalLength: 450000,
 
   // Array of Yahoo! WOEIDs of countries to get trends for
   // Currently tries to cover most of the English speaking world
-  woeid_array: [
+  locationsTracking: [
     23424977, // United States
     23424775, // Canada
     23424975, // United Kingdom
@@ -29,18 +30,6 @@ var config = {
     23424748, // Australia
     23424916  // New Zealand
   ],
-
-  // Number of tweets retreived per call to the Twitter search api
-  popularTweetsPerSearch: 100,
-
-  // Total number of popular tweets retreived for each trend from Twitter
-  popularTweetsRetreivedTotal: 200,
-
-  // Interval length in milliseconds, (1800000 is 30 mins)
-  intervalLength: 1800000,
-
-  // Port that the API listens on
-  apiPort: 8080,
 
   // List of News API news org ids to retreive news info for
   // Orgs appearing higher in the array are more likely to have their articles stored
