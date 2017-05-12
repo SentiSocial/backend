@@ -10,7 +10,7 @@ const allTrendsController = function (req, res) {
       let resData = {trends: trends}
       res.json(resData)
     }
-  }).select({name: 1, sentiment_score: 1, _id: 0})
+  }).select({name: 1, rank: 1, sentiment_score: 1, _id: 0}).sort({rank: 1})
 }
 
 module.exports = allTrendsController

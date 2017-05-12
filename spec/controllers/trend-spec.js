@@ -1,3 +1,4 @@
+const mocks = require('../mocks')
 const httpMocks = require('node-mocks-http')
 const Trend = require('../../src/models/trend')
 const mongoose = require('mongoose')
@@ -10,14 +11,10 @@ function getResponse () {
   })
 }
 
+var mockTrend
+
 describe('Trend Controller', () => {
-  var mockTrend = {
-    name: 'test-trend',
-    history: [
-      {sentiment: 1, timestamp: 100},
-      {sentiment: 2, timestamp: 160}
-    ]
-  }
+  mockTrend = mocks.getMockTrend()
 
   beforeAll(function (done) {
     // Wrap mongoose with mockgoose
@@ -47,7 +44,7 @@ describe('Trend Controller', () => {
     let req = httpMocks.createRequest({
       method: 'GET',
       params: {
-        name: 'test-trend'
+        name: mockTrend.name
       },
       url: '/v1/trend/test-trend'
     })
@@ -98,7 +95,7 @@ describe('Trend Controller', () => {
     let req = httpMocks.createRequest({
       method: 'GET',
       params: {
-        name: 'test-trend'
+        name: mockTrend.name
       },
       url: '/v1/trend/test-trend'
     })
@@ -116,7 +113,7 @@ describe('Trend Controller', () => {
     let req = httpMocks.createRequest({
       method: 'GET',
       params: {
-        name: 'test-trend'
+        name: mockTrend.name
       },
       url: '/v1/trend/test-trend'
     })
@@ -125,7 +122,17 @@ describe('Trend Controller', () => {
     res.on('end', () => {
       let data = JSON.parse(res._getData())
 
-      let fields = ['name', 'history']
+      let fields = [
+        'name',
+        'rank',
+        'tweets_analyzed',
+        'sentiment_score',
+        'sentiment_description',
+        'locations',
+        'tweet_volume',
+        'tweets',
+        'articles'
+      ]
       fields.forEach(field => {
         expect(data[field]).toBeDefined()
       })

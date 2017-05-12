@@ -1,4 +1,5 @@
 'use strict'
+const mocks = require('../mocks')
 const mongoose = require('mongoose')
 const mockgoose = require('mockgoose')
 const Trend = require('../../src/models/trend')
@@ -33,9 +34,9 @@ describe('Main utils', () => {
 
   it('Should remove all old trends from the database with removeOldTrends', done => {
     let mockTrends = [
-      getMockTrend(),
-      getMockTrend(),
-      getMockTrend()
+      mocks.getMockTrend(),
+      mocks.getMockTrend(),
+      mocks.getMockTrend()
     ]
 
     mockTrends[0].name = '#trend1'
@@ -57,7 +58,7 @@ describe('Main utils', () => {
   })
 
   it('Should add a new trend with createTrend', done => {
-    let trend = getMockTrend()
+    let trend = mocks.getMockTrend()
 
     mainUtils.createNewTrend(trend).then(() => {
       getAllTrends().then(trends => {
@@ -68,8 +69,8 @@ describe('Main utils', () => {
   })
 
   it('Should update an existing trend with updateExistingTrend', done => {
-    let existingTrendData = getMockTrend()
-    let currentTrendData = getMockTrend()
+    let existingTrendData = mocks.getMockTrend()
+    let currentTrendData = mocks.getMockTrend()
 
     currentTrendData.rank = 3
     currentTrendData.articles = [
@@ -129,11 +130,11 @@ describe('Main utils', () => {
       done()
     }})
 
-    mainUtils.processTrend(getMockTrend(), [], [])
+    mainUtils.processTrend(mocks.getMockTrend(), [], [])
   })
 
   it('Should call updateExistingTrend when processTrend is called with an existing Trend', done => {
-    let trend = getMockTrend()
+    let trend = mocks.getMockTrend()
     let trendModel = new Trend(trend)
 
     spyOn(mainUtils, 'updateExistingTrend').and.returnValue({then: () => {
@@ -174,35 +175,4 @@ function getAllTrends (cb) {
       resolve(docs)
     }).catch(reject)
   })
-}
-
-/**
- * Returns a mock trend object for testing.
- *
- * @return {Object} a mock trend
- */
-function getMockTrend () {
-  return {
-    name: '#trend',
-    rank: 2,
-    tweets_analyzed: 100,
-    sentiment_score: 3,
-    sentiment_description: 'Positive',
-    locations: ['US', 'CA'],
-    tweet_volume: 12345,
-    tweets: [
-      { embed_id: '123456' },
-      { embed_id: '123457' }
-    ],
-    articles: [
-      {
-        title: 'SomeArticleTitle',
-        description: 'An Article',
-        source: 'http://cnn.com',
-        link: 'http://cnn.com/article',
-        timestamp: 1494573005,
-        media: 'http://cnn.com/image.jpg'
-      }
-    ]
-  }
 }

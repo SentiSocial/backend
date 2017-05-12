@@ -1,3 +1,4 @@
+const mocks = require('../mocks')
 const httpMocks = require('node-mocks-http')
 const Trend = require('../../src/models/trend')
 const mongoose = require('mongoose')
@@ -17,17 +18,16 @@ function getResponse () {
   })
 }
 
+var mockTrends
+
 describe('All Trends Controller', () => {
-  var mockTrends = [
-    new Trend({
-      name: 'test-trend1',
-      sentiment_score: 4
-    }),
-    new Trend({
-      name: 'test-trend2',
-      sentiment_score: -1
-    })
+  mockTrends = [
+    mocks.getMockTrend(),
+    mocks.getMockTrend()
   ]
+
+  mockTrends[0].rank = 1
+  mockTrends[1].rank = 2
 
   beforeAll(function (done) {
     // Wrap mongoose with mockgoose
@@ -96,12 +96,27 @@ describe('All Trends Controller', () => {
     res.on('end', () => {
       let data = JSON.parse(res._getData())
 
-      let fields = ['name', 'sentiment_score']
+      let fields = ['name', 'sentiment_score', 'rank']
       data.trends.forEach(trend => {
         fields.forEach(field => {
           expect(trend[field]).toBeDefined()
         })
       })
+
+      done()
+    })
+    allTrendsController(req, res)
+  })
+
+  it('Should return trends sorted by rank', done => {
+
+    let req = getRequest()
+    let res = getResponse()
+
+    res.on('end', () => {
+      let data = JSON.parse(res._getData())
+
+      expect(data.trends[0].rank).toBeLessThan(data.trends[1].rank)
 
       done()
     })

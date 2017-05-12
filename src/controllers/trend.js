@@ -16,7 +16,7 @@ const trendController = function (req, res) {
     } else {
       res.json(trend)
     }
-  }).select({_id: 0})
+  }).select({_id: 0, __v: 0})
 }
 
 module.exports = trendController
