@@ -106,8 +106,8 @@ describe('Twitter Trends Module', () => {
   it('Should return the correct trends, in order', done => {
     trends.getTrends().then((trends) => {
       expect(trends.length).toEqual(2)
-      expect(trends[0]).toEqual({name: '#trend1', locations: ['US', 'CA'], tweet_volume: 1})
-      expect(trends[1]).toEqual({name: '#trend2', locations: ['US'], tweet_volume: 2})
+      expect(trends[0]).toEqual({name: '#trend1', locations: ['US', 'CA'], tweet_volume: 1, rank: 1})
+      expect(trends[1]).toEqual({name: '#trend2', locations: ['US'], tweet_volume: 2, rank: 2})
       done()
     })
   })

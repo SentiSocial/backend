@@ -86,9 +86,10 @@ var trends = {
     // tracking that are on the worldwide trends list, and in the same order
     // as they appear on the worldwide trends list
     function reduceTrends () {
+      let rank = 1
       // Iterate over each worldwide trend
       worldwideTrends.forEach(worldwideTrend => {
-        var trend = {name: worldwideTrend.name, locations: [], tweet_volume: worldwideTrend.tweet_volume}
+        let trend = {name: worldwideTrend.name, locations: [], tweet_volume: worldwideTrend.tweet_volume}
         // for each worldwide trend, iterate over each countrycode we have
         Object.keys(locationTrends).forEach(countryCode => {
           // For each country code, iterate over that country's trends
@@ -104,6 +105,9 @@ var trends = {
         // If this worldwide trend is trending in a location we're tracking
         // add it to the trendsToTrack array
         if (trend.locations.length > 0) {
+          trend.rank = rank
+          rank++
+
           trendsToTrack.push(trend)
         }
       })
