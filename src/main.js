@@ -33,7 +33,6 @@ mongoose.connect('mongodb://' + config.dbAddress + '/' + config.dbName)
 var tweetStream = new TweetStream()
 
 function intervalFunction () {
-  console.log('interval')
   // At the beginning of each interval get all trends
   trends.getTrends()
   // Then update the trend info in the database
