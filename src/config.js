@@ -16,9 +16,9 @@ const config = {
   // Maximum number of popular tweets to store for each trend
   maxTweetsPerTrend: 10,
 
-  // Server interval length in milliseconds (Trends are updated every this many
-  // milliseconds), (450000 is 7.5 mins)
-  intervalLength: 450000,
+  // Server interval length in seconds (Trends are updated every this many
+  // seconds), (450 is 7.5 mins)
+  intervalLength: 450,
 
   // Array of Yahoo! WOEIDs of countries to get trends for
   // Currently tries to cover most of the English speaking world
