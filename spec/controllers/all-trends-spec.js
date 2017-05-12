@@ -109,7 +109,6 @@ describe('All Trends Controller', () => {
   })
 
   it('Should return trends sorted by rank', done => {
-
     let req = getRequest()
     let res = getResponse()
 
