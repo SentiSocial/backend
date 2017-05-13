@@ -16,6 +16,9 @@ const config = {
   // Maximum number of popular tweets to store for each trend
   maxTweetsPerTrend: 10,
 
+  // Maximum number of keywords to store for each trend
+  maxKeywordsPerTrend: 40,
+
   // Server interval length in seconds (Trends are updated every this many
   // seconds), (450 is 7.5 mins)
   intervalLength: 450,

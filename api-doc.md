@@ -97,6 +97,10 @@ Response:
 | tweet_volume            | number &#124; null      | Tweet volume for the past 24 hours (Can be null if info is not available)                        |
 | locations               | array                   | Array of country codes representing countries that the trend is trending in                      |
 | locations[i]            | string                  | ISO 3611 country code                                                                            |
+| keywords                | array                   | Array of keywords associated with the trend                                                      |
+| keywords[i]             | object                  |                                                                                                  |
+| keywords[i].word        | string                  | A keyword associated with the trend                                                              |
+| keywords[i].occurences  | number                  | Number of occurences of this keyword in analyzed tweets                                          |
 | articles                | array                   | Array of objects containing news articles, sorted by popularity of news source                   |
 | articles[i]             | object                  |                                                                                                  |
 | articles[i]._id         | string                  | Sequential unique identifier for news articles                                                   |
@@ -131,63 +135,105 @@ Example Response:
     "GB",
     "US"
   ],
-	"articles" : [
-		{
-			"media" : "http://ichef.bbci.co.uk/onesport/cps/624/cpsprodpb/15A57/production/_96036688_chelseacelebrate.jpg",
-			"link" : "http://www.bbc.co.uk/sport/football/39813798",
-			"source" : "BBC News",
-			"timestamp" : 1494626338,
-			"description" : "Chelsea are crowned Premier League champions as Michy Batshuayi's late goal gives them the win they needed to secure the title at West Brom.",
-			"title" : "West Bromwich Albion 0-1 Chelsea"
-		},
-		{
-			"media" : "http://ichef.bbci.co.uk/onesport/cps/624/cpsprodpb/15A57/production/_96036688_chelseacelebrate.jpg",
-			"link" : "http://www.bbc.co.uk/sport/football/39813798",
-			"source" : "BBC Sport",
-			"timestamp" : 1494626338,
-			"description" : "Chelsea are crowned Premier League champions as Michy Batshuayi's late goal gives them the win they needed to secure the title at West Brom.",
-			"title" : "West Bromwich Albion 0-1 Chelsea"
-		},
-		{
-			"media" : "http://ichef.bbci.co.uk/onesport/cps/624/cpsprodpb/EEF5/production/_96037116_antonioconte.jpg",
-			"link" : "http://www.bbc.co.uk/sport/football/39905241",
-			"source" : "BBC Sport",
-			"timestamp" : 1494632312,
-			"description" : "Chelsea need to win the FA Cup to turn a \"great season\" into a \"fantastic\" one after clinching the title, says manager Antonio Conte.",
-			"title" : "Chelsea are Premier League champions: Antonio Conte targets Double"
-		},
+  "keywords" : [
+    {
+      "occurences" : 66,
+      "word" : "chelsea"
+    },
+    {
+      "occurences" : 59,
+      "word" : "football"
+    },
+    {
+      "occurences" : 30,
+      "word" : "win"
+    },
+    {
+      "occurences" : 15,
+      "word" : "team"
+    },
+    {
+      "occurences" : 15,
+      "word" : "soccer"
+    },
+    {
+      "occurences" : 9,
+      "word" : "goal"
+    },
+    {
+      "occurences" : 8,
+      "word" : "points"
+    },
+    {
+      "occurences" : 8,
+      "word" : "penalty"
+    },
+    {
+      "occurences" : 8,
+      "word" : "league"
+    },
+    {
+      "occurences" : 8,
+      "word" : "premier"
+    }
   ],
-	"tweets" : [
-		{
-			"embed_id" : "863134776651374592"
-		},
-		{
-			"embed_id" : "862940061624659968"
-		},
-		{
-			"embed_id" : "863141907999973379"
-		},
-		{
-			"embed_id" : "863136242279620608"
-		},
-		{
-			"embed_id" : "863141446957846532"
-		},
-		{
-			"embed_id" : "862863664327610369"
-		},
-		{
-			"embed_id" : "863136436203261952"
-		},
-		{
-			"embed_id" : "863138919822614529"
-		},
-		{
-			"embed_id" : "863135537313533952"
-		},
-		{
-			"embed_id" : "863117986768486401"
-		}
-	],
+  "articles" : [
+    {
+      "media" : "http://ichef.bbci.co.uk/onesport/cps/624/cpsprodpb/15A57/production/_96036688_chelseacelebrate.jpg",
+      "link" : "http://www.bbc.co.uk/sport/football/39813798",
+      "source" : "BBC News",
+      "timestamp" : 1494626338,
+      "description" : "Chelsea are crowned Premier League champions as Michy Batshuayi's late goal gives them the win they needed to secure the title at West Brom.",
+      "title" : "West Bromwich Albion 0-1 Chelsea"
+    },
+    {
+      "media" : "http://ichef.bbci.co.uk/onesport/cps/624/cpsprodpb/15A57/production/_96036688_chelseacelebrate.jpg",
+      "link" : "http://www.bbc.co.uk/sport/football/39813798",
+      "source" : "BBC Sport",
+      "timestamp" : 1494626338,
+      "description" : "Chelsea are crowned Premier League champions as Michy Batshuayi's late goal gives them the win they needed to secure the title at West Brom.",
+      "title" : "West Bromwich Albion 0-1 Chelsea"
+    },
+    {
+      "media" : "http://ichef.bbci.co.uk/onesport/cps/624/cpsprodpb/EEF5/production/_96037116_antonioconte.jpg",
+      "link" : "http://www.bbc.co.uk/sport/football/39905241",
+      "source" : "BBC Sport",
+      "timestamp" : 1494632312,
+      "description" : "Chelsea need to win the FA Cup to turn a \"great season\" into a \"fantastic\" one after clinching the title, says manager Antonio Conte.",
+      "title" : "Chelsea are Premier League champions: Antonio Conte targets Double"
+    }
+  ],
+  "tweets" : [
+    {
+      "embed_id" : "863134776651374592"
+    },
+    {
+      "embed_id" : "862940061624659968"
+    },
+    {
+      "embed_id" : "863141907999973379"
+    },
+    {
+      "embed_id" : "863136242279620608"
+    },
+    {
+      "embed_id" : "863141446957846532"
+    },
+    {
+      "embed_id" : "862863664327610369"
+    },
+    {
+      "embed_id" : "863136436203261952"
+    },
+    {
+      "embed_id" : "863138919822614529"
+    },
+    {
+      "embed_id" : "863135537313533952"
+    },
+    {
+      "embed_id" : "863117986768486401"
+    }
+  ]
 }
 ```

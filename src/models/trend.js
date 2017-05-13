@@ -14,6 +14,11 @@ var articleSchema = new mongoose.Schema({
   media: String
 }, {_id: false})
 
+var keywordSchema = new mongoose.Schema({
+  word: String,
+  occurences: Number
+}, {_id: false})
+
 var trendSchema = new mongoose.Schema({
   name: String,
   rank: Number,
@@ -22,6 +27,7 @@ var trendSchema = new mongoose.Schema({
   sentiment_description: String,
   locations: [String],
   tweet_volume: Number,
+  keywords: [keywordSchema],
   tweets: [tweetSchema],
   articles: [articleSchema]
 })

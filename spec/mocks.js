@@ -17,6 +17,11 @@ const mocks = {
       sentiment_description: 'Positive',
       locations: ['US', 'CA'],
       tweet_volume: 12345,
+      keywords: [
+        {word: 'someword', occurences: 12},
+        {word: 'someotherword', occurences: 5},
+        {word: 'someotherotherword', occurences: 2}
+      ],
       tweets: [
         { embed_id: '123456' },
         { embed_id: '123457' }

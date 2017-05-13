@@ -35,7 +35,6 @@ const mainUtils = {
       let trendNames = trends.map(trend => { return trend.name })
 
       let streamData = tweetStream.getData()
-      console.log(streamData)
 
       // Remove all old trends
       mainUtils.removeOldTrends(trendNames)
@@ -81,6 +80,7 @@ const mainUtils = {
         tweets: tweets,
         sentiment_score: streamData ? streamData.sentiment : 0,
         tweets_analyzed: streamData ? streamData.tweets_analyzed : 0,
+        keywords: streamData ? streamData.keywords : [],
         sentiment_description: 'Not Implemented Yet'
       })
 
@@ -115,12 +115,29 @@ const mainUtils = {
         existingTrendData.sentiment_score * existingTrendData.tweets_analyzed) /
         newTweetsAnalyzed : 0
 
+      // Create a new keyword array (removing duplicates)
+      let keywordsExisting = {}
+      let newKeywords = existingTrendData.keywords.concat(currentTrendData.keywords)
+      .filter(keyword => {
+        if (keywordsExisting[keyword.word]) {
+          return false
+        } else {
+          keywordsExisting[keyword.word] = true
+          return true
+        }
+      })
+      newKeywords.sort((a, b) => {
+        return b.occurences - a.occurences
+      })
+      newKeywords = newKeywords.slice(0, config.maxKeywordsPerTrend)
+
       Trend.findOneAndUpdate({name: existingTrendData.name},
         {
           $set: {
             sentiment_score: newSentimentScore,
             tweets_analyzed: newTweetsAnalyzed,
             rank: currentTrendData.rank,
+            keywords: newKeywords,
             tweets: currentTrendData.tweets,
             articles: currentTrendData.articles
           }

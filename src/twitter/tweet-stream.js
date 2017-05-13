@@ -3,6 +3,8 @@ const Twitter = require('twitter')
 const sentiment = require('sentiment')
 const _ = require('underscore')
 const apiKeys = require('../api-keys')
+const KeywordBank = require('./keyword-bank')
+const config = require('../config')
 
 var client = new Twitter({
   consumer_key: apiKeys.twitter_consumer_key,
@@ -44,7 +46,11 @@ function TweetStream () {
     // Fill the trendData object
     trendData = {}
     trends.forEach(trend => {
-      trendData[trend] = {tweets_analyzed: 0, sentiment_prelim: 0}
+      trendData[trend] = {
+        tweets_analyzed: 0,
+        sentiment_prelim: 0,
+        keywordBank: new KeywordBank()
+      }
     })
 
     stream = client.stream('statuses/filter', {track: trends.join(',')})
@@ -52,6 +58,7 @@ function TweetStream () {
     stream.on('data', event => {
       // Ignore all streaming API messages except tweets
       if (!event.text) {
+        console.log(event)
         return
       }
 
@@ -63,6 +70,8 @@ function TweetStream () {
           // Add sentiment (Sentiment is averaged when data is returned)
           trendData[trendRegex.name].sentiment_prelim += sentimentScore
           trendData[trendRegex.name].tweets_analyzed ++
+
+          trendData[trendRegex.name].keywordBank.addText(event.text)
         }
       })
     })
@@ -90,13 +99,16 @@ function TweetStream () {
     var returnTrendData = {}
 
     Object.keys(trendData).forEach(trend => {
-      // Omit sentiment_prelim from the return
-      returnTrendData[trend] = _.omit(trendData[trend], 'sentiment_prelim')
+      // Omit sentiment_prelim and keywordBank from the return
+      returnTrendData[trend] = _.omit(trendData[trend], 'sentiment_prelim', 'keywordBank')
 
       // Average the sentiment (avoiding dividing by zero if tweets_analyzed == 0)
       var avgSentiment = trendData[trend].tweets_analyzed > 0
       ? trendData[trend].sentiment_prelim / trendData[trend].tweets_analyzed : 0
       returnTrendData[trend].sentiment = avgSentiment
+
+      // Add top keywords
+      returnTrendData[trend].keywords = trendData[trend].keywordBank.getTopKeywords(config.maxKeywordsPerTrend)
     })
 
     return returnTrendData

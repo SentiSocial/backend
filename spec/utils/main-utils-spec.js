@@ -90,6 +90,13 @@ describe('Main utils', () => {
     currentTrendData.sentiment_score = -2
     currentTrendData.tweets_analyzed = 5
 
+    currentTrendData.keywords = [
+      {word: 'word1', occurences: 10}
+    ]
+    existingTrendData.keywords = [
+      {word: 'word2', occurences: 4}
+    ]
+
     let trendModel = Trend(existingTrendData)
 
     trendModel.save().then(() => {
@@ -107,6 +114,10 @@ describe('Main utils', () => {
           doc.tweets.forEach((tweet, i) => {
             expect(tweet).toEqual(jasmine.objectContaining(currentTrendData.tweets[i]))
           })
+
+          // Keywords arrays should be merged and sorted
+          expect(doc.keywords[0]).toEqual(jasmine.objectContaining({word: 'word1', occurences: 10}))
+          expect(doc.keywords[1]).toEqual(jasmine.objectContaining({word: 'word2', occurences: 4}))
 
          // Tweets analyzed should be summed up
           let totalTweetsAnalyzed = currentTrendData.tweets_analyzed + existingTrendData.tweets_analyzed
