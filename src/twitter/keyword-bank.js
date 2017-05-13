@@ -1,3 +1,4 @@
+'use strict'
 const keywordExtractor = require('keyword-extractor')
 
 // Disregard keywords if they match these regexes
