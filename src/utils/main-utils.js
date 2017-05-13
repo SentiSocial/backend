@@ -35,6 +35,7 @@ const mainUtils = {
       let trendNames = trends.map(trend => { return trend.name })
 
       let streamData = tweetStream.getData()
+      console.log(streamData)
 
       // Remove all old trends
       mainUtils.removeOldTrends(trendNames)
@@ -125,7 +126,7 @@ const mainUtils = {
           }
         })
       .then(resolve)
-      .catch({reject})
+      .catch(reject)
     })
   },
 
