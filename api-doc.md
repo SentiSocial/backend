@@ -14,7 +14,7 @@ Get all current trends sorted in order by current popularity and associated data
 Response:
 
 | Name                      | Type   | Description                                                                             |
-|-------------------- ------|--------|-----------------------------------------------------------------------------------------|
+|---------------------------|--------|-----------------------------------------------------------------------------------------|
 | trends                    | array  | Array of trends sorted most popular first                                               |
 | trends[i]                 | object |                                                                                         |
 | trends[i].name            | string | Name of Trend                                                                           |
