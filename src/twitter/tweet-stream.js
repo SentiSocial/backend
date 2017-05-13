@@ -1,9 +1,8 @@
 'use strict'
 const Twitter = require('twitter')
-const sentiment = require('sentiment')
-const _ = require('underscore')
 const apiKeys = require('../api-keys')
 const KeywordBank = require('./keyword-bank')
+const SentimentBank = require('./sentiment-bank')
 const config = require('../config')
 
 var client = new Twitter({
@@ -47,9 +46,9 @@ function TweetStream () {
     trendData = {}
     trends.forEach(trend => {
       trendData[trend] = {
-        tweets_analyzed: 0,
-        sentiment_prelim: 0,
-        keywordBank: new KeywordBank()
+        sentimentBank: new SentimentBank(),
+        keywordBank: new KeywordBank(),
+        tweets_analyzed: 0
       }
     })
 
@@ -58,20 +57,15 @@ function TweetStream () {
     stream.on('data', event => {
       // Ignore all streaming API messages except tweets
       if (!event.text) {
-        console.log(event)
         return
       }
-
-      var sentimentScore = sentiment(event.text).score
 
       // Identify the trend and update trendData
       trendRegexes.forEach(trendRegex => {
         if (event.text.match(trendRegex.regex)) {
-          // Add sentiment (Sentiment is averaged when data is returned)
-          trendData[trendRegex.name].sentiment_prelim += sentimentScore
-          trendData[trendRegex.name].tweets_analyzed ++
-
+          trendData[trendRegex.name].sentimentBank.addText(event.text)
           trendData[trendRegex.name].keywordBank.addText(event.text)
+          trendData[trendRegex.name].tweets_analyzed++
         }
       })
     })
@@ -100,15 +94,11 @@ function TweetStream () {
 
     Object.keys(trendData).forEach(trend => {
       // Omit sentiment_prelim and keywordBank from the return
-      returnTrendData[trend] = _.omit(trendData[trend], 'sentiment_prelim', 'keywordBank')
+      returnTrendData[trend] = {}
 
-      // Average the sentiment (avoiding dividing by zero if tweets_analyzed == 0)
-      var avgSentiment = trendData[trend].tweets_analyzed > 0
-      ? trendData[trend].sentiment_prelim / trendData[trend].tweets_analyzed : 0
-      returnTrendData[trend].sentiment = avgSentiment
-
-      // Add top keywords
+      returnTrendData[trend].sentiment = trendData[trend].sentimentBank.getSentiment()
       returnTrendData[trend].keywords = trendData[trend].keywordBank.getTopKeywords(config.maxKeywordsPerTrend)
+      returnTrendData[trend].tweets_analyzed = trendData[trend].tweets_analyzed
     })
 
     return returnTrendData
