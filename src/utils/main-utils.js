@@ -4,6 +4,7 @@ const Trend = require('../models/trend')
 var news = require('../news/news')
 var tweetSearch = require('../twitter/tweet-search')
 const config = require('../config')
+const sentimentUtils = require('./sentiment-utils')
 
 /**
  * Contains utilities used in the main module
@@ -79,9 +80,9 @@ const mainUtils = {
         articles: newsArticles,
         tweets: tweets,
         sentiment_score: streamData ? streamData.sentiment : 0,
+        sentiment_description: streamData ? sentimentUtils.getSentimentDescription(streamData.sentiment) : 'No Data',
         tweets_analyzed: streamData ? streamData.tweets_analyzed : 0,
-        keywords: streamData ? streamData.keywords : [],
-        sentiment_description: 'Not Implemented Yet'
+        keywords: streamData ? streamData.keywords : []
       })
 
       // Try to find the trend
@@ -135,6 +136,7 @@ const mainUtils = {
         {
           $set: {
             sentiment_score: newSentimentScore,
+            sentiment_description: sentimentUtils.getSentimentDescription(newSentimentScore),
             tweets_analyzed: newTweetsAnalyzed,
             rank: currentTrendData.rank,
             keywords: newKeywords,

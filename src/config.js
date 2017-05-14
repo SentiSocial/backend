@@ -23,6 +23,19 @@ const config = {
   // seconds), (450 is 7.5 mins)
   intervalLength: 450,
 
+  // Human readable descriptions of sentiment values to return via the API
+  sentimentDescriptions: [
+    {max: Infinity, min: 3, text: 'Extremely Positive'},
+    {max: 3, min: 1.5, text: 'Very Positive'},
+    {max: 1.5, min: 1, text: 'Positive'},
+    {max: 1, min: 0.25, text: 'Slightly Positive'},
+    {max: 0.25, min: -0.25, text: 'Neutral'},
+    {max: -0.25, min: -1, text: 'Slightly Negative'},
+    {max: -1, min: -1.5, text: 'Negative'},
+    {max: -1.5, min: -3, text: 'Very Negative'},
+    {max: -3, min: -Infinity, text: 'Extremely Negative'}
+  ],
+
   // Array of Yahoo! WOEIDs of countries to get trends for
   // Currently tries to cover most of the English speaking world
   locationsTracking: [
