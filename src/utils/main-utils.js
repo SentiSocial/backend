@@ -79,8 +79,8 @@ const mainUtils = {
       let fullTrendData = _.extend(trendData, {
         articles: newsArticles,
         tweets: tweets,
-        sentiment_score: streamData ? streamData.sentiment : 0,
-        sentiment_description: streamData ? sentimentUtils.getSentimentDescription(streamData.sentiment) : 'No Data',
+        sentiment_score: streamData ? streamData.sentiment : null,
+        sentiment_description: streamData ? sentimentUtils.getSentimentDescription(streamData.sentiment) : null,
         tweets_analyzed: streamData ? streamData.tweets_analyzed : 0,
         keywords: streamData ? streamData.keywords : []
       })
@@ -114,7 +114,7 @@ const mainUtils = {
       let newSentimentScore = newTweetsAnalyzed > 0
         ? (currentTrendData.sentiment_score * currentTrendData.tweets_analyzed +
         existingTrendData.sentiment_score * existingTrendData.tweets_analyzed) /
-        newTweetsAnalyzed : 0
+        newTweetsAnalyzed : null
 
       // Create a new keyword array (removing duplicates)
       let keywordsExisting = {}
@@ -136,7 +136,7 @@ const mainUtils = {
         {
           $set: {
             sentiment_score: newSentimentScore,
-            sentiment_description: sentimentUtils.getSentimentDescription(newSentimentScore),
+            sentiment_description: newSentimentScore !== null ? sentimentUtils.getSentimentDescription(newSentimentScore) : null,
             tweets_analyzed: newTweetsAnalyzed,
             rank: currentTrendData.rank,
             keywords: newKeywords,
