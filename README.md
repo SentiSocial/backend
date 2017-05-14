@@ -8,7 +8,7 @@
 
 Created at The University of Toronto Scarborough's Hack the Valley 2017
 
-SentiSocial is a Twitter based news aggregation and sentiment analysis tool.
+SentiSocial is a Twitter based trend anslysis tool.
 This repository contains the SentiSocial backend, which queries the Twitter API
 for current trends, and aggregates news and popular tweets for those trends
 using the [News API](https://newsapi.org/) and the Twitter API. Sentiment
@@ -43,6 +43,8 @@ News API authentication keys in the following enviornment variables.
 | Twitter access token        | TWITTER_ACCESS_TOKEN        |
 | Twitter access token secret | TWITTER_ACCESS_TOKEN_SECRET |
 | News API key                | NEWS_API_KEY                |
+
+Then run:
 
 `npm start`
 
