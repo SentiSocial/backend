@@ -3,8 +3,7 @@ const mocks = require('../mocks')
 const mongoose = require('mongoose')
 const mockgoose = require('mockgoose')
 const Trend = require('../../src/models/trend')
-const rewire = require('rewire')
-const mainUtils = rewire('../../src/utils/main-utils')
+const mainUtils = require('../../src/utils/main-utils')
 
 mongoose.Promise = global.Promise
 
