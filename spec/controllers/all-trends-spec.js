@@ -46,7 +46,7 @@ describe('All Trends Controller', () => {
     })
   })
 
-  afterAll((done) => {
+  afterAll(done => {
     mockgoose.reset(() => {
       mongoose.connection.close()
       done()

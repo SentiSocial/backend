@@ -37,27 +37,27 @@ var trends = {
 
     // Fills in the locationsTracking array with woeids and country codes
     function fillLocations () {
-      return client.get('trends/available', {}).then((locations) => {
+      return client.get('trends/available', {}).then(locations => {
         locations.forEach(location => {
           if (config.locationsTracking.indexOf(location.woeid) !== -1) {
             locationsTracking.push({woeid: location.woeid, countryCode: location.countryCode})
           }
         })
-      }).catch((error) => { console.error(error) })
+      }).catch(error => { console.error(error) })
     }
 
     // Gets trends for the entire world (woeid 1), fills the worldwideTrends
     // array with them
     function getWorldwideTrends () {
-      return getTrendsForLocation(1).then((trends) => {
+      return getTrendsForLocation(1).then(trends => {
         worldwideTrends = trends[0].trends
-      }).catch((error) => { console.error(error) })
+      }).catch(error => { console.error(error) })
     }
 
     // Gets the trends for the specified woeid, returns a promise
     function getTrendsForLocation (woeid) {
       return client.get('trends/place', {id: woeid})
-      .catch((error) => { console.error(error) })
+      .catch(error => { console.error(error) })
     }
 
     // Fills the locationsTrends object with countrycode:array_of_trends key
@@ -67,8 +67,8 @@ var trends = {
         let callsMade = 0
 
         for (var i = 0; i < locationsTracking.length; i++) {
-          ((i) => {
-            getTrendsForLocation(locationsTracking[i].woeid).then((trends) => {
+          (i => {
+            getTrendsForLocation(locationsTracking[i].woeid).then(trends => {
               locationTrends[locationsTracking[i].countryCode] = trends[0].trends
 
               callsMade++
@@ -76,7 +76,7 @@ var trends = {
               if (callsMade === locationsTracking.length) {
                 resolve()
               }
-            }).catch((error) => { reject(error) })
+            }).catch(error => { reject(error) })
           })(i)
         }
       })
@@ -119,7 +119,7 @@ var trends = {
       .then(fillTrends)
       .then(reduceTrends)
       .then(() => { resolve(trendsToTrack) })
-      .catch((error) => { console.error(error) })
+      .catch(error => { console.error(error) })
     })
   }
 }

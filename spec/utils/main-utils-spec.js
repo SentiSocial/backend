@@ -11,7 +11,7 @@ describe('Main utils', () => {
   beforeAll(done => {
     // Wrap mongoose with mockgoose
     mockgoose(mongoose).then(() => {
-      mongoose.connect('mongodb://example.com/testdb', (err) => {
+      mongoose.connect('mongodb://example.com/testdb', err => {
         done(err)
       })
     })
@@ -181,7 +181,7 @@ function storeMockTrends (mockTrends, cb) {
  */
 function getAllTrends (cb) {
   return new Promise((resolve, reject) => {
-    Trend.find({}).then((docs) => {
+    Trend.find({}).then(docs => {
       resolve(docs)
     }).catch(reject)
   })

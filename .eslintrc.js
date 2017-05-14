@@ -3,6 +3,9 @@ module.exports = {
       "standard",
       "plugin:jasmine/recommended"
     ],
+    "rules": {
+      "arrow-parens": ["error", "as-needed"]
+    },
     "plugins": [
         "standard",
         "promise",

@@ -5,9 +5,9 @@ const mockgoose = require('mockgoose')
 const mocks = require('../mocks')
 
 describe('Trend', function () {
-  beforeEach((done) => {
+  beforeEach(done => {
     mockgoose(mongoose).then(() => {
-      mongoose.connect('mongodb://example.com/testdb', (err) => {
+      mongoose.connect('mongodb://example.com/testdb', err => {
         mockgoose.reset(() => {
           done(err)
         })
@@ -22,11 +22,11 @@ describe('Trend', function () {
     })
   })
 
-  it('Saves a trend and retreives it', (done) => {
+  it('Saves a trend and retreives it', done => {
     let trendModel = new Trend(mocks.getMockTrend())
 
     // Save the trend
-    trendModel.save((err) => {
+    trendModel.save(err => {
       expect(err).toBeNull()
 
       // Try to find the trend after saving
