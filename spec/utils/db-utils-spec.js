@@ -3,7 +3,7 @@ const mocks = require('../mocks')
 const mongoose = require('mongoose')
 const mockgoose = require('mockgoose')
 const Trend = require('../../src/models/trend')
-const mainUtils = require('../../src/utils/main-utils')
+const dbUtils = require('../../src/utils/db-utils')
 
 mongoose.Promise = global.Promise
 
@@ -44,7 +44,7 @@ describe('Main utils', () => {
 
     storeMockTrends(mockTrends).then(() => {
       // Remove #trend3 from the database
-      mainUtils.removeOldTrends(['#trend1', '#trend2']).then(() => {
+      dbUtils.removeOldTrends(['#trend1', '#trend2']).then(() => {
         getAllTrends().then(trends => {
           // #trend3 should no longer exist
           expect(trends.length).toEqual(2)
@@ -59,7 +59,7 @@ describe('Main utils', () => {
   it('Should add a new trend with createTrend', done => {
     let trend = mocks.getMockTrend()
 
-    mainUtils.createNewTrend(trend).then(() => {
+    dbUtils.createNewTrend(trend).then(() => {
       getAllTrends().then(trends => {
         expect(trends.length).toEqual(1)
         done()
@@ -99,7 +99,7 @@ describe('Main utils', () => {
     let trendModel = Trend(existingTrendData)
 
     trendModel.save().then(() => {
-      mainUtils.updateExistingTrend(existingTrendData, currentTrendData).then(() => {
+      dbUtils.updateExistingTrend(existingTrendData, currentTrendData).then(() => {
         Trend.findOne({}).then(doc => {
           // Rank should be copied from currentTrendData
           expect(doc.rank).toEqual(currentTrendData.rank)
@@ -135,26 +135,26 @@ describe('Main utils', () => {
   })
 
   it('Should call createNewTrend when processTrend is called with a new Trend', done => {
-    spyOn(mainUtils, 'createNewTrend').and.returnValue({then: () => {
-      expect(mainUtils.createNewTrend).toHaveBeenCalled()
+    spyOn(dbUtils, 'createNewTrend').and.returnValue({then: () => {
+      expect(dbUtils.createNewTrend).toHaveBeenCalled()
       done()
     }})
 
-    mainUtils.processTrend(mocks.getMockTrend(), [], [])
+    dbUtils.processTrend(mocks.getMockTrend(), [], [])
   })
 
   it('Should call updateExistingTrend when processTrend is called with an existing Trend', done => {
     let trend = mocks.getMockTrend()
     let trendModel = new Trend(trend)
 
-    spyOn(mainUtils, 'updateExistingTrend').and.returnValue({then: () => {
-      expect(mainUtils.updateExistingTrend).toHaveBeenCalled()
+    spyOn(dbUtils, 'updateExistingTrend').and.returnValue({then: () => {
+      expect(dbUtils.updateExistingTrend).toHaveBeenCalled()
 
       done()
     }})
 
     trendModel.save().then(() => {
-      mainUtils.processTrend(trend, [], [])
+      dbUtils.processTrend(trend, [], [])
     })
   })
 })

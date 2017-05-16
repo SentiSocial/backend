@@ -7,9 +7,9 @@ const config = require('../config')
 const sentimentUtils = require('./sentiment-utils')
 
 /**
- * Contains utilities used in the main module
+ * Contains utility functions used to query and update the database.
  */
-const mainUtils = {
+const dbUtils = {
   /**
    * Removes all trends from the database not located in the currTrends array.
    *
@@ -38,7 +38,7 @@ const mainUtils = {
       let streamData = tweetStream.getData()
 
       // Remove all old trends
-      mainUtils.removeOldTrends(trendNames)
+      dbUtils.removeOldTrends(trendNames)
 
       let trendsProcessed = 0
 
@@ -47,7 +47,7 @@ const mainUtils = {
         news.getNews(trendData.name, newsArticles => {
           tweetSearch.getTweetSample(trendData.name, config.maxTweetsPerTrend)
           .then(tweets => {
-            mainUtils.processTrend(trendData, newsArticles, tweets, streamData[trendData.name])
+            dbUtils.processTrend(trendData, newsArticles, tweets, streamData[trendData.name])
             .then(() => {
               // Resolve when all trends processed
               trendsProcessed++
@@ -75,6 +75,7 @@ const mainUtils = {
    * @return {Promise}
    */
   processTrend: function (trendData, newsArticles, tweets, streamData) {
+
     return new Promise((resolve, reject) => {
       let fullTrendData = _.extend(trendData, {
         articles: newsArticles,
@@ -90,9 +91,9 @@ const mainUtils = {
       .then(doc => {
         // If trend exists
         if (doc) {
-          mainUtils.updateExistingTrend(doc, fullTrendData).then(resolve)
+          dbUtils.updateExistingTrend(doc, fullTrendData).then(resolve)
         } else {
-          mainUtils.createNewTrend(fullTrendData).then(resolve)
+          dbUtils.createNewTrend(fullTrendData).then(resolve)
         }
       }).catch(reject)
     })
@@ -164,4 +165,4 @@ const mainUtils = {
   }
 }
 
-module.exports = mainUtils
+module.exports = dbUtils

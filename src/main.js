@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const api = require('./api')
 const trends = require('./twitter/trends')
 const config = require('./config')
-const mainUtils = require('./utils/main-utils')
+const dbUtils = require('./utils/db-utils')
 const TweetStream = require('./twitter/tweet-stream')
 
 mongoose.Promise = global.Promise
@@ -37,7 +37,7 @@ function intervalFunction () {
   trends.getTrends()
   // Then update the trend info in the database
   .then(trends => {
-    mainUtils.update(trends, tweetStream)
+    dbUtils.update(trends, tweetStream)
 
     tweetStream.closeStream()
 
