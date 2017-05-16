@@ -75,7 +75,6 @@ const dbUtils = {
    * @return {Promise}
    */
   processTrend: function (trendData, newsArticles, tweets, streamData) {
-
     return new Promise((resolve, reject) => {
       let fullTrendData = _.extend(trendData, {
         articles: newsArticles,
