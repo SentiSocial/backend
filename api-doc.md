@@ -4,174 +4,238 @@ Summary:
 
 | Method | Endpoint                  | Description                                              |
 |--------|---------------------------|----------------------------------------------------------|
-| GET    | /v1/alltrends             | Get all current trends and data associated with each one |
-| GET    | /v1/trend/{name}          | Get data for the specified trend                         |
-| GET    | /v1/trend/{name}/tweets   | Get tweets related to the specified trend                |
-| GET    | /v1/trend/{name}/articles | Get news articles related to the specified trend         |
+| GET    | /alltrends                | Get all current trends and data associated with each one |
+| GET    | /trend/{name}             | Get in depth data data for a specified trend             |
 
 ## GET /v1/alltrends
 
-Get all current trends and associated data for each one
+Get all current trends sorted in order by current popularity and associated data.
 
 Response:
 
-| Name                | Type   | Description                                                                             |
-|---------------------|--------|-----------------------------------------------------------------------------------------|
-| trends              | array  | Array of trends sorted most popular first                                               |
-| trends[i]           | object |                                                                                         |
-| trends[i].name      | string | Name of Trend                                                                           |
-| trends[i].sentiment | number | Latest sentiment score for this trend, higher values indicate a more positive sentiment |
+| Name                      | Type   | Description                                                                             |
+|---------------------------|--------|-----------------------------------------------------------------------------------------|
+| trends                    | array  | Array of trends sorted most popular first                                               |
+| trends[i]                 | object |                                                                                         |
+| trends[i].name            | string | Name of Trend                                                                           |
+| trends[i].sentiment_score | number | Sentiment score for this trend, higher values indicate a more positive sentiment        |
 
 Example Request:
 ```
-GET https://senti.social/v1/Daft%20Punk
+GET https://api.senti.social/alltrends
 ```
 
 Example Response:
 ```
 {
-  "trends": [
-    {
-      "name": "Daft Punk",
-      "sentiment": 2.3
-    }
-  ]
+   "trends":[
+      {
+         "name":"Chelsea",
+         "sentiment_score":2.17
+      },
+      {
+         "name":"David Luiz",
+         "sentiment_score":1.85
+      },
+      {
+         "name":"#WannaCry",
+         "sentiment_score":-0.57
+      },
+      {
+         "name":"#ransomware",
+         "sentiment_score":-0.36
+      },
+      {
+         "name":"#nhscyberattack",
+         "sentiment_score":-0.42
+      },
+      {
+         "name":"#MasterChefUK",
+         "sentiment_score":2.62
+      },
+      {
+         "name":"#withfewexceptions",
+         "sentiment_score":-0.07
+      },
+      {
+         "name":"#SevenDaysToDead",
+         "sentiment_score":0.08
+      },
+      {
+         "name":"#BritishLGBTAwards",
+         "sentiment_score":2.23
+      },
+      {
+         "name":"#Gogglebox",
+         "sentiment_score":0.62
+      },
+      {
+         "name":"#InconvenienceAFilm",
+         "sentiment_score":-0.42
+      },
+      {
+         "name":"#FlashbackFriday",
+         "sentiment_score":0.19
+      }
+   ]
 }
 ```
 
-## GET /v1/trend/{name}
+## GET /v1/trends/{name}
 
-Get data for the specified trend
-
-Response:
-
-| Name                 | Type   | Description                                                              |
-|----------------------|--------|--------------------------------------------------------------------------|
-| name                 | string | Trend name echoed back                                                   |
-| history              | array  | Array of objects containing timestamp and sentiment, sorted oldest first |
-| history[i]           | object |                                                                          |
-| history[i].timestamp | number | Unix timestamp in seconds that this history object was recorded at       |
-| history[i].sentiment | number | Sentiment score for this trend at the given timestamp                    |
-
-Example Request:
-```
-GET https://senti.social/v1/%23NFLPlayoffs
-```
-
-Example Response:
-```
-{
-  "name": "#NFLPlayoffs",
-  "history": [
-    {
-      "timestamp": 1485381489296,
-      "sentiment": 0.932
-    },
-    { "timestamp": 1485382360721
-      sentiment: 0.876
-    }
-  ]
-}
-```
-
-## GET /v1/trend/{name}/tweets
-
-Get popular tweets related to the specified trend
-
-Request parameters:
-
-| Name   | Description                                                                                                |
-|--------|------------------------------------------------------------------------------------------------------------|
-| max_id | If set, returns tweets with an _id value less than _id. Otherwise response will start from the highest _id |
-| limit  | If set, return no more than this many tweets                                                               |
+Get detailed information about the specific trend
 
 Response:
 
-| Name               | Type   | Description                                                 |
-|--------------------|--------|-------------------------------------------------------------|
-| tweets             | array  | Array of popular tweets for this trend                      |
-| tweets[i]          | object |                                                             |
-| tweets[i]._id      | string | Sequential unique identifier for tweets used for pagination |
-| tweets[i].embed_id | string | Twitter id of tweet, used to embed it                       |
+| Name                    | Type                    | Description                                                                                                        |
+|-------------------------|-------------------------|--------------------------------------------------------------------------------------------------------------------|
+| name                    | string                  | Trend name echoed back                                                                                             |
+| rank                    | number                  | Trend's popularity rank (index starts at 1)                                                                        |
+| tracking_since          | number                  | Time at which SentiSocial started tracking this trend as a Unix timestamp in seconds                               |
+| sentiment_score         | number &#124; null      | Sentiment score for the trend (Higher is more positive) (can be null if info is not available yet)                 |
+| sentiment_description   | string &#124; null      | Human readable description of sentiment_score (eg. "Slightly Positive") (can be null if info is not available yet) |
+| tweets_analyzed         | number                  | Number of tweets analyzed to obtain the sentiment score                                                            |
+| tweet_volume            | number &#124; null      | Tweet volume for the past 24 hours (Can be null if info is not available)                                          |
+| locations               | array                   | Array of country codes representing countries that the trend is trending in                                        |
+| locations[i]            | string                  | ISO 3611 country code                                                                                              |
+| keywords                | array                   | Array of keywords associated with the trend                                                                        |
+| keywords[i]             | object                  |                                                                                                                    |
+| keywords[i].word        | string                  | A keyword associated with the trend                                                                                |
+| keywords[i].occurences  | number                  | Number of occurences of this keyword in analyzed tweets                                                            |
+| articles                | array                   | Array of objects containing news articles, sorted by popularity of news source                                     |
+| articles[i]             | object                  |                                                                                                                    |
+| articles[i]._id         | string                  | Sequential unique identifier for news articles                                                                     |
+| articles[i].title       | string                  | Article's headline                                                                                                 |
+| articles[i].description | string                  | Article excerpt or description                                                                                     |
+| articles[i].source      | string                  | Publishing organization of news article                                                                            |
+| articles[i].link        | string                  | URL link to the article                                                                                            |
+| articles[i].timestamp   | string                  | Unix timestamp in seconds of the publishing date                                                                   |
+| articles[i].media       | string &#124; undefined | URL link to media associated with the article, can be undefined if no media exists                                 |
+| tweets                  | array                   | Array of popular tweets related to the trend                                                                       |
+| tweets[i]               |                         |                                                                                                                    |
+| tweets[i].embed_id      | string                  | ID of the tweet that can be used to embed it on a webpage                                                          |
 
 Example Request:
 ```
-GET https://senti.social/v1/%23somesportsgame?limit=2&max_id=587f91be59b3dffe61f901b7
+GET https://api.senti.social/trend/Chelsea
 ```
 
 Example Response:
 
 ```
 {
-  "tweets": [
+  "name" : "Chelsea",
+  "rank" : 1,
+  "tracking_since": 1494984862585,
+  "sentiment_score" : 2.01,
+  "sentiment_description" : "Very Positive",
+  "tweets_analyzed" : 126556,
+  "tweet_volume" : 403246,
+  "locations" : [
+    "AU",
+    "IE",
+    "GB",
+    "US"
+  ],
+  "keywords" : [
     {
-      "_id": "587f91be59b3dffe61f901b3",
-      "embed_id": "821744049568413059"
+      "occurences" : 66,
+      "word" : "chelsea"
     },
     {
-      "_id": "587f91be59b3dffe61f901b1",
-      "embed_id": "821704759409351744"
+      "occurences" : 59,
+      "word" : "football"
+    },
+    {
+      "occurences" : 30,
+      "word" : "win"
+    },
+    {
+      "occurences" : 15,
+      "word" : "team"
+    },
+    {
+      "occurences" : 15,
+      "word" : "soccer"
+    },
+    {
+      "occurences" : 9,
+      "word" : "goal"
+    },
+    {
+      "occurences" : 8,
+      "word" : "points"
+    },
+    {
+      "occurences" : 8,
+      "word" : "penalty"
+    },
+    {
+      "occurences" : 8,
+      "word" : "league"
+    },
+    {
+      "occurences" : 8,
+      "word" : "premier"
     }
   ],
-}
-```
-
-## GET /v1/trends/{name}/articles
-
-Get news articles related to the specified trend
-
-Request parameters:
-
-| Name                | Description                                                                                             |
-|---------------------|---------------------------------------------------------------------------------------------------------|
-| max_id              | If set, returns articles with an _id value than _id. Otherwise response will start from the highest _id |
-| limit               | If set, return no more than this many tweets                                                            |
-
-Response:
-
-| Name                    | Type                    | Description                                                                        |
-|-------------------------|-------------------------|------------------------------------------------------------------------------------|
-| articles                | array                   | Array of objects containing news articles, sorted by popularity of news source     |
-| articles[i]             | object                  |                                                                                    |
-| articles[i]._id         | string                  | Sequential unique identifier for news articles                                     |
-| articles[i].title       | string                  | Article's headline                                                                 |
-| articles[i].description | string                  | Article excerpt or description                                                     |
-| articles[i].source      | string                  | Publishing organization of news article                                            |
-| articles[i].link        | string                  | URL link to the article                                                            |
-| articles[i].timestamp   | string                  | Unix timestamp in seconds of the publishing date                                   |
-| articles[i].media       | string &#124; undefined | URL link to media associated with the article, can be undefined if no media exists |
-
-Example Request:
-```
-GET https://senti.social/v1/%23Rio%20Olympics?limit=2&max_id=587f91be59b3dffe61f901bf
-```
-
-Example Response:
-
-```
-{
-  "articles": [
+  "articles" : [
     {
-      "_id": 587f91be59b3dffe61f901bd,
-      "title": For the Rio Olympic Games, There’s No Turning Back Now,
-      "description": Despite protests and criticisms that the Summer Games do not
-      belong in Brazil, a country struggling with political turmoil and economic
-      collapse — not to mention the Zika virus — the competitions have begun:,
-      "source": The New York Times,
-      "link": https://www.nytimes.com/2016/08/07/sports/olympics/rio-2016-games-theres-no-turning-back-now.html?_r=0,
-      "timestamp": 1470463200,
-      "media": https://static01.nyt.com/images/2016/08/07/sports/olympics/07macur/07macur-superJumbo.jpg
+      "media" : "http://ichef.bbci.co.uk/onesport/cps/624/cpsprodpb/15A57/production/_96036688_chelseacelebrate.jpg",
+      "link" : "http://www.bbc.co.uk/sport/football/39813798",
+      "source" : "BBC News",
+      "timestamp" : 1494626338,
+      "description" : "Chelsea are crowned Premier League champions as Michy Batshuayi's late goal gives them the win they needed to secure the title at West Brom.",
+      "title" : "West Bromwich Albion 0-1 Chelsea"
     },
     {
-      "_id": 587f91be59b3dffe61f901b8,
-      "title": Rio Olympics 2016: Five things to watch out for as Games commence,
-      "description": The athletes have arrived, the venues are ready and expectation is palpable as
-      the sporting world awaits the commencement of the 31st Olympic Games, the first
-      ever Olympiad to be staged in South America.
-      "source": CNN,
-      "link": http://edition.cnn.com/2016/08/04/sport/rio-olympics-2016-five-things-to-watch-friday/,
-      "timestamp": 1470471142,
-      "media": undefined
+      "media" : "http://ichef.bbci.co.uk/onesport/cps/624/cpsprodpb/15A57/production/_96036688_chelseacelebrate.jpg",
+      "link" : "http://www.bbc.co.uk/sport/football/39813798",
+      "source" : "BBC Sport",
+      "timestamp" : 1494626338,
+      "description" : "Chelsea are crowned Premier League champions as Michy Batshuayi's late goal gives them the win they needed to secure the title at West Brom.",
+      "title" : "West Bromwich Albion 0-1 Chelsea"
+    },
+    {
+      "media" : "http://ichef.bbci.co.uk/onesport/cps/624/cpsprodpb/EEF5/production/_96037116_antonioconte.jpg",
+      "link" : "http://www.bbc.co.uk/sport/football/39905241",
+      "source" : "BBC Sport",
+      "timestamp" : 1494632312,
+      "description" : "Chelsea need to win the FA Cup to turn a \"great season\" into a \"fantastic\" one after clinching the title, says manager Antonio Conte.",
+      "title" : "Chelsea are Premier League champions: Antonio Conte targets Double"
+    }
+  ],
+  "tweets" : [
+    {
+      "embed_id" : "863134776651374592"
+    },
+    {
+      "embed_id" : "862940061624659968"
+    },
+    {
+      "embed_id" : "863141907999973379"
+    },
+    {
+      "embed_id" : "863136242279620608"
+    },
+    {
+      "embed_id" : "863141446957846532"
+    },
+    {
+      "embed_id" : "862863664327610369"
+    },
+    {
+      "embed_id" : "863136436203261952"
+    },
+    {
+      "embed_id" : "863138919822614529"
+    },
+    {
+      "embed_id" : "863135537313533952"
+    },
+    {
+      "embed_id" : "863117986768486401"
     }
   ]
+}
 ```

@@ -4,9 +4,8 @@ const newsUtils = require('../utils/news-utils')
 
 const newsApi = 'http://newsapi.org'
 const apiKey = require('../api-keys').newsApiKey
-const config = require('../config.js')
+const config = require('../../config.js')
 const sources = require('./sources.json')
-const maxArticles = config.maxArticlesStorageCap
 
 /**
  * Retrieves relevant news using NewsAPI.org given a phrase.
@@ -15,10 +14,6 @@ const maxArticles = config.maxArticlesStorageCap
  * @author Omar Chehab
  */
 function getNews (phrase, callback) {
-  if (!apiKey) {
-    throw Error('News Module requires an API key from NewsAPI.org')
-  }
-
   let articles = []
   let pending = sources.length
 
@@ -38,7 +33,7 @@ function getNews (phrase, callback) {
   )
 
   function respond () {
-    callback(reduceArticles(articles))
+    callback(articles.slice(0, config.maxArticlesPerTrend))
   }
 }
 
@@ -92,37 +87,6 @@ function searchForArticlesFromSource (pattern, source, callback) {
 
     callback(undefined, articles)
   })
-}
-
-/**
- * pickArticles - Selects articles based on popularity of the a news source
- *
- * @author suchaHassle
- * @param  {Array} articles An array of objects for all news articles
- * @return {Array} An array of objects for the top news articles capped at configured amount
- */
-function reduceArticles (articles) {
-  if (articles.length <= maxArticles) {
-    return articles
-  }
-
-  var count = 0
-  var finalArticles = []
-
-  // Iterate through the list of the sort news sources
-  for (var i = 0; i < config.sources.length; i++) {
-    // Add all articles from said news source
-    for (var j = 0; j < articles.length; j++) {
-      if (articles[j].id === config.sources[i]) {
-        finalArticles.push(articles[j])
-        count++
-      }
-      // Return if we've reached max cap
-      if (count === config.maxArticlesStorageCap) {
-        return finalArticles
-      }
-    }
-  }
 }
 
 module.exports = {

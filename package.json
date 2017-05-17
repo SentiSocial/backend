@@ -25,10 +25,12 @@
   "homepage": "https://github.com/SentiSocial/sentisocial-backend#readme",
   "dependencies": {
     "express": "^4.14.0",
+    "keyword-extractor": "0.0.13",
     "mongoose": "^4.7.6",
     "request": "^2.79.0",
     "sentiment": "^2.1.0",
-    "twitter": "^1.7.0"
+    "twitter": "^1.7.0",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "eslint": "^3.13.0",
@@ -37,11 +39,11 @@
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^2.0.1",
     "jasmine": "^2.5.2",
-    "mockery": "^2.0.0",
     "mockgoose": "^6.0.8",
     "nock": "^9.0.2",
     "node-mocks-http": "^1.5.6",
-    "pre-commit": "^1.2.2"
+    "pre-commit": "^1.2.2",
+    "rewire": "^2.5.2"
   },
   "pre-commit": [
     "lint",
