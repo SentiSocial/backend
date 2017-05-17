@@ -22,7 +22,7 @@ var keywordSchema = new mongoose.Schema({
 var trendSchema = new mongoose.Schema({
   name: String,
   rank: Number,
-  tracking_since: {type: Number, default: Date.now},
+  tracking_since: {type: Number, default: () => {return Math.round(Date.now() / 1000)}},
   tweets_analyzed: Number,
   sentiment_score: Number,
   sentiment_description: String,
