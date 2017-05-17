@@ -1,6 +1,5 @@
 const apiKeys = require('../src/api-keys')
 
-
 describe('Api Keys Module', () => {
   it('Should return if all api-keys are set with verify()', () => {
     apiKeys.twitterConsumerKey = ''
