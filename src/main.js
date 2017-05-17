@@ -21,7 +21,9 @@ db.once('open', () => {
   // Then set up updateTrends to run each server interval
   setInterval(updateTrends, config.intervalLength * 1000)
 
-  api.start()
+  api.start().then(() => {
+    console.log('API Listening on port ' + config.apiPort.toString())
+  })
 })
 mongoose.connect('mongodb://' + config.dbAddress + '/' + config.dbName)
 
