@@ -6,10 +6,10 @@ const SentimentBank = require('./sentiment-bank')
 const config = require('../../config')
 
 var client = new Twitter({
-  consumer_key: apiKeys.twitter_consumer_key,
-  consumer_secret: apiKeys.twitter_consumer_secret,
-  access_token_key: apiKeys.twitter_access_token_key,
-  access_token_secret: apiKeys.twitter_access_token_secret
+  consumer_key: apiKeys.twitterConsumerKey,
+  consumer_secret: apiKeys.twitterConsumerSecret,
+  access_token_key: apiKeys.twitterAccessTokenKey,
+  access_token_secret: apiKeys.twitterAccessTokenSecret
 })
 
 /**
