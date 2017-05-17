@@ -27,6 +27,7 @@
     "express": "^4.14.0",
     "keyword-extractor": "0.0.13",
     "mongoose": "^4.7.6",
+    "node-persist": "^2.0.11",
     "request": "^2.79.0",
     "sentiment": "^2.1.0",
     "twitter": "^1.7.0",
