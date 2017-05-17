@@ -32,11 +32,11 @@ Before running the backend, ensure you have node + NPM installed and run:
 
 `npm install`
 
-After installation, edit `src/config.js` to your liking, making sure to add the
+After installation, edit `config.js` to your liking, making sure to add the
 address of your MongoDB server. You will also need to store your Twitter and
 News API authentication keys in the following enviornment variables.
 
-|key                          | enviornment variable        |
+| key                         | enviornment variable        |
 |-----------------------------|-----------------------------|
 | Twitter consumer key        | TWITTER_CONSUMER_KEY        |
 | Twitter consumer secret     | TWITTER_CONSUMER_SECRET     |

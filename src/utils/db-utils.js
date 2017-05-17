@@ -1,7 +1,7 @@
 'use strict'
 const _ = require('underscore')
 const Trend = require('../models/trend')
-const config = require('../config')
+const config = require('../../config')
 const sentimentUtils = require('./sentiment-utils')
 
 /**

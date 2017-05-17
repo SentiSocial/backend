@@ -4,7 +4,7 @@ const newsUtils = require('../utils/news-utils')
 
 const newsApi = 'http://newsapi.org'
 const apiKey = require('../api-keys').newsApiKey
-const config = require('../config.js')
+const config = require('../../config.js')
 const sources = require('./sources.json')
 
 /**

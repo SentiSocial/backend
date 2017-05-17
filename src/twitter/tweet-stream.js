@@ -3,7 +3,7 @@ const Twitter = require('twitter')
 const apiKeys = require('../api-keys')
 const KeywordBank = require('./keyword-bank')
 const SentimentBank = require('./sentiment-bank')
-const config = require('../config')
+const config = require('../../config')
 
 var client = new Twitter({
   consumer_key: apiKeys.twitter_consumer_key,

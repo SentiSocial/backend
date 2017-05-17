@@ -1,5 +1,5 @@
 const express = require('express')
-const config = require('./config')
+const config = require('../config')
 const allTrendsController = require('./controllers/all-trends')
 const trendController = require('./controllers/trend')
 
