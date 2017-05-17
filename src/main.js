@@ -8,6 +8,7 @@ const TweetStream = require('./twitter/tweet-stream')
 const tweetSearch = require('./twitter/tweet-search')
 const news = require('./news/news')
 const apiKeys = require('./api-keys')
+const storage = require('node-persist')
 
 mongoose.Promise = global.Promise
 
@@ -16,15 +17,19 @@ db.on('error', console.error)
 db.once('open', () => {
   console.log('Successfully connected to MongoDB server ' + config.dbAddress)
 
-  // Run updateTrends when the backend starts
-  updateTrends()
-
-  // Then set up updateTrends to run each server interval
-  setInterval(updateTrends, config.intervalLength * 1000)
-
   api.start().then(() => {
     console.log('API Listening on port ' + config.apiPort.toString())
   })
+
+  // Calculate the time to next update based on last_update, then set up updateTrends
+  // to be called every config.intervalLength seconds
+  storage.initSync()
+  let lastUpdateTime = storage.getItemSync('last_update')
+  let timeToInitUpdate = lastUpdateTime !== undefined ? config.intervalLength * 1000 - (Date.now() - lastUpdateTime) : 0
+  setTimeout(() => {
+    updateTrends()
+    setInterval(updateTrends, config.intervalLength * 1000)
+  }, timeToInitUpdate)
 })
 
 if (apiKeys.verify()) {
@@ -42,6 +47,8 @@ var tweetStream = new TweetStream()
  *
  */
 function updateTrends () {
+  storage.setItemSync('last_update', Date.now())
+
   tweetStream.closeStream()
   let streamData = tweetStream.getData()
 
