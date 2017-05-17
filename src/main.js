@@ -13,7 +13,7 @@ mongoose.Promise = global.Promise
 var db = mongoose.connection
 db.on('error', console.error)
 db.once('open', () => {
-  console.log('Successfully connected to mongodb')
+  console.log('Successfully connected to MongoDB server ' + config.dbAddress)
 
   // Run updateTrends when the backend starts
   updateTrends()
