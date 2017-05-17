@@ -81,7 +81,7 @@ Example Response:
 }
 ```
 
-## GET /v1/trends/{name}
+## GET /v1/trend/{name}
 
 Get detailed information about the specific trend
 
