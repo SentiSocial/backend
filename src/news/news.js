@@ -14,10 +14,6 @@ const sources = require('./sources.json')
  * @author Omar Chehab
  */
 function getNews (phrase, callback) {
-  if (!apiKey) {
-    throw Error('News Module requires an API key from NewsAPI.org')
-  }
-
   let articles = []
   let pending = sources.length
 

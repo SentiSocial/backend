@@ -7,6 +7,7 @@ const dbUtils = require('./utils/db-utils')
 const TweetStream = require('./twitter/tweet-stream')
 const tweetSearch = require('./twitter/tweet-search')
 const news = require('./news/news')
+const apiKeys = require('./api-keys')
 
 mongoose.Promise = global.Promise
 
@@ -25,7 +26,12 @@ db.once('open', () => {
     console.log('API Listening on port ' + config.apiPort.toString())
   })
 })
-mongoose.connect('mongodb://' + config.dbAddress + '/' + config.dbName)
+
+if (apiKeys.verify()) {
+  mongoose.connect('mongodb://' + config.dbAddress + '/' + config.dbName)
+} else {
+  console.error('Some API keys could not be found, check your enviornment variables')
+}
 
 var tweetStream = new TweetStream()
 
