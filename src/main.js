@@ -25,7 +25,6 @@ db.once('open', () => {
 })
 mongoose.connect('mongodb://' + config.dbAddress + '/' + config.dbName)
 
-
 var tweetStream = new TweetStream()
 
 /**

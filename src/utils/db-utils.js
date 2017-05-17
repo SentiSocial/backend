@@ -1,8 +1,6 @@
 'use strict'
 const _ = require('underscore')
 const Trend = require('../models/trend')
-var news = require('../news/news')
-var tweetSearch = require('../twitter/tweet-search')
 const config = require('../config')
 const sentimentUtils = require('./sentiment-utils')
 
