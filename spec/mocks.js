@@ -12,6 +12,7 @@ const mocks = {
     return {
       name: '#trend',
       rank: 2,
+      tracking_since: 1494984862585,
       tweets_analyzed: 100,
       sentiment_score: 3,
       sentiment_description: 'Positive',

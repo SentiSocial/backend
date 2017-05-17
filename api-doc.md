@@ -91,6 +91,7 @@ Response:
 |-------------------------|-------------------------|--------------------------------------------------------------------------------------------------------------------|
 | name                    | string                  | Trend name echoed back                                                                                             |
 | rank                    | number                  | Trend's popularity rank (index starts at 1)                                                                        |
+| tracking_since          | number                  | Time at which SentiSocial started tracking this trend as a Unix timestamp in seconds                               |
 | sentiment_score         | number &#124; null      | Sentiment score for the trend (Higher is more positive) (can be null if info is not available yet)                 |
 | sentiment_description   | string &#124; null      | Human readable description of sentiment_score (eg. "Slightly Positive") (can be null if info is not available yet) |
 | tweets_analyzed         | number                  | Number of tweets analyzed to obtain the sentiment score                                                            |
@@ -125,6 +126,7 @@ Example Response:
 {
   "name" : "Chelsea",
   "rank" : 1,
+  "tracking_since": 1494984862585,
   "sentiment_score" : 2.01,
   "sentiment_description" : "Very Positive",
   "tweets_analyzed" : 126556,

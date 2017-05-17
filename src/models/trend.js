@@ -22,6 +22,7 @@ var keywordSchema = new mongoose.Schema({
 var trendSchema = new mongoose.Schema({
   name: String,
   rank: Number,
+  tracking_since: {type: Number, default: Date.now},
   tweets_analyzed: Number,
   sentiment_score: Number,
   sentiment_description: String,
