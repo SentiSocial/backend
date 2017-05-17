@@ -46,7 +46,7 @@ describe('Trend Controller', () => {
       params: {
         name: mockTrend.name
       },
-      url: '/v1/trend/test-trend'
+      url: '/trend/test-trend'
     })
     let res = getResponse()
 
@@ -61,7 +61,7 @@ describe('Trend Controller', () => {
   it('Should return with status 400 if no trend is specified', done => {
     let req = httpMocks.createRequest({
       method: 'GET',
-      url: '/v1/trend/test-trend'
+      url: '/trend/test-trend'
     })
     let res = getResponse()
 
@@ -79,7 +79,7 @@ describe('Trend Controller', () => {
       params: {
         name: 'trend-that-does-not-exist'
       },
-      url: '/v1/trend/test-trend'
+      url: '/trend/test-trend'
     })
     let res = getResponse()
 
@@ -97,7 +97,7 @@ describe('Trend Controller', () => {
       params: {
         name: mockTrend.name
       },
-      url: '/v1/trend/test-trend'
+      url: '/trend/test-trend'
     })
     let res = getResponse()
 
@@ -115,7 +115,7 @@ describe('Trend Controller', () => {
       params: {
         name: mockTrend.name
       },
-      url: '/v1/trend/test-trend'
+      url: '/trend/test-trend'
     })
     let res = getResponse()
 

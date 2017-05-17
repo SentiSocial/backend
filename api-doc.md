@@ -7,7 +7,7 @@ Summary:
 | GET    | /alltrends                | Get all current trends and data associated with each one |
 | GET    | /trend/{name}             | Get in depth data data for a specified trend             |
 
-## GET /v1/alltrends
+## GET /alltrends
 
 Get all current trends sorted in order by current popularity and associated data.
 
@@ -81,7 +81,7 @@ Example Response:
 }
 ```
 
-## GET /v1/trend/{name}
+## GET /trend/{name}
 
 Get detailed information about the specific trend
 

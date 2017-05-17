@@ -8,7 +8,7 @@ const allTrendsController = require('../../src/controllers/all-trends')
 function getRequest () {
   return httpMocks.createRequest({
     method: 'GET',
-    url: '/v1/alltrends'
+    url: '/alltrends'
   })
 }
 
