@@ -5,24 +5,28 @@ const trends = require('./twitter/trends')
 const config = require('./config')
 const dbUtils = require('./utils/db-utils')
 const TweetStream = require('./twitter/tweet-stream')
+const tweetSearch = require('./twitter/tweet-search')
+const news = require('./news/news')
 
 mongoose.Promise = global.Promise
 
-// Connect to the db, then set up the intervalFunction
 var db = mongoose.connection
 db.on('error', console.error)
 db.once('open', () => {
   console.log('Successfully connected to mongodb')
 
-  // Run the intervalFunction when the backend starts
-  intervalFunction()
+  // Run updateTrends when the backend starts
+  updateTrends()
 
-  // Then set up intervalFunction to run each server interval
-  setInterval(intervalFunction, config.intervalLength * 1000)
+  // Then set up updateTrends to run each server interval
+  setInterval(updateTrends, config.intervalLength * 1000)
 
   api.start()
 })
 mongoose.connect('mongodb://' + config.dbAddress + '/' + config.dbName)
+
+
+var tweetStream = new TweetStream()
 
 /**
  * Function run once every server interval, gets trends from the
@@ -30,17 +34,24 @@ mongoose.connect('mongodb://' + config.dbAddress + '/' + config.dbName)
  * information in the database.
  *
  */
-var tweetStream = new TweetStream()
+function updateTrends () {
+  tweetStream.closeStream()
+  let streamData = tweetStream.getData()
 
-function intervalFunction () {
   // At the beginning of each interval get all trends
   trends.getTrends()
   // Then update the trend info in the database
   .then(trends => {
-    dbUtils.update(trends, tweetStream)
+    trends.forEach(trend => {
+      tweetSearch.getTweetSample(trend.name)
+      .then(tweets => {
+        news.getNews(trend.name, news => {
+          dbUtils.processTrend(trend, news, tweets, streamData[trend.name])
+        })
+      })
+    })
 
-    tweetStream.closeStream()
-
+    // Start tracking the new trends
     tweetStream.startTracking(trends.map(trendData => { return trendData.name }))
   })
 }

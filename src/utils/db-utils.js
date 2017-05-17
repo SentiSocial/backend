@@ -24,45 +24,6 @@ const dbUtils = {
   },
 
   /**
-   * Update the trends in the database. Should be passed an array of trends
-   * that are currently trending, and a TweetStream object that has been tracking
-   * all trends currently in the database for the past server interval.
-   *
-   * @param  {Array} trends Array of trend objects that are currently trending
-   * @param  {Object} tweetStream TweetStream object that has been tracking trends currently in the db for the past server interval
-   */
-  update: function (trends, tweetStream) {
-    return new Promise((resolve, reject) => {
-      let trendNames = trends.map(trend => { return trend.name })
-
-      let streamData = tweetStream.getData()
-
-      // Remove all old trends
-      dbUtils.removeOldTrends(trendNames)
-
-      let trendsProcessed = 0
-
-      // Fill in other trend info
-      trends.forEach(trendData => {
-        news.getNews(trendData.name, newsArticles => {
-          tweetSearch.getTweetSample(trendData.name, config.maxTweetsPerTrend)
-          .then(tweets => {
-            dbUtils.processTrend(trendData, newsArticles, tweets, streamData[trendData.name])
-            .then(() => {
-              // Resolve when all trends processed
-              trendsProcessed++
-
-              if (trendsProcessed === trends.length) {
-                resolve()
-              }
-            })
-          })
-        })
-      })
-    })
-  },
-
-  /**
    * Given a specific trend, update its document in the database with the given
    * information, or create a new document for it if it does not already exist
    * in the database. Returns a promise that is resolved after the trend has
