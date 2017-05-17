@@ -26,7 +26,6 @@ db.once('open', () => {
   storage.initSync()
   let lastUpdateTime = storage.getItemSync('last_update')
   let timeToInitUpdate = lastUpdateTime !== undefined ? config.intervalLength * 1000 - (Date.now() - lastUpdateTime) : 0
-  console.log(timeToInitUpdate)
   setTimeout(() => {
     updateTrends()
     setInterval(updateTrends, config.intervalLength * 1000)
