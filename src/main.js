@@ -56,6 +56,7 @@ function updateTrends () {
   trends.getTrends()
   // Then update the trend info in the database
   .then(trends => {
+    dbUtils.removeOldTrends(trends.map(trendInfo => { return trendInfo.name }))
     trends.forEach(trend => {
       tweetSearch.getTweetSample(trend.name)
       .then(tweets => {
