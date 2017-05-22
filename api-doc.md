@@ -31,51 +31,51 @@ Example Response:
    "trends":[
       {
          "name":"Chelsea",
-         "sentiment_score":2.17
+         "sentiment_score":2.175
       },
       {
          "name":"David Luiz",
-         "sentiment_score":1.85
+         "sentiment_score":1.852
       },
       {
          "name":"#WannaCry",
-         "sentiment_score":-0.57
+         "sentiment_score":-0.574
       },
       {
          "name":"#ransomware",
-         "sentiment_score":-0.36
+         "sentiment_score":-0.365
       },
       {
          "name":"#nhscyberattack",
-         "sentiment_score":-0.42
+         "sentiment_score":-0.422
       },
       {
          "name":"#MasterChefUK",
-         "sentiment_score":2.62
+         "sentiment_score":2.629
       },
       {
          "name":"#withfewexceptions",
-         "sentiment_score":-0.07
+         "sentiment_score":-0.072
       },
       {
          "name":"#SevenDaysToDead",
-         "sentiment_score":0.08
+         "sentiment_score":0.089
       },
       {
          "name":"#BritishLGBTAwards",
-         "sentiment_score":2.23
+         "sentiment_score":2.231
       },
       {
          "name":"#Gogglebox",
-         "sentiment_score":0.62
+         "sentiment_score":0.622
       },
       {
          "name":"#InconvenienceAFilm",
-         "sentiment_score":-0.42
+         "sentiment_score":-0.424
       },
       {
          "name":"#FlashbackFriday",
-         "sentiment_score":0.19
+         "sentiment_score":0.198
       }
    ]
 }
@@ -127,7 +127,7 @@ Example Response:
   "name" : "Chelsea",
   "rank" : 1,
   "tracking_since": 1494984862585,
-  "sentiment_score" : 2.01,
+  "sentiment_score" : 2.018,
   "sentiment_description" : "Very Positive",
   "tweets_analyzed" : 126556,
   "tweet_volume" : 403246,
