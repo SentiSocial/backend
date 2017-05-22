@@ -25,7 +25,8 @@ function SentimentBank () {
    * @return {Number} The average sentiment for the analyzed tweets
    */
   this.getSentiment = function () {
-    return analyzed !== 0 ? totalSentiment / analyzed : 0
+    let unrounded = analyzed !== 0 ? totalSentiment / analyzed : 0
+    return Math.round(unrounded * 1000) / 1000 // Rond to nearest thousandth
   }
 
   /**
