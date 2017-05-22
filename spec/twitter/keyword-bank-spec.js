@@ -27,4 +27,31 @@ describe('KeywordBank', () => {
     keywordBank.addText(word)
     expect(keywordBank.getTopKeywords()[0]).toEqual({word: 'keyword', occurences: 3})
   })
+
+  it('Should disregard links', () => {
+    let keywordBank = new KeywordBank()
+
+    keywordBank.addText('https://example.com')
+    keywordBank.addText('http://example.com')
+    keywordBank.addText('http://example.net')
+
+    expect(keywordBank.getTopKeywords()).toEqual([])
+  })
+
+  it('Should disregard "rt" and "retweet" (case insensitive)', () => {
+    let keywordBank = new KeywordBank()
+
+    keywordBank.addText('rt retweet RT Retweet')
+
+    expect(keywordBank.getTopKeywords()).toEqual([])
+  })
+
+  it('Should disregard words containing non alphanumeric characters (except for @ and #)', () => {
+    let keywordBank = new KeywordBank()
+
+    keywordBank.addText('$100')
+    keywordBank.addText('\u2022') // Unicode bullet
+
+    expect(keywordBank.getTopKeywords()).toEqual([])
+  })
 })
