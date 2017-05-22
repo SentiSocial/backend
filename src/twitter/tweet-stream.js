@@ -46,7 +46,7 @@ function TweetStream () {
     trendData = {}
     trends.forEach(trend => {
       trendData[trend] = {
-        sentimentBank: new SentimentBank(),
+        sentimentBank: new SentimentBank(trend),
         keywordBank: new KeywordBank(),
         tweets_analyzed: 0
       }

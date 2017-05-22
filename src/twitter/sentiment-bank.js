@@ -2,12 +2,18 @@
 const sentiment = require('sentiment')
 
 /**
- * Construct a new SentimentBank object.
+ * Construct a new SentmentBank object. A SentimentBank is used to keep track
+ * of sentiment for incoming text on a particular topic.
  *
  */
-function SentimentBank () {
+function SentimentBank (trendName = '') {
   let analyzed = 0
   let totalSentiment = 0
+
+  // Ignore words occuring in the trend name in sentiment calculations
+  let ignoreQuery = {}
+  trendName.split(' ').map(word => { return word.replace(/[^a-zA-Z]/g, '').toLowerCase() })
+  .forEach(word => { ignoreQuery[word] = 0 })
 
   /**
    * Add a tweet to the tweet sentiment analysis.
@@ -15,7 +21,7 @@ function SentimentBank () {
    * @param {String} tweetText Text to analyzed and add to average
    */
   this.addText = function (tweet) {
-    totalSentiment += sentiment(tweet).score
+    totalSentiment += sentiment(tweet, ignoreQuery).score
     analyzed++
   }
 
