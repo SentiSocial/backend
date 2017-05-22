@@ -32,4 +32,13 @@ describe('SentimentBank', () => {
 
     expect(sentimentBank.getSentiment()).toEqual(averageSen)
   })
+
+  it('Ignores all words occuring in the trend name', () => {
+    let trendName = 'Bad Horrible trend name with negative sentiment'
+    let sentimentBank = new SentimentBank(trendName)
+
+    sentimentBank.addText('Bad Horrible Negative')
+
+    expect(sentimentBank.getSentiment()).toEqual(0)
+  })
 })
