@@ -52,7 +52,7 @@ function TweetStream () {
       }
     })
 
-    stream = client.stream('statuses/filter', {track: trends.join(',')})
+    stream = client.stream('statuses/filter', {track: trends.join(','), language: 'en'})
 
     stream.on('data', event => {
       // Ignore all streaming API messages except tweets
