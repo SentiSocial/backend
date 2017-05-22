@@ -10,7 +10,7 @@ describe('SentimentBank', () => {
 
     let sen = sentiment(tweetText)
 
-    expect(sentimentBank.getSentiment()).toEqual(sen.score)
+    expect(sentimentBank.getSentiment()).toBeCloseTo(sen.score, 3)
   })
 
   it('Correctly calculates an average with multiple tweets', () => {
@@ -30,7 +30,7 @@ describe('SentimentBank', () => {
     sentimentBank.addText(string2)
     sentimentBank.addText(string3)
 
-    expect(sentimentBank.getSentiment()).toEqual(averageSen)
+    expect(sentimentBank.getSentiment()).toBeCloseTo(averageSen, 3)
   })
 
   it('Ignores all words occuring in the trend name', () => {
