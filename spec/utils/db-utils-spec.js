@@ -126,7 +126,7 @@ describe('Main utils', () => {
           let sentimentAvg = (currentTrendData.sentiment_score * currentTrendData.tweets_analyzed +
             existingTrendData.sentiment_score * existingTrendData.tweets_analyzed) / totalTweetsAnalyzed
 
-          expect(doc.sentiment_score).toEqual(sentimentAvg)
+          expect(doc.sentiment_score).toBeCloseTo(sentimentAvg, 3)
 
           done()
         })
