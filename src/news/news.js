@@ -2,7 +2,7 @@
 const request = require('request')
 const newsUtils = require('../utils/news-utils')
 
-const newsApiBaseUrl = 'https://newsapi.org'
+const newsApiBaseUrl = 'https://newsapi.org/v1'
 const apiKey = require('../api-keys').newsApiKey
 const config = require('../../config.js')
 var sources = require('./sources.json')
@@ -43,7 +43,7 @@ const news = {
  */
 function searchForArticlesFromSource (pattern, source) {
   return new Promise((resolve, reject) => {
-    const url = `${newsApiBaseUrl}/v1/articles?source=${source.id}&apiKey=${apiKey}`
+    const url = `${newsApiBaseUrl}/articles?source=${source.id}&apiKey=${apiKey}`
     let articles = []
 
     request(url, (error, response) => {
