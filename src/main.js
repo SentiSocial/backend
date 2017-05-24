@@ -60,7 +60,8 @@ function updateTrends () {
     trends.forEach(trend => {
       tweetSearch.getTweetSample(trend.name)
       .then(tweets => {
-        news.getNews(trend.name, news => {
+        news.getNews(trend.name)
+        .then(news => {
           dbUtils.processTrend(trend, news, tweets, streamData[trend.name])
         })
       })
