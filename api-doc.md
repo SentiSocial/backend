@@ -1,15 +1,15 @@
 # SentiSocial API Reference
 
-Summary:
+## Summary:
 
 | Method | Endpoint                  | Description                                              |
 |--------|---------------------------|----------------------------------------------------------|
 | GET    | /alltrends                | Get all current trends and data associated with each one |
-| GET    | /trend/{name}             | Get in depth data data for a specified trend             |
+| GET    | /trend/{name}             | Get in depth data for a specific trend                   |
 
 ## GET /alltrends
 
-Get all current trends sorted in order by current popularity and associated data.
+Get all current trends sorted in order by current popularity and associated data
 
 Response:
 
@@ -83,7 +83,7 @@ Example Response:
 
 ## GET /trend/{name}
 
-Get detailed information about the specific trend
+Get detailed information about a specific trend
 
 Response:
 
