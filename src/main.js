@@ -12,30 +12,34 @@ const storage = require('node-persist')
 
 mongoose.Promise = global.Promise
 
-var db = mongoose.connection
-db.on('error', console.error)
-db.once('open', () => {
-  console.log('Successfully connected to MongoDB server ' + config.dbAddress)
-
-  api.start().then(() => {
-    console.log('API Listening on port ' + config.apiPort.toString())
-  })
-
-  // Calculate the time to next update based on last_update, then set up updateTrends
-  // to be called every config.intervalLength seconds
-  storage.initSync()
-  let lastUpdateTime = storage.getItemSync('last_update')
-  let timeToInitUpdate = lastUpdateTime !== undefined ? config.intervalLength * 1000 - (Date.now() - lastUpdateTime) : 0
-  setTimeout(() => {
-    updateTrends()
-    setInterval(updateTrends, config.intervalLength * 1000)
-  }, timeToInitUpdate)
-})
-
 if (apiKeys.verify()) {
-  mongoose.connect('mongodb://' + config.dbAddress + '/' + config.dbName)
+  start()
 } else {
   console.error('Some API keys could not be found, check your enviornment variables')
+}
+
+function start () {
+  mongoose.connect('mongodb://' + config.dbAddress + '/' + config.dbName)
+
+  var db = mongoose.connection
+  db.on('error', console.error)
+  db.once('open', () => {
+    console.log('Successfully connected to MongoDB server ' + config.dbAddress)
+
+    api.start().then(() => {
+      console.log('API Listening on port ' + config.apiPort.toString())
+    })
+
+    // Calculate the time to next update based on last_update, then set up updateTrends
+    // to be called every config.intervalLength seconds
+    storage.initSync()
+    let lastUpdateTime = storage.getItemSync('last_update')
+    let timeToInitUpdate = lastUpdateTime !== undefined ? config.intervalLength * 1000 - (Date.now() - lastUpdateTime) : 0
+    setTimeout(() => {
+      updateTrends()
+      setInterval(updateTrends, config.intervalLength * 1000)
+    }, timeToInitUpdate)
+  })
 }
 
 var tweetStream = new TweetStream()
