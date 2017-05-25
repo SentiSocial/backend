@@ -3,4 +3,4 @@ node_js:
   - "stable"
 script:
   - npm run lint
-  - npm test
+  - npm run test-cov
