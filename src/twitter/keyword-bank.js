@@ -4,8 +4,8 @@ const keywordExtractor = require('keyword-extractor')
 // Disregard keywords if they match these regexes
 const stopRegexes = [
   /http.*/, // Disregard links
-  /^rt|retweet$/i, // Disregard 'rt' (prepended to retweets)
-  /^[^a-zA-z0-9#@]/ // Disregard words with any non alphanumeric characters (excluding @ and #)
+  /^rt$|^retweet$/i, // Disregard 'rt' and 'retweet'
+  /[^a-zA-z0-9#]/ // Disregard words with any non alphanumeric characters (excluding # for hashtags)
 ]
 
 /**
