@@ -2,93 +2,82 @@
 const request = require('request')
 const newsUtils = require('../utils/news-utils')
 
-const newsApi = 'http://newsapi.org'
+const newsApiBaseUrl = 'https://newsapi.org/v1'
 const apiKey = require('../api-keys').newsApiKey
 const config = require('../../config.js')
-const sources = require('./sources.json')
+var sources = require('./sources.json')
 
-/**
- * Retrieves relevant news using NewsAPI.org given a phrase.
- * @param  {string}   phrase
- * @param  {function} callback
- * @author Omar Chehab
- */
-function getNews (phrase, callback) {
-  let articles = []
-  let pending = sources.length
+const news = {
+  /**
+   * Retrieves relevant news using NewsAPI.org given a phrase. Returns a promise.
+   *
+   * @param  {String} phrase Phrase to search for
+   */
+  getNews: function (phrase) {
+    return new Promise((resolve, reject) => {
+      let articles = []
+      let pending = sources.length
 
-  const pattern = newsUtils.generateFuzzyPattern(phrase)
+      const pattern = newsUtils.generateFuzzyPattern(phrase)
 
-  sources.forEach(source => searchForArticlesFromSource(pattern, source,
-   (error, response) => {
-     pending--
-     if (error) {
-       console.error(`Request to ${source} failed`, error)
-       return
-     }
+      sources.forEach(source => searchForArticlesFromSource(pattern, source)
+        .then(response => {
+          pending--
 
-     articles = articles.concat(response)
-     if (!pending) respond()
-   })
-  )
-
-  function respond () {
-    callback(articles.slice(0, config.maxArticlesPerTrend))
+          articles = articles.concat(response)
+          if (!pending) {
+            resolve(articles.slice(0, config.maxArticlesPerTrend))
+          }
+        }).catch(console.error)
+      )
+    })
   }
 }
 
 /**
- * Requests NewsAPI.org for articles from a given source and returns an array of
- * articles that matches a given RegExp pattern.
- * @param  {RegExp}   pattern   describing what to find
- * @param  {string}   source    newsapi.org source id
- * @param  {function} callback  callback should be a function with two
- *                              parameters.
- *                              First parameter is error.
- *                              Second parameter is articles.
- * @author Omar Chehab
+ * Requests NewsAPI.org for articles from a given source. Returns a promise
+ * that resolves with a list of news articles
+ *
+ * @param  {RegExp} pattern describing what to find
+ * @param  {String} source newsapi.org source id
  */
-function searchForArticlesFromSource (pattern, source, callback) {
-  const url = `${newsApi}/v1/articles?source=${source.id}&apiKey=${apiKey}`
-  let articles = []
+function searchForArticlesFromSource (pattern, source) {
+  return new Promise((resolve, reject) => {
+    const url = `${newsApiBaseUrl}/articles?source=${source.id}&apiKey=${apiKey}`
+    let articles = []
 
-  request(url, (error, response) => {
-    if (error) {
-      callback(error)
-      return
-    }
-
-    response = JSON.parse(response.body)
-
-    if (response.status !== 'ok') {
-      const message = `NewsAPI returned status ${response.status} `
-      callback(new Error(message))
-      return
-    }
-
-    response.articles.forEach(article => {
-      const title = article.title
-      const titleMatches = title && pattern.test(title)
-      const description = article.description
-      const descriptionMatches = description && pattern.test(description)
-
-      if (titleMatches || descriptionMatches) {
-        const timestamp = new Date(article.publishedAt).getTime() / 1000
-        articles.push({
-          title: title,
-          description: description,
-          timestamp: timestamp,
-          source: source.name,
-          link: article.url,
-          media: article.urlToImage
-        })
+    request(url, (error, response) => {
+      if (error) {
+        reject(error)
       }
-    })
 
-    callback(undefined, articles)
+      response = JSON.parse(response.body)
+
+      if (response.status !== 'ok') {
+        reject(new Error(response.status))
+      }
+
+      response.articles.forEach(article => {
+        const title = article.title
+        const titleMatches = title && pattern.test(title)
+        const description = article.description
+        const descriptionMatches = description && pattern.test(description)
+
+        if (titleMatches || descriptionMatches) {
+          const timestamp = new Date(article.publishedAt).getTime() / 1000
+          articles.push({
+            title: title,
+            description: description,
+            timestamp: timestamp,
+            source: source.name,
+            link: article.url,
+            media: article.urlToImage
+          })
+        }
+      })
+      resolve(articles)
+    })
   })
 }
 
-module.exports = {
-  getNews: getNews
-}
+module.exports = news
