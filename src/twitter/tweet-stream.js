@@ -55,8 +55,9 @@ function TweetStream () {
     stream = client.stream('statuses/filter', {track: trends.join(','), language: 'en'})
 
     stream.on('data', event => {
-      // Ignore all streaming API messages except tweets
-      if (!event.text) {
+      // Log streaming API warnings
+      if (event.warning) {
+        console.error('Warning from streaming API: ', event)
         return
       }
 

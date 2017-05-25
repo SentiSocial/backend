@@ -7,8 +7,14 @@ const mockTweetStream = new stream.Readable()
 mockTweetStream._read = () => {}
 mockTweetStream.destroy = () => {}
 
+// Write a tweet streaming API message to the mock stream
 function writeTweetToStream (text) {
   mockTweetStream.emit('data', {text: text})
+}
+
+// Write a generic streaming API message to the mock stream
+function writeMessageToStream (message) {
+  mockTweetStream.emit('data', message)
 }
 
 describe('Tweet stream module', () => {
@@ -62,6 +68,14 @@ describe('Tweet stream module', () => {
     writeTweetToStream('Some tweet text')
 
     mockTweetStream.emit('error')
+
+    expect(console.error).toHaveBeenCalled()
+  })
+
+  it('Should log warnings from the streaming API', () => {
+    spyOn(console, 'error')
+
+    writeMessageToStream({warning: { code: 'SOME_WARNING_CODE' }})
 
     expect(console.error).toHaveBeenCalled()
   })
