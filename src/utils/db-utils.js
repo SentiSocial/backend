@@ -1,5 +1,4 @@
 'use strict'
-const _ = require('underscore')
 const Trend = require('../models/trend')
 const config = require('../../config')
 const sentimentUtils = require('./sentiment-utils')
@@ -28,21 +27,35 @@ const dbUtils = {
    * been saved.
    *
    * @param  {Object} trendData Data about the trend returned from the trends module
+   * @param  {String} trendData.name Name of trend
+   * @param  {String} trendData.rank Trend popularity rank
+   * @param  {String} trendData.locations Array of country code locations in which the trend is trending
+   *
    * @param  {Array} newsArticles Array of news articles for the trend returned from the news module
+   *
    * @param  {Array} tweets Array of popular tweets for the trend returned from the tweet-search module
+   *
    * @param  {Object} streamData Data returned from the tweetStream for this trend (can be undefined if the trend just started trending)
+   * @param  {Number} streamData.sentiment Sentiment score collected for the trend by the tweetStream
+   * @param  {String} streamData.sentiment_description Human readable description of the sentiment score
+   * @param  {Number} streamData.tweets_analyzed Number of tweets analyzed to get the sentiment score
+   * @param  {Array}  streamData.keywords Array of keywords collected from the tweetStream
+   *
    * @return {Promise}
    */
   processTrend: function (trendData, newsArticles, tweets, streamData) {
     return new Promise((resolve, reject) => {
-      let fullTrendData = _.extend(trendData, {
+      let fullTrendData = {
+        name: trendData.name,
+        rank: trendData.rank,
+        locations: trendData.locations,
         articles: newsArticles,
         tweets: tweets,
         sentiment_score: streamData ? streamData.sentiment : null,
         sentiment_description: streamData ? sentimentUtils.getSentimentDescription(streamData.sentiment) : null,
         tweets_analyzed: streamData ? streamData.tweets_analyzed : 0,
         keywords: streamData ? streamData.keywords : []
-      })
+      }
 
       // Try to find the trend
       Trend.findOne({name: trendData.name})
