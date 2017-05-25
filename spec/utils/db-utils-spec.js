@@ -67,27 +67,113 @@ describe('Main utils', () => {
     })
   })
 
-  it('Should update an existing trend with updateExistingTrend', done => {
+  it('Should update trend rank with updateExistingTrend', done => {
     let existingTrendData = mocks.getMockTrend()
     let currentTrendData = mocks.getMockTrend()
 
-    currentTrendData.rank = 3
-    currentTrendData.articles = [
-      {
-        title: 'new articles',
-        description: 'A new Article',
-        source: 'http://cnn.com',
-        link: 'http://cnn.com/article',
-        timestamp: 1494573005,
-        media: 'http://cnn.com/image.jpg'
-      }
-    ]
-    currentTrendData.tweets = [
-      { embed_id: '111111' },
-      { embed_id: '222222' }
-    ]
-    currentTrendData.sentiment_score = -2
-    currentTrendData.tweets_analyzed = 5
+    existingTrendData.rank = 1
+    currentTrendData.rank = 2
+
+    let trendModel = Trend(existingTrendData)
+
+    trendModel.save().then(() => {
+      dbUtils.updateExistingTrend(existingTrendData, currentTrendData).then(() => {
+        Trend.findOne({}).then(doc => {
+          expect(doc.rank).toEqual(2)
+          done()
+        })
+      })
+    })
+  })
+
+  it('Should update trend articles with updateExistingTrend', done => {
+    let existingTrendData = mocks.getMockTrend()
+    let currentTrendData = mocks.getMockTrend()
+
+    existingTrendData.articles = []
+    currentTrendData.articles = [mocks.getMockArticle()]
+
+    let trendModel = Trend(existingTrendData)
+
+    trendModel.save().then(() => {
+      dbUtils.updateExistingTrend(existingTrendData, currentTrendData).then(() => {
+        Trend.findOne({}).then(doc => {
+          expect(doc.articles.length).toEqual(1)
+          done()
+        })
+      })
+    })
+  })
+
+  it('Should update trend tweets with updateExistingTrend', done => {
+    let existingTrendData = mocks.getMockTrend()
+    let currentTrendData = mocks.getMockTrend()
+
+    existingTrendData.tweets = []
+    currentTrendData.tweets = [mocks.getMockTweet()]
+
+    let trendModel = Trend(existingTrendData)
+
+    trendModel.save().then(() => {
+      dbUtils.updateExistingTrend(existingTrendData, currentTrendData).then(() => {
+        Trend.findOne({}).then(doc => {
+          expect(doc.tweets.length).toEqual(1)
+          done()
+        })
+      })
+    })
+  })
+
+  it('Should update trend tweets analyzed with updateExistingTrend', done => {
+    let existingTrendData = mocks.getMockTrend()
+    let currentTrendData = mocks.getMockTrend()
+
+    existingTrendData.tweets_analyzed = 1
+    currentTrendData.tweets_analyzed = 1
+
+    let trendModel = Trend(existingTrendData)
+
+    trendModel.save().then(() => {
+      dbUtils.updateExistingTrend(existingTrendData, currentTrendData).then(() => {
+        Trend.findOne({}).then(doc => {
+          expect(doc.tweets_analyzed).toEqual(2)
+          done()
+        })
+      })
+    })
+  })
+
+  it('Should update trend sentiment score with updateExistingTrend', done => {
+    let existingTrendData = mocks.getMockTrend()
+    let currentTrendData = mocks.getMockTrend()
+
+    existingTrendData.sentiment_score = 5
+    currentTrendData.sentiment_score = 2
+
+    existingTrendData.tweets_analyzed = 6
+    currentTrendData.tweets_analyzed = 8
+
+    const totalTweetsAnalyzed = existingTrendData.tweets_analyzed + currentTrendData.tweets_analyzed
+
+    let trendModel = Trend(existingTrendData)
+
+    trendModel.save().then(() => {
+      dbUtils.updateExistingTrend(existingTrendData, currentTrendData).then(() => {
+        Trend.findOne({}).then(doc => {
+          // Sentiment should be properly averaged weighting for tweets_analyzed
+          let sentimentAvg = (currentTrendData.sentiment_score * currentTrendData.tweets_analyzed +
+            existingTrendData.sentiment_score * existingTrendData.tweets_analyzed) / totalTweetsAnalyzed
+
+          expect(doc.sentiment_score).toBeCloseTo(sentimentAvg, 3)
+          done()
+        })
+      })
+    })
+  })
+
+  it('Should update trend keywords with updateExistingTrend', done => {
+    let existingTrendData = mocks.getMockTrend()
+    let currentTrendData = mocks.getMockTrend()
 
     currentTrendData.keywords = [
       {word: 'word1', occurences: 10}
@@ -101,32 +187,9 @@ describe('Main utils', () => {
     trendModel.save().then(() => {
       dbUtils.updateExistingTrend(existingTrendData, currentTrendData).then(() => {
         Trend.findOne({}).then(doc => {
-          // Rank should be copied from currentTrendData
-          expect(doc.rank).toEqual(currentTrendData.rank)
-
-          // Articles should be replaced
-          doc.articles.forEach((article, i) => {
-            expect(article).toEqual(jasmine.objectContaining(currentTrendData.articles[i]))
-          })
-
-          // Tweets should be replaced
-          doc.tweets.forEach((tweet, i) => {
-            expect(tweet).toEqual(jasmine.objectContaining(currentTrendData.tweets[i]))
-          })
-
           // Keywords arrays should be merged and sorted
           expect(doc.keywords[0]).toEqual(jasmine.objectContaining({word: 'word1', occurences: 10}))
           expect(doc.keywords[1]).toEqual(jasmine.objectContaining({word: 'word2', occurences: 4}))
-
-         // Tweets analyzed should be summed up
-          let totalTweetsAnalyzed = currentTrendData.tweets_analyzed + existingTrendData.tweets_analyzed
-          expect(doc.tweets_analyzed).toEqual(totalTweetsAnalyzed)
-
-          // Sentiment should be properly averaged weighting for tweets_analyzed
-          let sentimentAvg = (currentTrendData.sentiment_score * currentTrendData.tweets_analyzed +
-            existingTrendData.sentiment_score * existingTrendData.tweets_analyzed) / totalTweetsAnalyzed
-
-          expect(doc.sentiment_score).toBeCloseTo(sentimentAvg, 3)
 
           done()
         })

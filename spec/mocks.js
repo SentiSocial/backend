@@ -38,6 +38,33 @@ const mocks = {
         }
       ]
     }
+  },
+
+  /**
+   * Returns a mock article object for testing
+   *
+   * @return {Object} A mock article
+   */
+  getMockArticle: function () {
+    return {
+      title: 'SomeArticleTitle',
+      description: 'An Article',
+      source: 'http://cnn.com',
+      link: 'http://cnn.com/article',
+      timestamp: 1494573005,
+      media: 'http://cnn.com/image.jpg'
+    }
+  },
+
+  /**
+   * Returns a mock tweet object for testing
+   *
+   * @return {Object} A mock tweet
+   */
+  getMockTweet: function () {
+    return {
+      embed_id: '123456'
+    }
   }
 }
 
