@@ -1,32 +1,41 @@
 'use strict'
-const trends = require('./twitter/trends')
-const dbUtils = require('./utils/db-utils')
-const TweetStream = require('./twitter/tweet-stream')
-const tweetSearch = require('./twitter/tweet-search')
-const news = require('./news/news')
+var trends = require('./twitter/trends')
+var dbUtils = require('./utils/db-utils')
+var TweetStream = require('./twitter/tweet-stream')
+var tweetSearch = require('./twitter/tweet-search')
+var news = require('./news/news')
 
-const tweetStream = new TweetStream()
+var tweetStream = new TweetStream()
 
 /**
  * Updates all trends in the database.
  *
  */
 function updateTrends () {
-  tweetStream.closeStream()
-  const streamData = tweetStream.getData()
+  return new Promise((resolve, reject) => {
+    tweetStream.closeStream()
+    const streamData = tweetStream.getData()
 
-  trends.getTrends()
-  .then(trends => {
-    // Remove old trends
-    dbUtils.removeOldTrends(trends.map(trendInfo => { return trendInfo.name }))
+    trends.getTrends()
+    .then(trends => {
+      // Remove old trends
+      dbUtils.removeOldTrends(trends.map(trendInfo => { return trendInfo.name }))
 
-    // Get data for and process each trend
-    trends.forEach(trend => {
-      getDataAndProcess(trend, streamData[trend.name])
+      let trendsProcessed = 0
+
+      // Get data for and process each trend, resolve when all trends processed
+      trends.forEach(trend => {
+        getDataAndProcess(trend, streamData[trend.name]).then(() => {
+          trendsProcessed++
+          if (trendsProcessed === trends.length) {
+            resolve()
+          }
+        })
+      })
+
+      // Start tracking new trends
+      tweetStream.startTracking(trends.map(trendData => { return trendData.name }))
     })
-
-    // Start tracking new trends
-    tweetStream.startTracking(trends.map(trendData => { return trendData.name }))
   })
 }
 
@@ -43,13 +52,15 @@ function updateTrends () {
  * @param  {Array}  streamData.keywords Keywords related to the trend
  */
 function getDataAndProcess (trendInfo, streamData) {
-  const tweetSearchPromise = tweetSearch.getTweetSample(trendInfo.name)
-  const newsPromise = news.getNews(trendInfo.name)
+  return new Promise((resolve, reject) => {
+    const tweetSearchPromise = tweetSearch.getTweetSample(trendInfo.name)
+    const newsPromise = news.getNews(trendInfo.name)
 
-  Promise.all([tweetSearchPromise, newsPromise]).then(values => {
-    const tweets = values[0]
-    const news = values[1]
-    dbUtils.processTrend(trendInfo, news, tweets, streamData)
+    Promise.all([tweetSearchPromise, newsPromise]).then(values => {
+      const tweets = values[0]
+      const news = values[1]
+      dbUtils.processTrend(trendInfo, news, tweets, streamData).then(resolve)
+    })
   })
 }
 
