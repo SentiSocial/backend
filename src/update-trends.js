@@ -47,7 +47,6 @@ function getDataAndProcess (trendInfo, streamData) {
   const newsPromise = news.getNews(trendInfo.name)
 
   Promise.all([tweetSearchPromise, newsPromise]).then(values => {
-    console.log('preprocess')
     const tweets = values[0]
     const news = values[1]
     dbUtils.processTrend(trendInfo, news, tweets, streamData)
