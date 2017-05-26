@@ -2,12 +2,12 @@
   "name": "sentisocial-backend",
   "version": "0.0.1",
   "description": "Nodejs backend for SentiSocial",
-  "main": "src/main.js",
+  "main": "app.js",
   "scripts": {
     "test": "jasmine",
     "test-cov": "nyc --all --include src jasmine",
     "lint": "eslint .",
-    "start": "node src/main.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
