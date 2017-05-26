@@ -31,7 +31,7 @@ var tweetSearch = {
         if (error) reject(error)
 
         let tweets = []
-        result.statuses.forEach(function (tweet) {
+        result.statuses.forEach(tweet => {
           // Add the tweet text, id and popularity to tweets
           tweets.push({
             embed_id: tweet.id_str

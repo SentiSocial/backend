@@ -16,7 +16,7 @@ var mockTrend
 describe('Trend Controller', () => {
   mockTrend = mocks.getMockTrend()
 
-  beforeAll(function (done) {
+  beforeAll(done => {
     // Wrap mongoose with mockgoose
     mockgoose(mongoose).then(() => {
       mongoose.connect('mongodb://example.com/testdb', err => {

@@ -4,7 +4,8 @@ module.exports = {
       "plugin:jasmine/recommended"
     ],
     "rules": {
-      "arrow-parens": ["error", "as-needed"]
+      "arrow-parens": ["error", "as-needed"],
+      "prefer-arrow-callback": "error"
     },
     "plugins": [
         "standard",
