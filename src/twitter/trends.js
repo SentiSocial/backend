@@ -89,7 +89,7 @@ var trends = {
       let rank = 1
       // Iterate over each worldwide trend
       worldwideTrends.forEach(worldwideTrend => {
-        let trend = {name: worldwideTrend.name, locations: [], tweet_volume: worldwideTrend.tweet_volume}
+        const trend = {name: worldwideTrend.name, locations: [], tweet_volume: worldwideTrend.tweet_volume}
         // for each worldwide trend, iterate over each countrycode we have
         Object.keys(locationTrends).forEach(countryCode => {
           // For each country code, iterate over that country's trends

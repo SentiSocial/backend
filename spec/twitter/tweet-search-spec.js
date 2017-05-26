@@ -3,7 +3,7 @@ const tweetSearch = require('../../src/twitter/tweet-search')
 
 describe('Tweet Search Module', () => {
   beforeEach(() => {
-    let mockTweetData = {
+    const mockTweetData = {
       statuses: []
     }
 

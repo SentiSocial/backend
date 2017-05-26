@@ -11,7 +11,7 @@ function SentimentBank (trendName = '') {
   let totalSentiment = 0
 
   // Ignore words occuring in the trend name in sentiment calculations
-  let ignoreQuery = {}
+  const ignoreQuery = {}
   trendName.split(' ').map(word => { return word.replace(/[^a-zA-Z]/g, '').toLowerCase() })
   .forEach(word => { ignoreQuery[word] = 0 })
 

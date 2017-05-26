@@ -3,10 +3,10 @@ const KeywordBank = require('../../src/twitter/keyword-bank')
 
 describe('KeywordBank', () => {
   it('Should extract keywords using keyword-extractor', () => {
-    let keywordBank = new KeywordBank()
-    let sentence = 'This is a sentence with some keywords for testing purposes'
+    const keywordBank = new KeywordBank()
+    const sentence = 'This is a sentence with some keywords for testing purposes'
 
-    let keywords = keywordExtractor.extract(sentence)
+    const keywords = keywordExtractor.extract(sentence)
 
     keywordBank.addText(sentence)
 
@@ -16,8 +16,8 @@ describe('KeywordBank', () => {
   })
 
   it('Should count occurences', () => {
-    let keywordBank = new KeywordBank()
-    let word = 'keyword'
+    const keywordBank = new KeywordBank()
+    const word = 'keyword'
 
     keywordBank.addText(word)
 
@@ -29,7 +29,7 @@ describe('KeywordBank', () => {
   })
 
   it('Should disregard links', () => {
-    let keywordBank = new KeywordBank()
+    const keywordBank = new KeywordBank()
 
     keywordBank.addText('https://example.com')
     keywordBank.addText('http://example.com')
@@ -39,7 +39,7 @@ describe('KeywordBank', () => {
   })
 
   it('Should disregard "rt" and "retweet" (case insensitive)', () => {
-    let keywordBank = new KeywordBank()
+    const keywordBank = new KeywordBank()
 
     keywordBank.addText('rt retweet RT Retweet')
 
@@ -47,7 +47,7 @@ describe('KeywordBank', () => {
   })
 
   it('Should disregard words containing non alphanumeric characters (except for @ and #)', () => {
-    let keywordBank = new KeywordBank()
+    const keywordBank = new KeywordBank()
 
     keywordBank.addText('$100')
     keywordBank.addText('\u2022') // Unicode bullet
