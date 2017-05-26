@@ -1,22 +1,31 @@
-# sentisocial-backend
-## Node.js backend for SentiSocial
+<p align="center">
+<img height=250 width=250 src="logo.png">
+</p>
+<h1 align="center">SentiSocial-Backend</h1>
 
-[![Travis](https://img.shields.io/travis/SentiSocial/sentisocial-backend.svg)](https://travis-ci.org/SentiSocial/sentisocial-backend)
-[![Standard - JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](http://standardjs.com/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/SentiSocial/sentisocial-backend/blob/master/LICENSE)
+<p align="center">
+<a href="https://travis-ci.org/SentiSocial/sentisocial-backend"><img alt="Travis" src="https://img.shields.io/travis/SentiSocial/sentisocial-backend.svg"></a>
+<a href="https://github.com/SentiSocial/sentisocial-backend/blob/master/LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
+<a href="https://standardjs.com"><img alt="code style" src="https://img.shields.io/badge/code_style-standard-brightgreen.svg"></a>
+</p>
 
+Originally created at The University of Toronto Scarborough's Hack the Valley 2017.
 
-Created at The University of Toronto Scarborough's Hack the Valley 2017
-
-SentiSocial is a Twitter based trend anslysis tool.
+SentiSocial is a Twitter based trend analysis application.
 This repository contains the SentiSocial backend, which queries the Twitter API
-for current trends, and aggregates news and popular tweets for those trends
-using the [News API](https://newsapi.org/) and the Twitter API. Sentiment
-analysis is performed on tweets related to each trend using the [NPM sentiment
-package](https://www.npmjs.com/package/sentiment). All this information is then
-exposed via a REST API created with express.js.
+for current trends, collects data on each trend and exposes that data via a
+public API.
 
-The SentiSocial frontend can be found [here](https://github.com/SentiSocial/sentisocial-frontend)
+Specifically, the backend collects the following information on trends:
+- Average sentiment of tweets related to the trend (via the [NPM Sentiment Package](https://www.npmjs.com/package/sentiment))
+- Popular tweets related to the trend
+- News articles related to the trend (via the [News Api](https://newsapi.org))
+- Keywords found in tweets related to the trend
+- Countries in which the trend is trending
+- Amount of time the trend has been trending for
+- Volume of tweets related to the trend
+
+This data is displayed nicely in the SentiSocial frontend, which can be found [here](https://github.com/SentiSocial/sentisocial-frontend).
 
 The API is documented in api-doc.md.
 
@@ -34,9 +43,9 @@ Before running the backend, ensure you have node + NPM installed and run:
 
 After installation, edit `config.js` to your liking, making sure to add the
 address of your MongoDB server. You will also need to store your Twitter and
-News API authentication keys in the following enviornment variables.
+News API authentication keys in the following environment variables.
 
-| key                         | enviornment variable        |
+| key                         | environment variable        |
 |-----------------------------|-----------------------------|
 | Twitter consumer key        | TWITTER_CONSUMER_KEY        |
 | Twitter consumer secret     | TWITTER_CONSUMER_SECRET     |
@@ -48,18 +57,28 @@ Then run:
 
 `npm start`
 
-To spin up the backend
+To spin up the backend.
 
-# Tests
+## Tests
 
 Jasmine tests are located in the `spec` directory, to run them, use:
 
 `npm test`
 
-# Style
+To run the tests and view test coverage with Istanbul, use:
+
+`npm run test-cov`
+
+## Style
 
 This project uses the [JS standard code style](http://standardjs.com).
 
-To run the linter, use:
+ESLint is already configured to check the code for adherence with standard.
+To run it, use:
 
 `npm run lint`
+
+## License
+
+All code in this repository is licensed under the MIT license. See the LICENSE
+file for more details. All images and other assets are licensed under CC BY.
