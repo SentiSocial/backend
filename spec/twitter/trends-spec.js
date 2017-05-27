@@ -69,6 +69,11 @@ describe('Twitter Trends Module', () => {
         'country': 'Canada',
         'countryCode': 'CA',
         'woeid': 23424775
+      },
+      {
+        'country': 'Mexico',
+        'countryCode': 'MX',
+        'woeid': 23424900
       }
     ]
 
