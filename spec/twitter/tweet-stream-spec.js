@@ -79,4 +79,16 @@ describe('Tweet stream module', () => {
 
     expect(console.error).toHaveBeenCalled()
   })
+
+  it('Should disregard non tweet, non warning events', () => {
+    const mockEvent = {
+      'some_event': {
+        'event_property': 'something',
+        'another_event_property': 'something_else'
+      }
+    }
+
+    writeMessageToStream(mockEvent)
+    expect(tweetStream.getData()).toEqual({})
+  })
 })

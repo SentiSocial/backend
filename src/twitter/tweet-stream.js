@@ -59,6 +59,9 @@ function TweetStream () {
       if (event.warning) {
         console.error('Warning from streaming API: ', event)
         return
+      } else if (!event.text) {
+        // If there is no event text, this is not a tweet or a warning
+        return
       }
 
       // Identify the trend and update trendData
