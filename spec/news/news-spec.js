@@ -44,7 +44,7 @@ describe('News module', () => {
     nock.cleanAll()
   })
 
-  it('Should return news with all required fields', done => {
+  it('should return news with all required fields', done => {
     setMockSources()
 
     news.getNews('News article').then(articles => {
@@ -62,7 +62,7 @@ describe('News module', () => {
     }).catch(error => fail(error))
   })
 
-  it('Should return news whose title matches the keyword', done => {
+  it('should return news whose title matches the keyword', done => {
     setMockSources()
 
     news.getNews('title').then(articles => {
@@ -71,7 +71,7 @@ describe('News module', () => {
     }).catch(error => fail(error))
   })
 
-  it('Should return news whose description matches the keyword', done => {
+  it('should return news whose description matches the keyword', done => {
     setMockSources()
 
     news.getNews('description').then(articles => {
@@ -80,7 +80,7 @@ describe('News module', () => {
     }).catch(error => fail(error))
   })
 
-  it('Should return no articles if there is no match', done => {
+  it('should return no articles if there is no match', done => {
     setMockSources()
 
     news.getNews('asdfadsf').then(articles => {
@@ -89,7 +89,7 @@ describe('News module', () => {
     }).catch(error => fail(error))
   })
 
-  it('Should log an error if the promise if request encounters an error', done => {
+  it('should log an error if the promise if request encounters an error', done => {
     // Set all newsapi requests to return an error
     nock('https://newsapi.org/v1')
     .persist()
@@ -105,7 +105,7 @@ describe('News module', () => {
     }).catch(error => fail(error))
   })
 
-  it('Should log an error if the newsapi returns an error code', done => {
+  it('should log an error if the newsapi returns an error code', done => {
     const mockErrorResponse = {
       'status': 'error',
       'code': 'someErrorCode',

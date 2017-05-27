@@ -41,7 +41,7 @@ describe('Trend Controller', () => {
     })
   })
 
-  it('Should return with status 200 for a valid request', done => {
+  it('should return with status 200 for a valid request', done => {
     const req = httpMocks.createRequest({
       method: 'GET',
       params: {
@@ -59,7 +59,7 @@ describe('Trend Controller', () => {
     trendController(req, res)
   })
 
-  it('Should return with status 400 if no trend is specified', done => {
+  it('should return with status 400 if no trend is specified', done => {
     const req = httpMocks.createRequest({
       method: 'GET',
       url: '/trend/test-trend'
@@ -74,7 +74,7 @@ describe('Trend Controller', () => {
     trendController(req, res)
   })
 
-  it('Should return with status 404 if a nonexistant trend is specified', done => {
+  it('should return with status 404 if a nonexistant trend is specified', done => {
     const req = httpMocks.createRequest({
       method: 'GET',
       params: {
@@ -92,7 +92,7 @@ describe('Trend Controller', () => {
     trendController(req, res)
   })
 
-  it('Should return status 500 for an internal server error', done => {
+  it('should return status 500 for an internal server error', done => {
     const req = httpMocks.createRequest({
       method: 'GET',
       params: {
@@ -120,7 +120,7 @@ describe('Trend Controller', () => {
     })
   })
 
-  it('Should return valid JSON', done => {
+  it('should return valid JSON', done => {
     const req = httpMocks.createRequest({
       method: 'GET',
       params: {
@@ -138,7 +138,7 @@ describe('Trend Controller', () => {
     trendController(req, res)
   })
 
-  it('Should return all data for the trend', done => {
+  it('should return all data for the trend', done => {
     const req = httpMocks.createRequest({
       method: 'GET',
       params: {

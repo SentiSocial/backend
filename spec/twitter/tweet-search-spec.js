@@ -24,14 +24,14 @@ describe('Tweet Search Module', () => {
     .reply(200, mockTweetData)
   })
 
-  it('Should return at least the specified number of tweets', done => {
+  it('should return at least the specified number of tweets', done => {
     tweetSearch.getTweetSample('#test', 20).then(tweets => {
       expect(tweets.length >= 20).toEqual(true)
       done()
     })
   })
 
-  it('Should return tweets with the correct fields', done => {
+  it('should return tweets with the correct fields', done => {
     tweetSearch.getTweetSample('#test', 5).then(tweets => {
       tweets.forEach(tweet => {
         expect(tweet.embed_id).toBeDefined()

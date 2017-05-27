@@ -2,7 +2,7 @@ const keywordExtractor = require('keyword-extractor')
 const KeywordBank = require('../../src/twitter/keyword-bank')
 
 describe('KeywordBank', () => {
-  it('Should extract keywords using keyword-extractor', () => {
+  it('should extract keywords using keyword-extractor', () => {
     const keywordBank = new KeywordBank()
     const sentence = 'This is a sentence with some keywords for testing purposes'
 
@@ -15,7 +15,7 @@ describe('KeywordBank', () => {
     })
   })
 
-  it('Should count occurences', () => {
+  it('should count occurences', () => {
     const keywordBank = new KeywordBank()
     const word = 'keyword'
 
@@ -28,7 +28,7 @@ describe('KeywordBank', () => {
     expect(keywordBank.getTopKeywords()[0]).toEqual({word: 'keyword', occurences: 3})
   })
 
-  it('Should disregard links', () => {
+  it('should disregard links', () => {
     const keywordBank = new KeywordBank()
 
     keywordBank.addText('https://example.com')
@@ -38,7 +38,7 @@ describe('KeywordBank', () => {
     expect(keywordBank.getTopKeywords()).toEqual([])
   })
 
-  it('Should disregard "rt" and "retweet" (case insensitive)', () => {
+  it('should disregard "rt" and "retweet" (case insensitive)', () => {
     const keywordBank = new KeywordBank()
 
     keywordBank.addText('rt retweet RT Retweet')
@@ -46,7 +46,7 @@ describe('KeywordBank', () => {
     expect(keywordBank.getTopKeywords()).toEqual([])
   })
 
-  it('Should disregard words containing non alphanumeric characters (except for @ and #)', () => {
+  it('should disregard words containing non alphanumeric characters (except for @ and #)', () => {
     const keywordBank = new KeywordBank()
 
     keywordBank.addText('$100')

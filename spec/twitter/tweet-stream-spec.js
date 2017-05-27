@@ -28,7 +28,7 @@ describe('Tweet stream module', () => {
     tweetStream = new TweetStream()
   })
 
-  it('Should receive tweets from the stream', () => {
+  it('should receive tweets from the stream', () => {
     tweetStream.startTracking(['trend1', 'trend2'])
 
     writeTweetToStream('trend1')
@@ -40,7 +40,7 @@ describe('Tweet stream module', () => {
     expect(data.trend2.tweets_analyzed).toEqual(1)
   })
 
-  it('Should return all fields for each trend', () => {
+  it('should return all fields for each trend', () => {
     tweetStream.startTracking(['trend1'])
 
     writeTweetToStream('trend1')
@@ -52,7 +52,7 @@ describe('Tweet stream module', () => {
     expect(data.trend1.tweets_analyzed).toBeDefined()
   })
 
-  it('Should destroy the stream when closeStream is called', () => {
+  it('should destroy the stream when closeStream is called', () => {
     spyOn(mockTweetStream, 'destroy')
 
     tweetStream.startTracking(['trend1'])
@@ -62,7 +62,7 @@ describe('Tweet stream module', () => {
     expect(mockTweetStream.destroy).toHaveBeenCalled()
   })
 
-  it('Should log errors', () => {
+  it('should log errors', () => {
     spyOn(console, 'error')
 
     writeTweetToStream('Some tweet text')
@@ -72,7 +72,7 @@ describe('Tweet stream module', () => {
     expect(console.error).toHaveBeenCalled()
   })
 
-  it('Should log warnings from the streaming API', () => {
+  it('should log warnings from the streaming API', () => {
     spyOn(console, 'error')
 
     writeMessageToStream({warning: { code: 'SOME_WARNING_CODE' }})
@@ -80,7 +80,7 @@ describe('Tweet stream module', () => {
     expect(console.error).toHaveBeenCalled()
   })
 
-  it('Should disregard non tweet, non warning events', () => {
+  it('should disregard non tweet, non warning events', () => {
     const mockEvent = {
       'some_event': {
         'event_property': 'something',

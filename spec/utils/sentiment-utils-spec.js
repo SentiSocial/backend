@@ -10,12 +10,12 @@ describe('Sentiment utils', () => {
     sentimentUtils.__set__('config', mockConfig)
   })
 
-  it('Should return the proper sentiment description', () => {
+  it('should return the proper sentiment description', () => {
     expect(sentimentUtils.getSentimentDescription(1)).toEqual('a')
     expect(sentimentUtils.getSentimentDescription(-1)).toEqual('b')
   })
 
-  it('Should return a sentiment description on the edge of 2 sentiment descriptions', () => {
+  it('should return a sentiment description on the edge of 2 sentiment descriptions', () => {
     expect(sentimentUtils.getSentimentDescription(0)).toBeDefined()
   })
 })
