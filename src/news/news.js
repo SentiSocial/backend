@@ -25,7 +25,7 @@ const news = {
           pending--
 
           articles = articles.concat(response)
-          if (!pending) {
+          if (pending === 0) {
             resolve(articles.slice(0, config.maxArticlesPerTrend))
           }
         }).catch(console.error)
