@@ -5,7 +5,7 @@
 
 <p align="center">
 <a href="https://travis-ci.org/SentiSocial/sentisocial-backend"><img alt="Travis" src="https://img.shields.io/travis/SentiSocial/sentisocial-backend.svg"></a>
-<a href='https://coveralls.io/github/SentiSocial/sentisocial-backend?branch=coveralls'><img src='https://img.shields.io/coveralls/sentisocial/sentisocial-backend.svg' alt='Coverage Status' /></a>
+<a href='https://coveralls.io/github/SentiSocial/sentisocial-backend'><img src='https://img.shields.io/coveralls/sentisocial/sentisocial-backend.svg' alt='Coverage Status' /></a>
 <a href="https://github.com/SentiSocial/sentisocial-backend/blob/master/LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
 <a href="https://standardjs.com"><img alt="code style" src="https://img.shields.io/badge/code_style-standard-brightgreen.svg"></a>
 </p>
