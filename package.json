@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jasmine",
     "test-cov": "nyc --all --include src jasmine",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint .",
     "start": "node app.js"
   },
@@ -35,6 +36,7 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "coveralls": "^2.13.1",
     "eslint": "^3.13.0",
     "eslint-config-standard": "^6.2.1",
     "eslint-plugin-jasmine": "^2.2.0",
