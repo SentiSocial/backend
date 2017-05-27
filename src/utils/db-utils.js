@@ -16,7 +16,7 @@ const dbUtils = {
     return new Promise((resolve, reject) => {
       Trend.remove({name: {$nin: currTrends}})
       .then(resolve)
-      .catch(error => { reject(error) })
+      .catch(reject)
     })
   },
 
