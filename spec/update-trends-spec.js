@@ -29,7 +29,7 @@ describe('Update trends module', () => {
     updateTrends.__set__('tweetStream', mockTweetStream)
   })
 
-  it('Should get use the trends module to get trends', done => {
+  it('should get use the trends module to get trends', done => {
     const internalTrends = updateTrends.__get__('trends')
     spyOn(internalTrends, 'getTrends').and.returnValue(Promise.resolve([{name: 'trend1', rank: 1}]))
 
@@ -39,7 +39,7 @@ describe('Update trends module', () => {
     })
   })
 
-  it('Should remove old trends from the database', () => {
+  it('should remove old trends from the database', () => {
     const internalDbUtils = updateTrends.__get__('dbUtils')
     spyOn(internalDbUtils, 'removeOldTrends')
 
@@ -48,7 +48,7 @@ describe('Update trends module', () => {
     })
   })
 
-  it('Should get news for each trend', () => {
+  it('should get news for each trend', () => {
     const internalNews = updateTrends.__get__('news')
     spyOn(internalNews, 'getNews').and.returnValue(Promise.resolve([mocks.getMockArticle()]))
 
@@ -58,7 +58,7 @@ describe('Update trends module', () => {
     })
   })
 
-  it('Should get tweets for each trend', () => {
+  it('should get tweets for each trend', () => {
     const internalTweetSearch = updateTrends.__get__('tweetSearch')
     spyOn(internalTweetSearch, 'getTweetSample').and.returnValue(Promise.resolve([mocks.getMockTweet()]))
 
@@ -68,7 +68,7 @@ describe('Update trends module', () => {
     })
   })
 
-  it('Should call processTrend for each trend', () => {
+  it('should call processTrend for each trend', () => {
     const internalDbUtils = updateTrends.__get__('dbUtils')
     spyOn(internalDbUtils, 'processTrend').and.returnValue(Promise.resolve())
 

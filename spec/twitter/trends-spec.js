@@ -102,7 +102,7 @@ describe('Twitter Trends Module', () => {
     trends.__set__('config', configMock)
   })
 
-  it('Should return the correct trends, in order', done => {
+  it('should return the correct trends, in order', done => {
     trends.getTrends().then(trends => {
       expect(trends.length).toEqual(2)
       expect(trends[0]).toEqual({name: '#trend1', locations: ['US', 'CA'], tweet_volume: 1, rank: 1})

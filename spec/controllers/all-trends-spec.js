@@ -54,7 +54,7 @@ describe('All Trends Controller', () => {
     })
   })
 
-  it('Should return with status 200 for a valid request', done => {
+  it('should return with status 200 for a valid request', done => {
     const req = getRequest()
     const res = getResponse()
 
@@ -66,7 +66,7 @@ describe('All Trends Controller', () => {
     allTrendsController(req, res)
   })
 
-  it('Should return status 500 for an internal server error', done => {
+  it('should return status 500 for an internal server error', done => {
     // Mock trend model that calls the callback to find() with an error
     const trendMock = {find: (query, callback) => {
       callback(new Error('Some error'), {})
@@ -90,7 +90,7 @@ describe('All Trends Controller', () => {
     })
   })
 
-  it('Should return valid JSON', done => {
+  it('should return valid JSON', done => {
     const req = getRequest()
     const res = getResponse()
 
@@ -102,7 +102,7 @@ describe('All Trends Controller', () => {
     allTrendsController(req, res)
   })
 
-  it('Should return all current trends', done => {
+  it('should return all current trends', done => {
     const req = getRequest()
     const res = getResponse()
 
@@ -114,7 +114,7 @@ describe('All Trends Controller', () => {
     allTrendsController(req, res)
   })
 
-  it('Should return all data for each trend', done => {
+  it('should return all data for each trend', done => {
     const req = getRequest()
     const res = getResponse()
 
@@ -133,7 +133,7 @@ describe('All Trends Controller', () => {
     allTrendsController(req, res)
   })
 
-  it('Should return trends sorted by rank', done => {
+  it('should return trends sorted by rank', done => {
     const req = getRequest()
     const res = getResponse()
 

@@ -31,7 +31,7 @@ describe('Main utils', () => {
     })
   })
 
-  it('Should remove all old trends from the database with removeOldTrends', done => {
+  it('should remove all old trends from the database with removeOldTrends', done => {
     const mockTrends = [
       mocks.getMockTrend(),
       mocks.getMockTrend(),
@@ -56,7 +56,7 @@ describe('Main utils', () => {
     })
   })
 
-  it('Should add a new trend with createTrend', done => {
+  it('should add a new trend with createTrend', done => {
     const trend = mocks.getMockTrend()
 
     dbUtils.createNewTrend(trend).then(() => {
@@ -67,7 +67,7 @@ describe('Main utils', () => {
     })
   })
 
-  it('Should update trend rank with updateExistingTrend', done => {
+  it('should update trend rank with updateExistingTrend', done => {
     const existingTrendData = mocks.getMockTrend()
     const currentTrendData = mocks.getMockTrend()
 
@@ -86,7 +86,7 @@ describe('Main utils', () => {
     })
   })
 
-  it('Should update trend articles with updateExistingTrend', done => {
+  it('should update trend articles with updateExistingTrend', done => {
     const existingTrendData = mocks.getMockTrend()
     const currentTrendData = mocks.getMockTrend()
 
@@ -105,7 +105,7 @@ describe('Main utils', () => {
     })
   })
 
-  it('Should update trend tweets with updateExistingTrend', done => {
+  it('should update trend tweets with updateExistingTrend', done => {
     const existingTrendData = mocks.getMockTrend()
     const currentTrendData = mocks.getMockTrend()
 
@@ -124,7 +124,7 @@ describe('Main utils', () => {
     })
   })
 
-  it('Should update trend tweets analyzed with updateExistingTrend', done => {
+  it('should update trend tweets analyzed with updateExistingTrend', done => {
     const existingTrendData = mocks.getMockTrend()
     const currentTrendData = mocks.getMockTrend()
 
@@ -143,7 +143,7 @@ describe('Main utils', () => {
     })
   })
 
-  it('Should update trend sentiment score with updateExistingTrend', done => {
+  it('should update trend sentiment score with updateExistingTrend', done => {
     const existingTrendData = mocks.getMockTrend()
     const currentTrendData = mocks.getMockTrend()
 
@@ -171,7 +171,7 @@ describe('Main utils', () => {
     })
   })
 
-  it('Should update trend keywords with updateExistingTrend', done => {
+  it('should update trend keywords with updateExistingTrend', done => {
     const existingTrendData = mocks.getMockTrend()
     const currentTrendData = mocks.getMockTrend()
 
@@ -197,7 +197,7 @@ describe('Main utils', () => {
     })
   })
 
-  it('Should set sentiment score and description to null with updateExistingTrend if no tweets analyzed', done => {
+  it('should set sentiment score and description to null with updateExistingTrend if no tweets analyzed', done => {
     const existingTrendData = mocks.getMockTrend()
     const currentTrendData = mocks.getMockTrend()
 
@@ -216,7 +216,7 @@ describe('Main utils', () => {
     })
   })
 
-  it('Should call createNewTrend when processTrend is called with a new Trend', done => {
+  it('should call createNewTrend when processTrend is called with a new Trend', done => {
     spyOn(dbUtils, 'createNewTrend').and.returnValue({then: () => {
       expect(dbUtils.createNewTrend).toHaveBeenCalled()
       done()
@@ -225,7 +225,7 @@ describe('Main utils', () => {
     dbUtils.processTrend(mocks.getMockTrend(), [], [])
   })
 
-  it('Should call updateExistingTrend when processTrend is called with an existing Trend', done => {
+  it('should call updateExistingTrend when processTrend is called with an existing Trend', done => {
     const trend = mocks.getMockTrend()
     const trendModel = new Trend(trend)
 
@@ -240,7 +240,7 @@ describe('Main utils', () => {
     })
   })
 
-  it('Should call createNewTrend with proper stream data if provided', done => {
+  it('should call createNewTrend with proper stream data if provided', done => {
     spyOn(dbUtils, 'createNewTrend').and.returnValue({then: () => {
       expect(dbUtils.createNewTrend).toHaveBeenCalledWith(jasmine.objectContaining({
         sentiment_score: 3,
@@ -257,7 +257,7 @@ describe('Main utils', () => {
     })
   })
 
-  it('Should call updateExistingTrend with proper stream data if provided', done => {
+  it('should call updateExistingTrend with proper stream data if provided', done => {
     const trend = mocks.getMockTrend()
     const trendModel = new Trend(trend)
 

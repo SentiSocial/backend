@@ -3,13 +3,13 @@ const SentimentBank = require('../../src/twitter/sentiment-bank')
 const sentiment = require('sentiment')
 
 describe('SentimentBank', () => {
-  it('Returns a sentiment score of 0 with no tweets', () => {
+  it('returns a sentiment score of 0 with no tweets', () => {
     const sentimentBank = new SentimentBank()
 
     expect(sentimentBank.getSentiment()).toEqual(0)
   })
 
-  it('Returns the correct number of analyzed texts', () => {
+  it('returns the correct number of analyzed texts', () => {
     const sentimentBank = new SentimentBank()
 
     expect(sentimentBank.getAnalyzed()).toEqual(0)
@@ -21,7 +21,7 @@ describe('SentimentBank', () => {
     expect(sentimentBank.getAnalyzed()).toEqual(3)
   })
 
-  it('Correctly calculates an average with 1 tweet', () => {
+  it('correctly calculates an average with 1 tweet', () => {
     const sentimentBank = new SentimentBank()
     const tweetText = 'This is a great string with a positivie mood'
     sentimentBank.addText(tweetText)
@@ -31,7 +31,7 @@ describe('SentimentBank', () => {
     expect(sentimentBank.getSentiment()).toEqual(sen.score)
   })
 
-  it('Correctly calculates an average with multiple tweets', () => {
+  it('correctly calculates an average with multiple tweets', () => {
     const sentimentBank = new SentimentBank()
 
     const string1 = 'This is a great string with a positivie mood'
@@ -51,7 +51,7 @@ describe('SentimentBank', () => {
     expect(sentimentBank.getSentiment()).toEqual(averageSen)
   })
 
-  it('Ignores all words occuring in the trend name', () => {
+  it('ignores all words occuring in the trend name', () => {
     const trendName = 'Bad Horrible trend name with negative sentiment'
     const sentimentBank = new SentimentBank(trendName)
 

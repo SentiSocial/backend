@@ -22,7 +22,7 @@ describe('Trend', () => {
     })
   })
 
-  it('Saves a trend and retreives it', done => {
+  it('saves a trend and retreives it', done => {
     const trendModel = new Trend(mocks.getMockTrend())
 
     // Save the trend
