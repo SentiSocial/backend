@@ -80,6 +80,15 @@ describe('News module', () => {
     }).catch(error => fail(error))
   })
 
+  it('Should return no articles if there is no match', done => {
+    setMockSources()
+
+    news.getNews('asdfadsf').then(articles => {
+      expect(articles[0]).not.toBeDefined()
+      done()
+    }).catch(error => fail(error))
+  })
+
   it('Should log an error if the promise if request encounters an error', done => {
     // Set all newsapi requests to return an error
     nock('https://newsapi.org/v1')
