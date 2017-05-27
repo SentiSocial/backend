@@ -1,9 +1,10 @@
+const rewire = require('rewire')
 const mocks = require('../mocks')
 const httpMocks = require('node-mocks-http')
 const Trend = require('../../src/models/trend')
 const mongoose = require('mongoose')
 const mockgoose = require('mockgoose')
-const trendController = require('../../src/controllers/trend')
+const trendController = rewire('../../src/controllers/trend')
 
 function getResponse () {
   return httpMocks.createResponse({
@@ -89,6 +90,34 @@ describe('Trend Controller', () => {
     })
 
     trendController(req, res)
+  })
+
+  it('Should return status 500 for an internal server error', done => {
+    const req = httpMocks.createRequest({
+      method: 'GET',
+      params: {
+        name: mockTrend.name
+      },
+      url: '/trend/test-trend'
+    })
+    const res = getResponse()
+
+    // Mock trend model that calls the callback to findOne() with an error
+    const trendMock = {findOne: (query, callback) => {
+      callback(new Error('Some error'), {})
+      return {select: () => {}}
+    }}
+
+    trendController.__with__({
+      Trend: trendMock
+    })(() => {
+      res.on('end', () => {
+        expect(res.statusCode).toEqual(500)
+        done()
+      })
+
+      trendController(req, res)
+    })
   })
 
   it('Should return valid JSON', done => {
