@@ -87,7 +87,8 @@ const dbUtils = {
         ? (currentTrendData.sentiment_score * currentTrendData.tweets_analyzed +
         existingTrendData.sentiment_score * existingTrendData.tweets_analyzed) /
         newTweetsAnalyzed : null
-      newSentimentScore = Math.round(newSentimentScore * 1000) / 1000 // Round to nearest thousandth
+
+      newSentimentScore = newSentimentScore === null ? null : Math.round(newSentimentScore * 1000) / 1000 // Round to nearest thousandth if not null
 
       // Create a new keyword array (removing duplicates)
       const keywordsExisting = {}
