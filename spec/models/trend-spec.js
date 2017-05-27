@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const mockgoose = require('mockgoose')
 const mocks = require('../mocks')
 
-describe('Trend', function () {
+describe('Trend', () => {
   beforeEach(done => {
     mockgoose(mongoose).then(() => {
       mongoose.connect('mongodb://example.com/testdb', err => {

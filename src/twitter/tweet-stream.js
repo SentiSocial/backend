@@ -71,7 +71,7 @@ function TweetStream () {
       })
     })
 
-    stream.on('error', function (error) {
+    stream.on('error', error => {
       console.error(error)
     })
   }

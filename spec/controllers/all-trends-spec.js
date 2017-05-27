@@ -29,7 +29,7 @@ describe('All Trends Controller', () => {
   mockTrends[0].rank = 1
   mockTrends[1].rank = 2
 
-  beforeAll(function (done) {
+  beforeAll(done => {
     // Wrap mongoose with mockgoose
     mockgoose(mongoose).then(() => {
       mongoose.connect('mongodb://example.com/testdb', err => {
