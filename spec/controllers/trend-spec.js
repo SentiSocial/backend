@@ -41,14 +41,14 @@ describe('Trend Controller', () => {
   })
 
   it('Should return with status 200 for a valid request', done => {
-    let req = httpMocks.createRequest({
+    const req = httpMocks.createRequest({
       method: 'GET',
       params: {
         name: mockTrend.name
       },
       url: '/trend/test-trend'
     })
-    let res = getResponse()
+    const res = getResponse()
 
     res.on('end', () => {
       expect(res.statusCode).toEqual(200)
@@ -59,11 +59,11 @@ describe('Trend Controller', () => {
   })
 
   it('Should return with status 400 if no trend is specified', done => {
-    let req = httpMocks.createRequest({
+    const req = httpMocks.createRequest({
       method: 'GET',
       url: '/trend/test-trend'
     })
-    let res = getResponse()
+    const res = getResponse()
 
     res.on('end', () => {
       expect(res.statusCode).toEqual(400)
@@ -74,14 +74,14 @@ describe('Trend Controller', () => {
   })
 
   it('Should return with status 404 if a nonexistant trend is specified', done => {
-    let req = httpMocks.createRequest({
+    const req = httpMocks.createRequest({
       method: 'GET',
       params: {
         name: 'trend-that-does-not-exist'
       },
       url: '/trend/test-trend'
     })
-    let res = getResponse()
+    const res = getResponse()
 
     res.on('end', () => {
       expect(res.statusCode).toEqual(404)
@@ -92,14 +92,14 @@ describe('Trend Controller', () => {
   })
 
   it('Should return valid JSON', done => {
-    let req = httpMocks.createRequest({
+    const req = httpMocks.createRequest({
       method: 'GET',
       params: {
         name: mockTrend.name
       },
       url: '/trend/test-trend'
     })
-    let res = getResponse()
+    const res = getResponse()
 
     res.on('end', () => {
       expect(res._isJSON()).toEqual(true)
@@ -110,19 +110,19 @@ describe('Trend Controller', () => {
   })
 
   it('Should return all data for the trend', done => {
-    let req = httpMocks.createRequest({
+    const req = httpMocks.createRequest({
       method: 'GET',
       params: {
         name: mockTrend.name
       },
       url: '/trend/test-trend'
     })
-    let res = getResponse()
+    const res = getResponse()
 
     res.on('end', () => {
-      let data = JSON.parse(res._getData())
+      const data = JSON.parse(res._getData())
 
-      let fields = [
+      const fields = [
         'name',
         'rank',
         'tweets_analyzed',

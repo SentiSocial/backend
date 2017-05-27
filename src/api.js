@@ -6,7 +6,7 @@ const trendController = require('./controllers/trend')
 const api = {
   start: function () {
     return new Promise((resolve, reject) => {
-      let app = express()
+      const app = express()
 
       app.use((req, res, next) => {
         res.setHeader('X-Powered-By', 'Lots of Coffee')

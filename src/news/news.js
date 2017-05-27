@@ -44,7 +44,7 @@ const news = {
 function searchForArticlesFromSource (pattern, source) {
   return new Promise((resolve, reject) => {
     const url = `${newsApiBaseUrl}/articles?source=${source.id}&apiKey=${apiKey}`
-    let articles = []
+    const articles = []
 
     request(url, (error, response) => {
       if (error) {

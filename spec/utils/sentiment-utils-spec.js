@@ -3,7 +3,7 @@ const sentimentUtils = rewire('../../src/utils/sentiment-utils')
 
 describe('Sentiment utils', () => {
   beforeAll(() => {
-    let mockConfig = {
+    const mockConfig = {
       sentimentDescriptions: [{min: 0, max: Infinity, text: 'a'}, {min: -Infinity, max: 0, text: 'b'}]
     }
 

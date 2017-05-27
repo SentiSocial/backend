@@ -54,8 +54,8 @@ describe('All Trends Controller', () => {
   })
 
   it('Should return with status 200 for a valid request', done => {
-    let req = getRequest()
-    let res = getResponse()
+    const req = getRequest()
+    const res = getResponse()
 
     res.on('end', () => {
       expect(res.statusCode).toEqual(200)
@@ -66,8 +66,8 @@ describe('All Trends Controller', () => {
   })
 
   it('Should return valid JSON', done => {
-    let req = getRequest()
-    let res = getResponse()
+    const req = getRequest()
+    const res = getResponse()
 
     res.on('end', () => {
       expect(res._isJSON()).toEqual(true)
@@ -78,11 +78,11 @@ describe('All Trends Controller', () => {
   })
 
   it('Should return all current trends', done => {
-    let req = getRequest()
-    let res = getResponse()
+    const req = getRequest()
+    const res = getResponse()
 
     res.on('end', () => {
-      let data = JSON.parse(res._getData())
+      const data = JSON.parse(res._getData())
       expect(data.trends.length).toEqual(mockTrends.length)
       done()
     })
@@ -90,13 +90,13 @@ describe('All Trends Controller', () => {
   })
 
   it('Should return all data for each trend', done => {
-    let req = getRequest()
-    let res = getResponse()
+    const req = getRequest()
+    const res = getResponse()
 
     res.on('end', () => {
-      let data = JSON.parse(res._getData())
+      const data = JSON.parse(res._getData())
 
-      let fields = ['name', 'sentiment_score', 'rank']
+      const fields = ['name', 'sentiment_score', 'rank']
       data.trends.forEach(trend => {
         fields.forEach(field => {
           expect(trend[field]).toBeDefined()
@@ -109,11 +109,11 @@ describe('All Trends Controller', () => {
   })
 
   it('Should return trends sorted by rank', done => {
-    let req = getRequest()
-    let res = getResponse()
+    const req = getRequest()
+    const res = getResponse()
 
     res.on('end', () => {
-      let data = JSON.parse(res._getData())
+      const data = JSON.parse(res._getData())
 
       expect(data.trends[0].rank).toBeLessThan(data.trends[1].rank)
 

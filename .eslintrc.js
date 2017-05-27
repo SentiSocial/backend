@@ -5,7 +5,8 @@ module.exports = {
     ],
     "rules": {
       "arrow-parens": ["error", "as-needed"],
-      "prefer-arrow-callback": "error"
+      "prefer-arrow-callback": "error",
+      "prefer-const": "error",
     },
     "plugins": [
         "standard",

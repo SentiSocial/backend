@@ -30,7 +30,7 @@ var tweetSearch = {
       client.get('search/tweets', {q: trend, result_type: 'popular', count: num}, (error, result, response) => {
         if (error) reject(error)
 
-        let tweets = []
+        const tweets = []
         result.statuses.forEach(tweet => {
           // Add the tweet text, id and popularity to tweets
           tweets.push({
