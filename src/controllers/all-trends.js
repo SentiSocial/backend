@@ -1,4 +1,4 @@
-const Trend = require('../models/trend')
+var Trend = require('../models/trend')
 
 const allTrendsController = function (req, res) {
   res.set('Access-Control-Allow-Origin', '*')

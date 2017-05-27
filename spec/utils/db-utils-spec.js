@@ -197,6 +197,25 @@ describe('Main utils', () => {
     })
   })
 
+  it('Should set sentiment score and description to null with updateExistingTrend if no tweets analyzed', done => {
+    const existingTrendData = mocks.getMockTrend()
+    const currentTrendData = mocks.getMockTrend()
+
+    existingTrendData.tweets_analyzed = 0
+    currentTrendData.tweets_analyzed = 0
+
+    const trendModel = Trend(existingTrendData)
+
+    trendModel.save().then(() => {
+      dbUtils.updateExistingTrend(existingTrendData, currentTrendData).then(() => {
+        Trend.findOne({}).then(doc => {
+          expect(doc.sentiment_score).toEqual(null)
+          done()
+        })
+      })
+    })
+  })
+
   it('Should call createNewTrend when processTrend is called with a new Trend', done => {
     spyOn(dbUtils, 'createNewTrend').and.returnValue({then: () => {
       expect(dbUtils.createNewTrend).toHaveBeenCalled()
@@ -218,6 +237,45 @@ describe('Main utils', () => {
 
     trendModel.save().then(() => {
       dbUtils.processTrend(trend, [], [])
+    })
+  })
+
+  it('Should call createNewTrend with proper stream data if provided', done => {
+    spyOn(dbUtils, 'createNewTrend').and.returnValue({then: () => {
+      expect(dbUtils.createNewTrend).toHaveBeenCalledWith(jasmine.objectContaining({
+        sentiment_score: 3,
+        tweets_analyzed: 2,
+        keywords: [{word: 'someword', occurences: 2}]
+      }))
+      done()
+    }})
+
+    dbUtils.processTrend(mocks.getMockTrend(), [], [], {
+      sentiment: 3,
+      tweets_analyzed: 2,
+      keywords: [{word: 'someword', occurences: 2}]
+    })
+  })
+
+  it('Should call updateExistingTrend with proper stream data if provided', done => {
+    const trend = mocks.getMockTrend()
+    const trendModel = new Trend(trend)
+
+    spyOn(dbUtils, 'updateExistingTrend').and.returnValue({then: () => {
+      expect(dbUtils.updateExistingTrend).toHaveBeenCalledWith(jasmine.any(Object), jasmine.objectContaining({
+        sentiment_score: 3,
+        tweets_analyzed: 2,
+        keywords: [{word: 'someword', occurences: 2}]
+      }))
+      done()
+    }})
+
+    trendModel.save().then(() => {
+      dbUtils.processTrend(mocks.getMockTrend(), [], [], {
+        sentiment: 3,
+        tweets_analyzed: 2,
+        keywords: [{word: 'someword', occurences: 2}]
+      })
     })
   })
 })

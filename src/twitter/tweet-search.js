@@ -27,9 +27,8 @@ var tweetSearch = {
    */
   getTweetSample: function (trend, num) {
     return new Promise((resolve, reject) => {
-      client.get('search/tweets', {q: trend, result_type: 'popular', count: num}, (error, result, response) => {
-        if (error) reject(error)
-
+      client.get('search/tweets', {q: trend, result_type: 'popular', count: num})
+      .then(result => {
         const tweets = []
         result.statuses.forEach(tweet => {
           // Add the tweet text, id and popularity to tweets
@@ -39,7 +38,7 @@ var tweetSearch = {
         })
 
         resolve(tweets)
-      })
+      }).catch(reject)
     })
   }
 }

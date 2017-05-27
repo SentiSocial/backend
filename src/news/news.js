@@ -25,10 +25,16 @@ const news = {
           pending--
 
           articles = articles.concat(response)
-          if (!pending) {
+          if (pending === 0) {
             resolve(articles.slice(0, config.maxArticlesPerTrend))
           }
-        }).catch(console.error)
+        }).catch(error => {
+          console.error(error)
+          pending--
+          if (pending === 0) {
+            resolve(articles.slice(0, config.maxArticlesPerTrend))
+          }
+        })
       )
     })
   }
@@ -49,15 +55,17 @@ function searchForArticlesFromSource (pattern, source) {
     request(url, (error, response) => {
       if (error) {
         reject(error)
+        return
       }
 
-      response = JSON.parse(response.body)
+      const responseJson = JSON.parse(response.body)
 
-      if (response.status !== 'ok') {
-        reject(new Error(response.status))
+      if (responseJson.status !== 'ok') {
+        reject(new Error(responseJson.status))
+        return
       }
 
-      response.articles.forEach(article => {
+      responseJson.articles.forEach(article => {
         const title = article.title
         const titleMatches = title && pattern.test(title)
         const description = article.description

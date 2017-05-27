@@ -3,6 +3,24 @@ const SentimentBank = require('../../src/twitter/sentiment-bank')
 const sentiment = require('sentiment')
 
 describe('SentimentBank', () => {
+  it('Returns a sentiment score of 0 with no tweets', () => {
+    const sentimentBank = new SentimentBank()
+
+    expect(sentimentBank.getSentiment()).toEqual(0)
+  })
+
+  it('Returns the correct number of analyzed texts', () => {
+    const sentimentBank = new SentimentBank()
+
+    expect(sentimentBank.getAnalyzed()).toEqual(0)
+    sentimentBank.addText('This is some text')
+    expect(sentimentBank.getAnalyzed()).toEqual(1)
+    sentimentBank.addText('This is some more text')
+    expect(sentimentBank.getAnalyzed()).toEqual(2)
+    sentimentBank.addText('This is even more text')
+    expect(sentimentBank.getAnalyzed()).toEqual(3)
+  })
+
   it('Correctly calculates an average with 1 tweet', () => {
     const sentimentBank = new SentimentBank()
     const tweetText = 'This is a great string with a positivie mood'
