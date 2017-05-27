@@ -7,7 +7,7 @@ const allTrendsController = function (req, res) {
     if (err) {
       res.status(500).send('Internal error while retreiving trend information')
     } else {
-      let resData = {trends: trends}
+      const resData = {trends: trends}
       res.json(resData)
     }
   }).select({name: 1, rank: 1, sentiment_score: 1, _id: 0}).sort({rank: 1})

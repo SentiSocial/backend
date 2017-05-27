@@ -45,7 +45,7 @@ const dbUtils = {
    */
   processTrend: function (trendData, newsArticles, tweets, streamData) {
     return new Promise((resolve, reject) => {
-      let fullTrendData = {
+      const fullTrendData = {
         name: trendData.name,
         rank: trendData.rank,
         locations: trendData.locations,
@@ -80,7 +80,7 @@ const dbUtils = {
    */
   updateExistingTrend: function (existingTrendData, currentTrendData) {
     return new Promise((resolve, reject) => {
-      let newTweetsAnalyzed = existingTrendData.tweets_analyzed + currentTrendData.tweets_analyzed
+      const newTweetsAnalyzed = existingTrendData.tweets_analyzed + currentTrendData.tweets_analyzed
 
       // Calculate the new sentiment score (weighting for tweets_analyzed and avoiding dividing by zero)
       let newSentimentScore = newTweetsAnalyzed > 0
@@ -90,7 +90,7 @@ const dbUtils = {
       newSentimentScore = Math.round(newSentimentScore * 1000) / 1000 // Round to nearest thousandth
 
       // Create a new keyword array (removing duplicates)
-      let keywordsExisting = {}
+      const keywordsExisting = {}
       let newKeywords = existingTrendData.keywords.concat(currentTrendData.keywords)
       .filter(keyword => {
         if (keywordsExisting[keyword.word]) {

@@ -45,7 +45,7 @@ const trends = {
  */
 function getCountryCodes () {
   return new Promise((resolve, reject) => {
-    let countryCodes = {}
+    const countryCodes = {}
 
     client.get('trends/available', {}).then(locations => {
       locations.forEach(location => {
@@ -113,11 +113,11 @@ function getLocationTrends (countryCodes) {
  * @return {Array} Array of worldwide trending topics
  */
 function reduceTrends (worldwideTrends, locationTrends) {
-  let trendsToTrack = []
+  const trendsToTrack = []
   let rank = 1
   // Iterate over each worldwide trend
   worldwideTrends.forEach(worldwideTrend => {
-    let trend = {name: worldwideTrend.name, locations: [], tweet_volume: worldwideTrend.tweet_volume}
+    const trend = {name: worldwideTrend.name, locations: [], tweet_volume: worldwideTrend.tweet_volume}
     // for each worldwide trend, iterate over each countrycode we have
     Object.keys(locationTrends).forEach(countryCode => {
       // For each country code, iterate over that country's trends

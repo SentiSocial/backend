@@ -5,7 +5,7 @@ var trends = rewire('../../src/twitter/trends')
 describe('Twitter Trends Module', () => {
   beforeAll(() => {
     // Mock trends data for different locations
-    let worldwideTrendsMock = [
+    const worldwideTrendsMock = [
       {
         'as_of': '2012-08-24T23:25:43Z',
         'created_at': '2012-08-24T23:24:14Z',
@@ -23,7 +23,7 @@ describe('Twitter Trends Module', () => {
       }
     ]
 
-    let usaTrendsMock = [
+    const usaTrendsMock = [
       {
         'as_of': '2012-08-24T23:25:43Z',
         'created_at': '2012-08-24T23:24:14Z',
@@ -41,7 +41,7 @@ describe('Twitter Trends Module', () => {
       }
     ]
 
-    let canadaTrendsMock = [
+    const canadaTrendsMock = [
       {
         'as_of': '2012-08-24T23:25:43Z',
         'created_at': '2012-08-24T23:24:14Z',
@@ -59,7 +59,7 @@ describe('Twitter Trends Module', () => {
       }
     ]
 
-    let locationsAvailableMock = [
+    const locationsAvailableMock = [
       {
         'country': 'United States',
         'countryCode': 'US',

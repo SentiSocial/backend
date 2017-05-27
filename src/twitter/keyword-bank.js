@@ -13,7 +13,7 @@ const stopRegexes = [
  *
  */
 function KeywordBank () {
-  let keywords = {}
+  const keywords = {}
 
   /**
    * Add the given text to the KeywordBank. Keywords will be extracted from the
@@ -22,7 +22,7 @@ function KeywordBank () {
    * @param  {String} text Text to extract keywords from and add to the bank
    */
   this.addText = function (text) {
-    let extractedKeywords = keywordExtractor.extract(text)
+    const extractedKeywords = keywordExtractor.extract(text)
 
     extractedKeywords.forEach(keyword => {
       if (stopRegexes.some(regex => { return keyword.match(regex) })) {
@@ -46,7 +46,7 @@ function KeywordBank () {
    */
   this.getTopKeywords = function (num) {
     // Turn keywords into an array, and sort
-    let keywordArray = Object.keys(keywords).map(keyword => {
+    const keywordArray = Object.keys(keywords).map(keyword => {
       return {word: keyword, occurences: keywords[keyword]}
     })
 
