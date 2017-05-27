@@ -12,10 +12,8 @@ function getResponse () {
   })
 }
 
-var mockTrend
-
 describe('Trend Controller', () => {
-  mockTrend = mocks.getMockTrend()
+  const mockTrend = mocks.getMockTrend()
 
   beforeAll(done => {
     // Wrap mongoose with mockgoose

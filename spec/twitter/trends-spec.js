@@ -1,6 +1,6 @@
 const nock = require('nock')
-var rewire = require('rewire')
-var trends = rewire('../../src/twitter/trends')
+const rewire = require('rewire')
+const trends = rewire('../../src/twitter/trends')
 
 describe('Twitter Trends Module', () => {
   beforeAll(() => {
@@ -96,7 +96,7 @@ describe('Twitter Trends Module', () => {
     .reply(200, locationsAvailableMock)
 
     // Mock the config so that trends are only requested from the mocked endpoints
-    var configMock = {
+    const configMock = {
       locationsTracking: [23424977, 23424775]
     }
     trends.__set__('config', configMock)

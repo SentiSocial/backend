@@ -1,8 +1,8 @@
 'use strict'
-var Twitter = require('twitter')
-var apiKeys = require('../api-keys')
+const Twitter = require('twitter')
+const apiKeys = require('../api-keys')
 
-var client = new Twitter({
+const client = new Twitter({
   consumer_key: apiKeys.twitterConsumerKey,
   consumer_secret: apiKeys.twitterConsumerSecret,
   access_token_key: apiKeys.twitterAccessTokenKey,
@@ -14,7 +14,7 @@ var client = new Twitter({
  *
  * @author GunshipPenguin
  */
-var tweetSearch = {
+const tweetSearch = {
 
   /**
    * Get's a sample of popular and recent tweets for the givent rend, calling the

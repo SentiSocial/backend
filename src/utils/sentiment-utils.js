@@ -1,7 +1,7 @@
 'use strict'
 var config = require('../../config')
 
-var sentimentUtils = {
+const sentimentUtils = {
 
   /**
    * Get a human readable description of the given sentiment score
