@@ -19,10 +19,8 @@ function getResponse () {
   })
 }
 
-var mockTrends
-
 describe('All Trends Controller', () => {
-  mockTrends = [
+  const mockTrends = [
     mocks.getMockTrend(),
     mocks.getMockTrend()
   ]

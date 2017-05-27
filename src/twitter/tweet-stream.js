@@ -19,13 +19,13 @@ var client = new Twitter({
  * @return {Object} A new TweetStream object
  */
 function TweetStream () {
-  var stream = null
+  let stream = null
 
   // Array mapping trend names to collected info on that trend
-  var trendData = {}
+  let trendData = {}
 
   // Array of objects containing trend names and regexes to match for them
-  var trendRegexes = []
+  let trendRegexes = []
 
   /**
    * Start collecting data for the trend names listed in the trends array.
@@ -94,7 +94,7 @@ function TweetStream () {
    * @return {type}  description
    */
   this.getData = function () {
-    var returnTrendData = {}
+    const returnTrendData = {}
 
     Object.keys(trendData).forEach(trend => {
       // Omit sentiment_prelim and keywordBank from the return

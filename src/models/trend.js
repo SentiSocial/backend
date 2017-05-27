@@ -1,11 +1,11 @@
 'use strict'
 const mongoose = require('mongoose')
 
-var tweetSchema = new mongoose.Schema({
+const tweetSchema = new mongoose.Schema({
   embed_id: String
 }, {_id: false})
 
-var articleSchema = new mongoose.Schema({
+const articleSchema = new mongoose.Schema({
   title: String,
   description: String,
   source: String,
@@ -14,12 +14,12 @@ var articleSchema = new mongoose.Schema({
   media: String
 }, {_id: false})
 
-var keywordSchema = new mongoose.Schema({
+const keywordSchema = new mongoose.Schema({
   word: String,
   occurences: Number
 }, {_id: false})
 
-var trendSchema = new mongoose.Schema({
+const trendSchema = new mongoose.Schema({
   name: String,
   rank: Number,
   tracking_since: {type: Number, default: () => { return Math.round(Date.now() / 1000) }},
@@ -33,6 +33,6 @@ var trendSchema = new mongoose.Schema({
   articles: [articleSchema]
 })
 
-var Trend = mongoose.model('Trend', trendSchema)
+const Trend = mongoose.model('Trend', trendSchema)
 
 module.exports = Trend
