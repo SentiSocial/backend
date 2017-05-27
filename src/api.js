@@ -8,10 +8,7 @@ const api = {
     return new Promise((resolve, reject) => {
       const app = express()
 
-      app.use((req, res, next) => {
-        res.setHeader('X-Powered-By', 'Lots of Coffee')
-        next()
-      })
+      app.set('x-powered-by', false)
 
       app.get('/alltrends', allTrendsController)
 
