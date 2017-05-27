@@ -28,7 +28,13 @@ const news = {
           if (pending === 0) {
             resolve(articles.slice(0, config.maxArticlesPerTrend))
           }
-        }).catch(console.error)
+        }).catch(error => {
+          console.error(error)
+          pending--
+          if (pending === 0) {
+            resolve(articles.slice(0, config.maxArticlesPerTrend))
+          }
+        })
       )
     })
   }
@@ -49,6 +55,7 @@ function searchForArticlesFromSource (pattern, source) {
     request(url, (error, response) => {
       if (error) {
         reject(error)
+        return
       }
 
       response = JSON.parse(response.body)
