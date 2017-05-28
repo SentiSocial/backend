@@ -1,5 +1,5 @@
 {
-  "name": "sentisocial-backend",
+  "name": "backend",
   "version": "0.0.1",
   "description": "Nodejs backend for SentiSocial",
   "main": "app.js",
@@ -12,19 +12,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SentiSocial/sentisocial-backend.git"
+    "url": "git+https://github.com/SentiSocial/backend.git"
   },
   "keywords": [
     "Twitter",
+    "Trends",
     "Sentiment",
-    "News"
+    "Analysis"
   ],
-  "author": "GunshipPenguin,suchaHassle",
+  "author": "GunshipPenguin,suchaHassle,omarChehab98,DennisTDev",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SentiSocial/sentisocial-backend/issues"
+    "url": "https://github.com/SentiSocial/backend/issues"
   },
-  "homepage": "https://github.com/SentiSocial/sentisocial-backend#readme",
+  "homepage": "https://github.com/SentiSocial/backend#readme",
   "dependencies": {
     "express": "^4.14.0",
     "keyword-extractor": "0.0.13",
