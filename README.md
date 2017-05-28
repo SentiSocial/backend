@@ -1,12 +1,12 @@
 <p align="center">
 <img height=250 width=250 src="logo.png">
 </p>
-<h1 align="center">SentiSocial-Backend</h1>
+<h1 align="center">Backend</h1>
 
 <p align="center">
-<a href="https://travis-ci.org/SentiSocial/sentisocial-backend"><img alt="Travis" src="https://img.shields.io/travis/SentiSocial/sentisocial-backend.svg"></a>
-<a href='https://coveralls.io/github/SentiSocial/sentisocial-backend?branch=master'><img src='https://img.shields.io/coveralls/SentiSocial/sentisocial-backend.svg' alt='Coverage Status' /></a>
-<a href="https://github.com/SentiSocial/sentisocial-backend/blob/master/LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
+<a href="https://travis-ci.org/SentiSocial/backend"><img alt="Travis" src="https://img.shields.io/travis/SentiSocial/backend.svg"></a>
+<a href='https://coveralls.io/github/SentiSocial/backend?branch=master'><img src='https://img.shields.io/coveralls/SentiSocial/backend.svg' alt='Coverage Status' /></a>
+<a href="https://github.com/SentiSocial/backend/blob/master/LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
 <a href="https://standardjs.com"><img alt="code style" src="https://img.shields.io/badge/code_style-standard-brightgreen.svg"></a>
 </p>
 
