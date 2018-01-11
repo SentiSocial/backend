@@ -48,19 +48,14 @@ function getNewsArticlesForPhrase (phrase) {
         return
       }
 
-      const articles = []
-      responseJson.articles.forEach(article => {
-        articles.push({
-          title: article.title,
-          description: article.description,
-          timestamp: new Date(article.publishedAt).getTime() / 1000,
-          source: article.source.name,
-          link: article.url,
-          media: article.urlToImage
-        })
-      })
-
-      resolve(articles)
+      resolve(responseJson.articles.map(article => ({
+        title: article.title,
+        description: article.description,
+        timestamp: new Date(article.publishedAt).getTime() / 1000,
+        source: article.source.name,
+        link: article.url,
+        media: article.urlToImage
+      })))
     })
   })
 }
