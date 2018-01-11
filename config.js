@@ -23,8 +23,8 @@ const config = {
   maxKeywordsPerTrend: 40,
 
   // Server interval length in seconds (Trends are updated every this many
-  // seconds), (360 is 6 mins)
-  intervalLength: 360,
+  // seconds), (900 is 15 mins)
+  intervalLength: 900,
 
   // Human readable descriptions of sentiment values to return via the API
   sentimentDescriptions: [
