@@ -85,4 +85,21 @@ describe('News module', () => {
       fail()
     }).catch(_ => done())
   })
+
+  it('should reject the promise if the returned data has an error newsapi status', done => {
+    // Set all newsapi requests to return an error
+    nock('https://newsapi.org/v2')
+      .persist()
+      .get('/everything')
+      .query(true)
+      .reply(200, {
+        status: 'error',
+        code: 'somecode',
+        message: 'This is a test error'
+      })
+
+    news.getNews('News article').then(articles => {
+      fail()
+    }).catch(_ => done())
+  })
 })
