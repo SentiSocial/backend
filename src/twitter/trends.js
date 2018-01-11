@@ -140,7 +140,7 @@ function reduceTrends (worldwideTrends, locationTrends) {
     }
   })
 
-  return trendsToTrack
+  return trendsToTrack.slice(0, config.maxTrends)
 }
 
 module.exports = trends
