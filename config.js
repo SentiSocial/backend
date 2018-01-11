@@ -10,6 +10,9 @@ const config = {
   // Port that the API listens on
   apiPort: 8080,
 
+  // Maximum number of trends to track
+  maxTrends: 10,
+
   // Maximum number of articles to store for each trend
   maxArticlesPerTrend: 10,
 
