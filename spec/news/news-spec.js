@@ -4,55 +4,58 @@ const nock = require('nock')
 const news = rewire('../../src/news/news')
 
 describe('News module', () => {
-  function getMockNews (org) {
+  function getMockNews () {
     return {
       'status': 'ok',
-      'source': org,
-      'sortBy': 'latest',
+      'totalResults': 40694,
       'articles': [
         {
+          'source': {
+            'id': null,
+            'name': 'cnn'
+          },
           'author': 'John Smith',
           'title': 'This is the news article title',
           'description': 'This is the news article description',
           'url': 'http://cnn.com/somearticle',
           'urlToImage': 'http://cnn.com/someimage.jpg',
           'publishedAt': '2017-05-24T23:35:37Z'
+        },
+        {
+          'source': {
+            'id': null,
+            'name': 'cnn'
+          },
+          'author': 'John Smith II',
+          'title': 'This is the another article title',
+          'description': 'This is another news article description',
+          'url': 'http://cnn.com/somearticle2',
+          'urlToImage': 'http://cnn.com/someimage2.jpg',
+          'publishedAt': '2017-05-25T23:35:37Z'
         }
       ]
     }
   }
 
-  const mockSources = [{id: 'cnn'}, {id: 'bbc-news'}]
-
-  function setMockSources () {
-    mockSources.forEach(source => {
-      nock('https://newsapi.org/v1')
-      .get('/articles')
-      .query(query => {
-        return query.source === source.id
-      })
-      .reply(200, getMockNews(source.id))
-    })
+  function setMockNews () {
+    nock('https://newsapi.org/v2')
+      .get('/everything')
+      .query(true)
+      .reply(200, getMockNews())
   }
-
-  beforeAll(() => {
-    // Ensure the module only requests from sources in mockSources
-    news.__set__('sources', mockSources)
-  })
 
   afterEach(() => {
     nock.cleanAll()
   })
 
   it('should return news with all required fields', done => {
-    setMockSources()
-
+    setMockNews()
     news.getNews('News article').then(articles => {
       const mockArticle = getMockNews().articles[0]
       expect(articles[0]).toEqual(jasmine.objectContaining({
         title: mockArticle.title,
         description: mockArticle.description,
-        source: mockArticle.source,
+        source: mockArticle.source.name,
         link: mockArticle.url,
         media: mockArticle.urlToImage
       }))
@@ -63,67 +66,23 @@ describe('News module', () => {
   })
 
   it('should return news whose title matches the keyword', done => {
-    setMockSources()
-
+    setMockNews()
     news.getNews('title').then(articles => {
       expect(articles[0]).toBeDefined()
       done()
     }).catch(error => fail(error))
   })
 
-  it('should return news whose description matches the keyword', done => {
-    setMockSources()
-
-    news.getNews('description').then(articles => {
-      expect(articles[0]).toBeDefined()
-      done()
-    }).catch(error => fail(error))
-  })
-
-  it('should return no articles if there is no match', done => {
-    setMockSources()
-
-    news.getNews('asdfadsf').then(articles => {
-      expect(articles[0]).not.toBeDefined()
-      done()
-    }).catch(error => fail(error))
-  })
-
-  it('should log an error if the promise if request encounters an error', done => {
+  it('should reject the promise if request encounters an error', done => {
     // Set all newsapi requests to return an error
-    nock('https://newsapi.org/v1')
+    nock('https://newsapi.org/v2')
     .persist()
-    .get('/articles')
+    .get('/everything')
     .query(true)
     .replyWithError('Some error')
 
-    spyOn(console, 'error')
-
     news.getNews('News article').then(articles => {
-      expect(console.error).toHaveBeenCalled()
-      done()
-    }).catch(error => fail(error))
-  })
-
-  it('should log an error if the newsapi returns an error code', done => {
-    const mockErrorResponse = {
-      'status': 'error',
-      'code': 'someErrorCode',
-      'message': 'Test Error'
-    }
-
-    // Set all newsapi requests to return an error
-    nock('https://newsapi.org/v1')
-    .persist()
-    .get('/articles')
-    .query(true)
-    .reply(400, mockErrorResponse)
-
-    spyOn(console, 'error')
-
-    news.getNews('News article').then(articles => {
-      expect(console.error).toHaveBeenCalled()
-      done()
-    }).catch(error => fail(error))
+      fail()
+    }).catch(_ => done())
   })
 })
