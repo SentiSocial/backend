@@ -8,7 +8,7 @@
     "test-cov": "nyc --all --include src jasmine",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint .",
-    "start": "node app.js Node Environment: production"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
